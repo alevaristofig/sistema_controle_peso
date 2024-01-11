@@ -1,0 +1,26 @@
+.form-perfil img{
+    margin-bottom: 1em;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+.form-perfil label{
+    margin-bottom: 0.5em;
+    font-size: 1.4em;
+}
+
+.form-perfil input, textarea, select{
+    margin-bottom: 1em;
+    padding: 0.7em;
+    border: 0;
+    border-radius: 5px;
+    max-width: 600px;
+}
+
+.form-perfil input:disabled{
+    cursor: not-allowed;
+}
+
+.form-perfil button{
+    max-width: 600px;
+}
