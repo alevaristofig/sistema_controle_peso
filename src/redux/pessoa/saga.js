@@ -1,9 +1,10 @@
-import { all, delay, takeEvery } from 'redux-saga/effects';
+import { all, takeEvery, call, put } from 'redux-saga/effects';
+//import { salvar } from './slice';
 
-function* buscar(){
-    yield delay(2000)
+function* salvar() {
+    alert('chegou saga')
 }
 
 export default all([
-    takeEvery('pessoa/buscar', buscar)
+    takeEvery('pessoa/salvar',salvar)
 ])
