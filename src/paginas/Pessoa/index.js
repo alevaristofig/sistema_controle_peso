@@ -1,17 +1,18 @@
-import { useState, useEffect } from "react";
-import { useDispatch, useSelector } from 'react-redux';
+import { useState } from "react";
+import { useDispatch } from 'react-redux';
 import { salvar } from '../../redux/pessoa/slice';
 
+import { toast, ToastContainer } from 'react-toastify';
 import { VscPerson } from "react-icons/vsc";
 
 import Header from "../../compomentes/Headers"
 import Titulo from "../../compomentes/Titulo"
 
+import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './pessoa.css';
 
 export default function Pessoa() {
-    const { pessoas, loading } = useSelector((rootReducer) => rootReducer.pessoa);
     const dispatch = useDispatch();
 
     const [nome,setNome] = useState('');
@@ -20,13 +21,31 @@ export default function Pessoa() {
     const [endereco,setEndereco] = useState('');
 
     function salvarDados(e) {
-      //  e.preventDefault();       
-        dispatch(salvar({
-            'nome': nome,
-            'email': email,
-            'altura': altura,
-            'endereco': endereco
-        }))
+        e.preventDefault();    
+        
+        if(validar()) {
+
+            dispatch(salvar({
+                'nome': nome,
+                'email': email,
+                'altura': altura,
+                'endereco': endereco
+            }));
+
+            setNome('');
+            setEmail('');
+            setAltura('');
+            setEndereco('');
+        }
+    }
+
+    function validar() {
+        if(nome === '' && email === '' && altura === '' &&  endereco === '') {
+            toast.error("Os campos não podem ficar em branco!");
+            return false;
+        }
+
+        return true;
     }
 
 
@@ -34,6 +53,9 @@ export default function Pessoa() {
         <div>
             <Header />
             <div className="content">
+                <div>
+                    <ToastContainer />
+                </div> 
                 <Titulo nome="Pessoa">
                     <VscPerson color="#000" size={24} />
                 </Titulo>
@@ -43,9 +65,11 @@ export default function Pessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Nome</label>
+                                <lable className="form-label obrigatorio">*</lable>
                                 <input 
                                     type="text" 
                                     className="form-control"
+                                    value={nome}
                                     onChange={(e) => setNome(e.target.value)} 
                                 /> 
                             </div>
@@ -54,9 +78,11 @@ export default function Pessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">E-mail</label>
+                                <lable className="form-label obrigatorio">*</lable>
                                 <input 
                                     type="text" 
                                     className="form-control"
+                                    value={email}
                                     onChange={(e) => setEmail(e.target.value)} 
                                 /> 
                             </div>
@@ -65,9 +91,11 @@ export default function Pessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Altura</label>
+                                <lable className="form-label obrigatorio">*</lable>
                                 <input 
                                     type="text" 
                                     className="form-control"
+                                    value={altura}
                                     onChange={(e) => setAltura(e.target.value)} 
                                 />  
                             </div>
@@ -76,10 +104,12 @@ export default function Pessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Endereço</label>
+                                <lable className="form-label obrigatorio">*</lable>
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    onChange={(e) => setAltura(e.target.value)} 
+                                    value={endereco}
+                                    onChange={(e) => setEndereco(e.target.value)} 
                                 />   
                             </div>
                         </div>

@@ -9,7 +9,7 @@
     font-size: 1.4em;
 }
 
-.form-perfil input, textarea, select{
+.form-perfil textarea, select{
     margin-bottom: 1em;
     padding: 0.7em;
     border: 0;
@@ -23,4 +23,9 @@
 
 .form-perfil button{
     max-width: 600px;
+}
+
+.obrigatorio{
+    color: #ff0000;
+    font-size: 20px;
 }

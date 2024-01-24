@@ -11,20 +11,19 @@ export const pessoaSlice = createSlice({
     initialState,
     reducers: {
         salvar: (state,action) => {
-            //state.loading = true;
-            alert('chegou redux')
+            state.loading = true;
         },
-        /*salvaPessoaSucesso(state) {
+        salvarSucesso(state) {
             state.loading = false;
             toast.success("Empresa Salva com Sucesso!");
         },
-        salvaPessoaError(state) {
+        salvarError(state) {
             state.loading = false;
             toast.error("Ocorreu um erro ao salvar a Empresa!");
-        }*/
+        }
     }
 });
 
-export const { salvar } = pessoaSlice.actions;
+export const { salvar, salvarSucesso, salvarError } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;
