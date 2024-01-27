@@ -1,6 +1,17 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
-import { salvarSucesso, salvarError} from './slice';
+import { listarSucesso, listarError, salvarSucesso, salvarError} from './slice';
 import axios from 'axios';
+
+function* listar() {
+    try {
+        const response = yield call(axios.get,"http://localhost:8080/pessoas");
+
+        yield put(listarSucesso(response.data));
+    } catch(error) {
+        console.log(error);
+        yield put(listarError());
+    }
+}
 
 function* salvar(action) {
     try {
@@ -22,5 +33,6 @@ function* salvar(action) {
 }
 
 export default all([
-    takeEvery('pessoa/salvar',salvar)
+    takeEvery('pessoa/salvar',salvar),
+    takeEvery('pessoa/listar', listar)
 ])
