@@ -65,7 +65,7 @@ export default function Pessoa() {
                                                     <td>{p.email}</td>
                                                     <td>{p.endereco}</td>
                                                     <td>
-                                                        <Link to="" className="btn btn-info">Editar</Link>
+                                                    <Link to={`/pessoadados/${p.id}`} className="btn btn-info">Editar</Link>
                                                     </td>
                                                 </tr>
                                             )
