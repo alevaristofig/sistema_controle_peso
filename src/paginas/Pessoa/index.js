@@ -1,22 +1,33 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { VscPerson } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 
-import { useDispatch, useSelector } from 'react-redux';
-import { listar } from '../../redux/pessoa/slice';
+//import { useDispatch, useSelector } from 'react-redux';
+//import { listar } from '../../redux/pessoa/slice';
+import usePessoa from "../../hooks/pessoaHook";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Pessoa() {
 
-    const dispatch = useDispatch();
-    const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa)
+    //const dispatch = useDispatch();
+    //const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa)
+    const [pessoas,setPessoas] = useState([]);
+    const [listar] = usePessoa();
 
-    useEffect(() => {
-        dispatch(listar());
+    useEffect(() => {    
+
+        async function listarPessoa() {
+            let pessoa = await listar();
+            setPessoas(pessoa);
+        }
+        
+        listarPessoa();
+
     },[]);
+
 
     return(
         <div>
@@ -32,13 +43,13 @@ export default function Pessoa() {
                             <Link to="/cadastropessoa" className="btn btn-success">Nova Pessoa</Link>
                         </div>
                     </div>
-
-                    {
-                        pessoas.length === 0
+                    {    
+                                     
+                        pessoas.length == 0
                         ?
                             <div className="row mt-4">
                                 <div className="col">
-                                    <span>Nenhuma pessoa encontrada</span>
+                                    <span>Nenhuma pessoa encontrada </span>                                    
                                 </div>
                             </div>
                             
@@ -57,6 +68,7 @@ export default function Pessoa() {
                                     </thead>
                                     <tbody>
                                     {
+                                        
                                         pessoas.map((p,i) => {
                                             return(
                                                 <tr key={i}>

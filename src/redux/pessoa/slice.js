@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
 const initialState = {
-    pessoas: [],
+    pessoas: null,
     loading: false
   }
 
@@ -15,6 +15,7 @@ export const pessoaSlice = createSlice({
         },
         listarSucesso: (state,action) => {
             state.loading = true;
+           // console.log('dados ',action.payload)
             state.pessoas = action.payload;
         },
         listarError: (state) => {
@@ -42,12 +43,24 @@ export const pessoaSlice = createSlice({
         salvarError: (state) => {
             state.loading = false;
             toast.error("Ocorreu um erro ao salvar a Pessoa!");
+        },
+        atualizar(state,action) {
+            state.loading = true;
+        },
+        atualizarSucesso(state) {
+            state.loading = true;
+            toast.success("Pessoa atualizada com Sucesso!");
+        },
+        atualizarError(state) {
+            state.loading = true;
+            toast.error("Ocorreu um erro ao atualizar a Pessoa!");
         }
     }
 });
 
 export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
-               buscar, buscarSucesso, buscarError 
+               buscar, buscarSucesso, buscarError, atualizar, atualizarSucesso,
+               atualizarError 
             } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;

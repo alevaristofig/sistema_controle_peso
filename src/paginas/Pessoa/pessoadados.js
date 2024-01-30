@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { buscar } from '../../redux/pessoa/slice';
+import { atualizar, buscar } from '../../redux/pessoa/slice';
 import { VscPerson } from "react-icons/vsc";
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -40,7 +40,14 @@ export default function PessoaDados() {
         };
 
         if(validar(data)) {
-
+            
+            dispatch(atualizar({
+                'pessoa': id,
+                'nome': nome,
+                'email': email,
+                'altura': altura,
+                'endereco': endereco
+            }))
         } else {
             toast.error("Os campos não podem ficar em branco!");
         }
@@ -66,7 +73,7 @@ export default function PessoaDados() {
                                 <input 
                                     type="text" 
                                     className="form-control"                                    
-                                    defaultValue={pessoas.nome}
+                                    defaultValue={ pessoas != null ? pessoas.nome : ''}
                                     onChange={(e) => setNome(e.target.value)} 
                                 /> 
                             </div>
@@ -79,7 +86,7 @@ export default function PessoaDados() {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    defaultValue={pessoas.email}
+                                    defaultValue={ pessoas != null ? pessoas.email : ''}
                                     onChange={(e) => setEmail(e.target.value)} 
                                 /> 
                             </div>
@@ -92,7 +99,7 @@ export default function PessoaDados() {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    defaultValue={pessoas.altura}
+                                    defaultValue={ pessoas != null ? pessoas.altura : ''}
                                     onChange={(e) => setAltura(e.target.value)} 
                                 />  
                             </div>
@@ -105,15 +112,15 @@ export default function PessoaDados() {
                                 <input 
                                     type="text" 
                                     className="form-control"
-                                    defaultValue={pessoas.endereco}
+                                    defaultValue={ pessoas != null ? pessoas.endereco : ''}
                                     onChange={(e) => setEndereco(e.target.value)} 
                                 />   
                             </div>
                         </div>
                     
-                        <div class="row mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <button type="submit" className="btn btn-primary">Cadastrar</button>
                             </div>
                         </div>                      
                     </form>
