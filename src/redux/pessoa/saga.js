@@ -9,7 +9,6 @@ function* listar() {
 
         yield put(listarSucesso(response.data));
     } catch(error) {
-        console.log(error);
         yield put(listarError());
     }
 }

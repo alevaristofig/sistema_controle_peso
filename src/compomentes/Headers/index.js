@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom';
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
+import { LiaWeightHangingSolid } from 'react-icons/lia';
 
 import './header.css';
 import avatarImg from '../../assets/avatar.png';
@@ -18,6 +19,10 @@ export default function Header(){
 
             <Link to="/pessoa">
                 <VscPerson color="#fff" size={24} /> Pessoa
+            </Link>
+
+            <Link to="/peso">
+                <LiaWeightHangingSolid color="#fff" size={24} /> Peso
             </Link>
         </div>
     )

@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
 const initialState = {
-    pessoas: null,
+    pessoas: [],
     loading: false
   }
 
@@ -14,12 +14,11 @@ export const pessoaSlice = createSlice({
             state.loading = true;            
         },
         listarSucesso: (state,action) => {
-            state.loading = true;
-           // console.log('dados ',action.payload)
+            state.loading = false;
             state.pessoas = action.payload;
         },
         listarError: (state) => {
-            state.loading = true;
+            state.loading = false;
             toast.error("Ocorreu um erro ao listar as Pessoas!");
         },
         buscar: (state,action) => {            
