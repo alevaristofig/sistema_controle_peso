@@ -42,7 +42,6 @@ export default function Peso() {
                             <Link to="/cadastropeso" className="btn btn-success">Novo Peso</Link>
                         </div>
                     </div>
-
                     {
                         loading 
                             ? 
@@ -99,7 +98,7 @@ export default function Peso() {
                                                                         }
                                                                     </td>
                                                                     <td>
-                                                                        <Link to={`/pessoadados/${m.id}`} className="btn btn-info">Editar</Link>
+                                                                        <Link to={`/editarpeso/${m.id}`} className="btn btn-info">Editar</Link>
                                                                     </td>
                                                                 </tr>
                                                             )
