@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
+import InputMask from 'react-input-mask';
 
 import usePeso from '../../hooks/pesoHook';
 
@@ -34,7 +35,9 @@ export default function EditarPeso() {
             setImc(result.imc);
             setAltura(result.pessoa.altura);
             setIdPessoa(result.pessoa.id);
-            setData(result.data);
+
+            let dataPeso = new Date(result.data)
+            setData(dataPeso.toLocaleDateString('pt-BR'));
 
             setLoading(false);
         }
@@ -47,11 +50,14 @@ export default function EditarPeso() {
         e.preventDefault();
 
         if(validar()) {
+            let dataBanco = data.split('/');
+            dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+'T00:00:00';
+
             dispatch(atualizar({
                 'id': id,
                 'valor': inputPeso,
                 'imc': imc,
-                'data': data,
+                'data': dataBanco,
                 'pessoa': {
                     'id': idPessoa
                 }
@@ -129,6 +135,19 @@ export default function EditarPeso() {
                                         />
                                     </div>
                                 </div>
+                                <div className="row mt-3">
+                                    <div className="col">
+                                        <label className="form-label">Data</label>
+                                        <label className="form-label obrigatorio">*</label>
+                                        <InputMask 
+                                            mask="99/99/9999" 
+                                            name="data" 
+                                            value={data}
+                                            className="form-control" 
+                                            onChange={ event => setData(event.target.value)}
+                                        /> 
+                                    </div>
+                                </div> 
                                 <div className="row mt-3">
                                     <div className="col">
                                         <button type="submit" className="btn btn-primary" onClick={salvarDados}>Cadastrar</button>

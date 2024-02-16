@@ -10,7 +10,7 @@ export const pesoSlice = createSlice({
     name: 'peso',
     initialState,
     reducers: {
-        listar: (state) => {            
+        listar: (state) => {                        
             state.loading = true;
         },
         listarSucesso(state,action) {
@@ -20,17 +20,6 @@ export const pesoSlice = createSlice({
         listarError(state,action) {
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Pesos!");         
-        },
-        buscar(state,action) {                   
-            state.loading = true; 
-        },
-        buscarSucesso(state,action) {
-            state.loading = false;
-            state.pesos = action.payload;
-        },
-        buscarError(state) {
-            state.loading = false;
-            toast.error("Ocorreu um erro ao buscar o peso!");   
         },
         salvar(state,action) {
             state.loading = true;
@@ -54,12 +43,23 @@ export const pesoSlice = createSlice({
         atualizarError(state) {
             state.loading = false;
             toast.error("Ocorreu um erro ao atualizar o peso!");
+        },
+        apagar(state,action) {
+            state.loading = true;
+        },
+        apgarSucesso(state) {
+            state.loading = false;
+            toast.success("Peso apagado com Sucesso!");
+        },
+        apgarError(state) {
+            state.loading = false;
+            toast.success("Ocorreu um erro ao apagar o peso!");
         }
     }
 });
 
 export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
-               buscar, buscarSucesso, buscarError, atualizar, atualizarSucesso,
-               atualizarError } = pesoSlice.actions;
+               atualizar, atualizarSucesso, atualizarError, apagar, apgarSucesso, 
+               apgarError  } = pesoSlice.actions;
 
 export default pesoSlice.reducer;

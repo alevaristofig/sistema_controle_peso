@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
 import InputMask from 'react-input-mask';
@@ -24,7 +23,6 @@ export default function CadastroPeso() {
     const [imc,setImc] = useState('0.00');
     const [data,setData] = useState('');
     const [validar] = usePeso();
-    const navigate = useNavigate();
 
     useEffect(() => {
         dispatch(listar());
@@ -54,7 +52,9 @@ export default function CadastroPeso() {
                 dados
             }));
 
-            navigate("/peso", { replace: true});
+           setPesoValor('');
+           setImc('');
+           setData('');
         }
     }
 

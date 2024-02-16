@@ -1,9 +1,9 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { listar } from '../../redux/peso/slice';
+import { listar, apagar } from '../../redux/peso/slice';
 
 import { ToastContainer } from 'react-toastify';
 import Header from "../../compomentes/Headers";
@@ -14,15 +14,30 @@ export default function Peso() {
 
     const dispatch = useDispatch();
     const { pesos, loading } = useSelector((rootReducer) => rootReducer.peso);
+    const navigate = useNavigate();
+
+    const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
         dispatch(listar());
-    },[]);
+
+        setLoadingDel(false);
+    },[loadingDel]);
 
     function formatarData(dataFormatada) {
-        dataFormatada = dataFormatada.split('-');
+        let d = new Date(dataFormatada);
+        //taFormatada = dataFormatada.split('-');
 
-        return dataFormatada[2]+'/'+dataFormatada[1]+'/'+dataFormatada[0]
+        //return dataFormatada[2]+'/'+dataFormatada[1]+'/'+dataFormatada[0]
+        return d.toLocaleDateString('pt-BR')
+    }
+
+    function apagarPeso(id) {
+        dispatch(apagar({
+            "id": id
+        }));
+
+        setLoadingDel(true);
     }
 
     return(
@@ -35,7 +50,9 @@ export default function Peso() {
                 <div>
                     <ToastContainer />
                 </div>
-
+                {
+                    console.log(pesos)
+                }
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">
@@ -56,12 +73,13 @@ export default function Peso() {
                                             <span>Nenhuma peso encontrado </span>                                    
                                         </div>
                                     </div>
-                                :
+                                :                                
                                     <div className="row mt-4">
                                         <div className="col">
                                             <table className="table table-bordered">
                                                 <thead>
                                                     <tr>
+                                                        <th>#</th>
                                                         <th>Peso</th>
                                                         <th>Imc</th>
                                                         <th>Data</th>
@@ -74,6 +92,7 @@ export default function Peso() {
                                                         pesos.map((m,i) => {
                                                             return(
                                                                 <tr key={i}>
+                                                                    <td>{m.id}</td>
                                                                     <td>{m.valor}</td>
                                                                     <td>{m.imc}</td>
                                                                     <td>{
@@ -98,7 +117,10 @@ export default function Peso() {
                                                                         }
                                                                     </td>
                                                                     <td>
-                                                                        <Link to={`/editarpeso/${m.id}`} className="btn btn-info">Editar</Link>
+                                                                        <Link to={`/editarpeso/${m.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                        <button type='button' 
+                                                                                className="btn btn-danger float-start" 
+                                                                                onClick={() => apagarPeso(m.id)}>Apagar</button>
                                                                     </td>
                                                                 </tr>
                                                             )
@@ -120,7 +142,7 @@ export default function Peso() {
                                                             }
                                                         </td>
                                                         <td>Total Peso</td>
-                                                        <td colSpan={2}>
+                                                        <td colSpan={3}>
                                                             {
                                                                 pesos[pesos.length-1].valor - pesos[0].valor < 0
                                                                 ?

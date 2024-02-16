@@ -4,18 +4,6 @@ import axios from 'axios';
 
 function usePeso() {
 
-    //const dispatch = useDispatch();
-    //const { pesos, loading } = useSelector((rootReducer) => rootReducer.peso);
-
-    /* function validar(dados) {
-        alert('nao')
-        if(dados.nome.length === 0 dados.nome == '' || dados.peso === '0.00' || dados.imc === '0.00' || dados.data === '') {            
-            return false;
-        }
-
-        return true;
-    }*/
-
     async function buscar(id) {
         const result = await axios.get(`http://localhost:8080/peso/${id}`)
                                .then((response) => {                                
