@@ -26,9 +26,7 @@ export default function Peso() {
 
     function formatarData(dataFormatada) {
         let d = new Date(dataFormatada);
-        //taFormatada = dataFormatada.split('-');
 
-        //return dataFormatada[2]+'/'+dataFormatada[1]+'/'+dataFormatada[0]
         return d.toLocaleDateString('pt-BR')
     }
 
@@ -50,9 +48,7 @@ export default function Peso() {
                 <div>
                     <ToastContainer />
                 </div>
-                {
-                    console.log(pesos)
-                }
+
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">

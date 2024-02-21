@@ -7,6 +7,8 @@ import PessoaDados from './paginas/Pessoa/pessoadados';
 import Peso from './paginas/Peso';
 import CadastroPeso from './paginas/Peso/cadastroPeso';
 import EditarPeso from './paginas/Peso/editarPeso';
+import Exercicio from './paginas/Exercicio';
+import CadastroExercicio from './paginas/Pessoa/cadastroexercicio';
 
 const router = createBrowserRouter([
   {
@@ -36,6 +38,14 @@ const router = createBrowserRouter([
   {
     path: '/editarpeso/:id',
     element: <EditarPeso />
+  },
+  {
+    path: '/exercicio',
+    element: <Exercicio />
+  },
+  {
+    path: '/cadastroexercicio',
+    element: <CadastroExercicio />
   }
 ])
 

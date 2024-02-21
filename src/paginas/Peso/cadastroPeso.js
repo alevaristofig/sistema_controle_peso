@@ -107,8 +107,7 @@ export default function CadastroPeso() {
                                 <lable className="form-label obrigatorio">*</lable>
                                 <CurrencyInput 
                                     name="myinput" 
-                                    className="form-control"
-                                    //value={pesoValor}
+                                    className="form-control"                                    
                                     onBlur={(e) => calcularImc(e.target.value)} 
                                     required />                                
                             </div>
