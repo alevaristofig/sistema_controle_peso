@@ -21,9 +21,44 @@ export const exercicioSlice = createSlice({
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Exercícios!");         
         },
+        salvar(state,action) {
+            state.loading = true;
+        },
+        salvarSucesso(state) {
+            state.loading = false;
+            toast.success("Exercício cadastrado com Sucesso!");
+        },
+        salvarError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao salvar o Exercício!");
+        },
+        remover(state,action) {
+            state.loading = true;
+        },
+        removerSucesso(state) {
+            state.loading = false;
+            toast.success("Exercício apagado com Sucesso!");
+        },
+        removerError(state) {
+            state.loading = false;
+            toast.success("Ocorreu um erro ao apagar o Exercício!");
+        },
+        atualizar(state,action) {
+            state.loading = true;
+        },
+        atualizarSucesso(state) {
+            state.loading = false;
+            toast.success("Exercício atualizado com Sucesso!");
+        },
+        atualizarError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao atualizar o Exercício!");
+        },
     }
 });
 
-export const { listar, listarSucesso, listarError } = exercicioSlice.actions;
+export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
+               remover, removerSucesso, removerError, atualizar, atualizarSucesso, 
+               atualizarError } = exercicioSlice.actions;
 
 export default exercicioSlice.reducer;
