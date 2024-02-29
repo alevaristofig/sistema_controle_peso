@@ -114,9 +114,9 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
                        
-                        <div class="row mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <button type="submit" className="btn btn-primary">Cadastrar</button>
                             </div>
                         </div>                      
                     </form>

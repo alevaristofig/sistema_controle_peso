@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid, LiaRunningSolid  } from 'react-icons/lia';
+import { GiWeightLiftingUp } from 'react-icons/gi';
 
 import './header.css';
 import avatarImg from '../../assets/avatar.png';
@@ -27,6 +28,10 @@ export default function Header(){
 
             <Link to="/exercicio">
                 <LiaRunningSolid  color="#fff" size={24} /> Exercício
+            </Link>
+
+            <Link to="/treino">
+                <GiWeightLiftingUp  color="#fff" size={24} /> Treino
             </Link>
         </div>
     )

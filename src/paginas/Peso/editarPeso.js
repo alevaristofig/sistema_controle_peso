@@ -50,8 +50,11 @@ export default function EditarPeso() {
         e.preventDefault();
 
         if(validar()) {
+
             let dataBanco = data.split('/');
-            dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+'T00:00:00';
+            let dataAtual = new Date();
+
+            dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
 
             dispatch(atualizar({
                 'id': id,
