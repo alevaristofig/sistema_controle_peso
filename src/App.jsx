@@ -8,12 +8,8 @@ import Peso from './paginas/Peso';
 import CadastroPeso from './paginas/Peso/cadastroPeso';
 import EditarPeso from './paginas/Peso/editarPeso';
 import Exercicio from './paginas/Exercicio';
-<<<<<<< HEAD
-import CadastroExercicio from './paginas/Pessoa/cadastroexercicio';
-=======
 import CadastroExercicio from './paginas/Exercicio/cadastroexercicio';
 import EditarExercicio from './paginas/Exercicio/editarExercicio';
->>>>>>> f016b46caf9b4255a5ae925747d046d07c9e4985
 import Treino from './paginas/Treino';
 
 const router = createBrowserRouter([

@@ -142,7 +142,8 @@ export default function Treino() {
     function mostrarDivTreino() {
         if(treinos.length > 0) {
 
-            let dataDivTreino = data.split('/');
+            let dataAtual = new Date();
+            let dataDivTreino = dataAtual.toLocaleDateString().split('/');
             dataDivTreino = dataDivTreino[2]+'-'+dataDivTreino[1]+'-'+dataDivTreino[0];
 
             let result = treinos.findIndex((e) => e.data.substring(0,10) === dataDivTreino);
@@ -191,29 +192,26 @@ export default function Treino() {
                                         <div className="row">                                    
                                             {                                        
                                                 exercicios.map((e,i) => {     
-                                                    if(mostrarDivTreino() === -1) {
-                                                        
-                                                         
-                                                                               
-                                                    return(                                                                                                       
-                                                        <div className="col-sm-3 mb-4" key={i}>
-                                                            <div className="card">
-                                                                <div className="card-body">
-                                                                    <h5 className="card-title">{e.nome}</h5>  
-                                                                    <p>{diaSemana} - {data}</p>                                  
-                                                                    <div className="form-check form-switch">
-                                                                        <input 
-                                                                            className="form-check-input" 
-                                                                            type="checkbox"
-                                                                            value={e.id}                                                                             
-                                                                            onChange={(e) => registrarValoresTreino(e)}                                                                            
-                                                                        />
-                                                                        <label className="form-check-label">Feito</label>
+                                                    if(mostrarDivTreino() === -1) {                                                                                                                                       
+                                                        return(                                                                                                       
+                                                            <div className="col-sm-3 mb-4" key={i}>
+                                                                <div className="card">
+                                                                    <div className="card-body">
+                                                                        <h5 className="card-title">{e.nome}</h5>  
+                                                                        <p>{diaSemana} - {data}</p>                                  
+                                                                        <div className="form-check form-switch">
+                                                                            <input 
+                                                                                className="form-check-input" 
+                                                                                type="checkbox"
+                                                                                value={e.id}                                                                             
+                                                                                onChange={(e) => registrarValoresTreino(e)}                                                                            
+                                                                            />
+                                                                            <label className="form-check-label">Feito</label>
+                                                                        </div>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                        </div>                                                
-                                                    )  
+                                                            </div>                                                
+                                                        )  
                                                     }                                          
                                                 })                                        
                                             }                                                                                                      
