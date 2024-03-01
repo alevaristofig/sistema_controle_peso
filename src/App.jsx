@@ -9,6 +9,7 @@ import CadastroPeso from './paginas/Peso/cadastroPeso';
 import EditarPeso from './paginas/Peso/editarPeso';
 import Exercicio from './paginas/Exercicio';
 import CadastroExercicio from './paginas/Pessoa/cadastroexercicio';
+import Treino from './paginas/Treino';
 
 const router = createBrowserRouter([
   {
@@ -46,6 +47,10 @@ const router = createBrowserRouter([
   {
     path: '/cadastroexercicio',
     element: <CadastroExercicio />
+  },
+  {
+    path: '/treino',
+    element: <Treino />
   }
 ])
 
