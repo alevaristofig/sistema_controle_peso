@@ -69,7 +69,7 @@ export default function PessoaDados() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Nome</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"                                    
@@ -82,7 +82,7 @@ export default function PessoaDados() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">E-mail</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -95,7 +95,7 @@ export default function PessoaDados() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Altura</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -108,7 +108,7 @@ export default function PessoaDados() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Endereço</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"

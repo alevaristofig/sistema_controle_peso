@@ -2,15 +2,33 @@ import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import { LiaRunningSolid  } from 'react-icons/lia';
 
+import { useDispatch } from 'react-redux';
+import { salvar } from "../../redux/exercicio/slice";
+
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroExercicio() {
+    const dispatch = useDispatch();
 
     const [nome,setNome] = useState('');
     const [frequencia,setFrequencia] = useState('');
     const [tempo,setTempo] = useState('');
+
+    function salvarDados(e) {
+        e.preventDefault();
+       
+        dispatch(salvar({
+            'nome': nome,
+            'frequencia': frequencia,
+            'tempo': tempo
+        }));
+
+        setNome('');
+        setFrequencia('');
+        setTempo('');
+    }
 
     return(
         <div>
@@ -25,15 +43,16 @@ export default function CadastroExercicio() {
                 </Titulo>
 
                 <div className="container py-4">
-                    <form className="form-perfil">
+                    <form className="form-perfil" onSubmit={salvarDados}>
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Nome</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type='text'
-                                    className="form-control"                                  
-                                    onBlur={(e) => setNome(e.target.value)} 
+                                    className="form-control" 
+                                    value={nome}                                 
+                                    onChange={(e) => setNome(e.target.value)} 
                                     required 
                                 />                                
                             </div>
@@ -41,12 +60,13 @@ export default function CadastroExercicio() {
 
                         <div className="row mt-3">
                             <div className="col">
-                                <label className="form-label">Frequência(em semanas)</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label">Frequência(em dias)</label>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type='text'
-                                    className="form-control"                                  
-                                    onBlur={(e) => setFrequencia(e.target.value)} 
+                                    className="form-control"   
+                                    value={frequencia}                               
+                                    onChange={(e) => setFrequencia(e.target.value)} 
                                     required 
                                 />                                
                             </div>
@@ -55,11 +75,12 @@ export default function CadastroExercicio() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Tempo(em minutos)</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type='text'
-                                    className="form-control"                                  
-                                    onBlur={(e) => setTempo(e.target.value)} 
+                                    className="form-control"   
+                                    value={tempo}                               
+                                    onChange={(e) => setTempo(e.target.value)} 
                                     required 
                                 />                                
                             </div>

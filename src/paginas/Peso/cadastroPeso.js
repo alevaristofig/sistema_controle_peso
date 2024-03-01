@@ -41,9 +41,10 @@ export default function CadastroPeso() {
         if(validar(dados)) {
 
             let dataBanco = data.split('/');
+            let dataAtual = new Date();
 
-            dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0];
-
+            dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+            
             dados.pessoa = {
                 'id': pessoas[0].id
             }
@@ -81,7 +82,7 @@ export default function CadastroPeso() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Pessoa</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <select                                     
                                     className="form-select"
                                     value={nomes}
@@ -104,7 +105,7 @@ export default function CadastroPeso() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Peso</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <CurrencyInput 
                                     name="myinput" 
                                     className="form-control"                                    
@@ -116,7 +117,7 @@ export default function CadastroPeso() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Imc</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -128,7 +129,7 @@ export default function CadastroPeso() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Data</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <InputMask 
                                     mask="99/99/9999" 
                                     name="data" 

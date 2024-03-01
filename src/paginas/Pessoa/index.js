@@ -4,8 +4,6 @@ import { Link } from "react-router-dom";
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 
-//import { useDispatch, useSelector } from 'react-redux';
-//import { listar } from '../../redux/pessoa/slice';
 import usePessoa from "../../hooks/pessoaHook";
 
 import 'bootstrap/dist/css/bootstrap.css';

@@ -65,7 +65,7 @@ export default function CadastroPessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Nome</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -78,7 +78,7 @@ export default function CadastroPessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">E-mail</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -91,7 +91,7 @@ export default function CadastroPessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Altura</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -104,7 +104,7 @@ export default function CadastroPessoa() {
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Endereço</label>
-                                <lable className="form-label obrigatorio">*</lable>
+                                <label className="form-label obrigatorio">*</label>
                                 <input 
                                     type="text" 
                                     className="form-control"
@@ -114,9 +114,9 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
                        
-                        <div class="row mt-3">
-                            <div class="col">
-                                <button type="submit" class="btn btn-primary">Cadastrar</button>
+                        <div className="row mt-3">
+                            <div className="col">
+                                <button type="submit" className="btn btn-primary">Cadastrar</button>
                             </div>
                         </div>                      
                     </form>

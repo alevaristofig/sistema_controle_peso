@@ -31,7 +31,7 @@ export default function Header(){
             </Link>
 
             <Link to="/treino">
-                <GiWeightLiftingUp  color="#fff" size={24} /> Exercício
+                <GiWeightLiftingUp  color="#fff" size={24} /> Treino
             </Link>
         </div>
     )
