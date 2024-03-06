@@ -13,6 +13,7 @@ import EditarExercicio from './paginas/Exercicio/editarExercicio';
 import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import CadastroAlimento from './paginas/Alimento/cadastroalimento';
+import EditarAlimento from './paginas/Alimento/editarAlimentos';
 
 const router = createBrowserRouter([
   {
@@ -66,6 +67,10 @@ const router = createBrowserRouter([
   {
     path: '/cadastroalimento',
     element: <CadastroAlimento />
+  },
+  {
+    path: '/editaralimento/:id',
+    element: <EditarAlimento />
   }
 ])
 

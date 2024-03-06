@@ -31,10 +31,34 @@ export const alimentoSlice = createSlice({
         salvarError: (state) => {
             state.loading = false;
             toast.error("Ocorreu um erro ao cadastrar o Alimento!");
+        },
+        atualizar: (state,action) => {
+            state.loading = true;
+        },
+        atualizarSucesso: (state,action) => {
+            state.loading = false;
+            toast.success("Alimento atualizado com Sucesso!");
+        },
+        atualizarError: (state,action) => {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao atualizar o Alimento!");
+        },
+        apagar: (state,action) => {
+            state.loading = true;
+        },
+        apagarSucesso: (state) => {
+            state.loading = false;
+            toast.success("Alimento apagado com Sucesso!");
+        },
+        apagarError: (state) => {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao apagar o Alimento!");
         }
     }
 });
 
-export const { salvar, salvarSucesso, salvarError, listar, listarSucesso, listarError } = alimentoSlice.actions;
+export const { salvar, salvarSucesso, salvarError, listar, listarSucesso, listarError,
+               apagar, apagarSucesso, apagarError, atualizar, atualizarSucesso,
+               atualizarError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;

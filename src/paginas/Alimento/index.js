@@ -1,8 +1,8 @@
-import { useEffect } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
-import { listar } from "../../redux/alimento/slice";
+import { listar, apagar } from "../../redux/alimento/slice";
 
 import { ToastContainer } from 'react-toastify';
 import { FaBowlFood } from 'react-icons/fa6';
@@ -15,9 +15,13 @@ export default function Alimento() {
     const dispatch = useDispatch();
     const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
 
+    const [loadingDel,setLoadingDel] = useState(true);
+
     useEffect(() => {
         dispatch(listar());
-    },[]);
+
+        setLoadingDel(false);
+    },[loadingDel]);
 
     function formatarData(dataFormatada) {
         let data = new Date(dataFormatada);
@@ -26,7 +30,11 @@ export default function Alimento() {
     }
 
     function apagarAlimento(id) {
-        
+        dispatch(apagar({
+            'id': id
+        }));
+
+        setLoadingDel(true);
     }
 
     return(
@@ -88,7 +96,7 @@ export default function Alimento() {
                                                                 <td>{formatarData(a.dataCadastro)}</td>
                                                                 <td>{formatarData(a.dataAtualizacao)}</td>
                                                                 <td>
-                                                                    <Link to={`/editarpeso/${a.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                    <Link to={`/editaralimento/${a.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
                                                                     <button type='button' 
                                                                             className="btn btn-danger float-start" 
                                                                             onClick={() => apagarAlimento(a.id)}>Apagar</button>

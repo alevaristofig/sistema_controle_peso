@@ -114,7 +114,7 @@ export default function EditarPeso() {
                             <form className="form-perfil" onSubmit={salvarDados}>                                
                                 <div className="row mt-3">
                                     <div className="col">
-                                        <label className="form-label">Pessoa</label>
+                                        <label className="form-label">Peso</label>
                                         <label className="form-label obrigatorio">*</label>
                                         <input 
                                             type='text' 
