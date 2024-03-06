@@ -11,6 +11,8 @@ import Exercicio from './paginas/Exercicio';
 import CadastroExercicio from './paginas/Exercicio/cadastroexercicio';
 import EditarExercicio from './paginas/Exercicio/editarExercicio';
 import Treino from './paginas/Treino';
+import Alimento from './paginas/Alimento';
+import CadastroAlimento from './paginas/Alimento/cadastroalimento';
 
 const router = createBrowserRouter([
   {
@@ -56,6 +58,14 @@ const router = createBrowserRouter([
   {
     path: '/treino',
     element: <Treino />
+  },
+  {
+    path: '/alimento',
+    element: <Alimento />
+  },
+  {
+    path: '/cadastroalimento',
+    element: <CadastroAlimento />
   }
 ])
 
