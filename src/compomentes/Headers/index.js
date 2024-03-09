@@ -4,6 +4,7 @@ import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid, LiaRunningSolid  } from 'react-icons/lia';
 import { GiWeightLiftingUp } from 'react-icons/gi';
 import { FaBowlFood } from 'react-icons/fa6';
+import { BiFoodMenu } from "react-icons/bi";
 
 import './header.css';
 import avatarImg from '../../assets/avatar.png';
@@ -37,6 +38,10 @@ export default function Header(){
 
             <Link to="/alimento">
                 <FaBowlFood  color="#fff" size={24} /> Alimento
+            </Link>
+
+            <Link to="/dieta">
+                <BiFoodMenu  color="#fff" size={24} /> Dieta
             </Link>
         </div>
     )

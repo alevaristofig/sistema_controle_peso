@@ -14,6 +14,8 @@ import Treino from './paginas/Treino';
 import Alimento from './paginas/Alimento';
 import CadastroAlimento from './paginas/Alimento/cadastroalimento';
 import EditarAlimento from './paginas/Alimento/editarAlimentos';
+import Dieta from './paginas/Dieta';
+import CadastroDieta from './paginas/Dieta/cadastrodieta';
 
 const router = createBrowserRouter([
   {
@@ -71,6 +73,14 @@ const router = createBrowserRouter([
   {
     path: '/editaralimento/:id',
     element: <EditarAlimento />
+  },
+  {
+    path: '/dieta',
+    element: <Dieta />
+  },
+  {
+    path: '/cadastrodieta',
+    element: <CadastroDieta />
   }
 ])
 

@@ -4,6 +4,7 @@ import peso from './peso/saga';
 import exercicio from './exercicio/saga';
 import treino from './treino/saga';
 import alimento from './alimento/saga';
+import dieta from './dieta/saga';
 
 export default function* rootSaga(){
     return yield all([
@@ -11,6 +12,7 @@ export default function* rootSaga(){
         peso,
         exercicio,
         treino,
-        alimento
+        alimento,
+        dieta
     ])
 }
