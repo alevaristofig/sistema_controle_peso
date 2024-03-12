@@ -1,20 +1,27 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
-import { salvarSucesso, salvarError, apagarSucesso, apagarError } from './slice';
+import { salvarDietaAlimentoSucesso, salvarDietaAlimentoError, 
+         apagarSucesso, apagarError } from './slice';
 
 import axios from 'axios';
 
-function* salvar(action) {
+function* salvarDietaAlimento(action) {
     try {
 
         let dados = {
-            'nome': action.payload.nome
+            'dietaId': {
+                'id': action.payload.dietaId
+            },
+            'alimentoId': {
+                'id': action.payload.alimentoId
+            }
         };
 
-        yield call(axios.post,"http://localhost:8080/dietas",dados);
+        yield call(axios.post,"http://localhost:8080/alimentodieta",dados);
 
-        yield put(salvarSucesso());
+        yield put(salvarDietaAlimentoSucesso());
     }catch(error) {
-        yield put(salvarError());
+        console.log(error)
+        yield put(salvarDietaAlimentoError());
     }
 }
 
@@ -30,6 +37,6 @@ function* apagar(action) {
 }
 
 export default all([
-    takeEvery('dieta/salvar', salvar),
+    takeEvery('dieta/salvarDietaAlimento', salvarDietaAlimento),
     takeEvery('dieta/apagar', apagar)
 ]);

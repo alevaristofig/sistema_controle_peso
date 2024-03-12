@@ -14,7 +14,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 export default function Dieta() {
     const dispatch = useDispatch();
 
-    const [listar] = useDieta();
+    const {listar} = useDieta();
 
     const [dietas,setDietas] = useState([]);
     const [loadingApagar,setLoadingApagar] = useState(true);

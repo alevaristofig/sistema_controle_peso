@@ -13,7 +13,20 @@ function useDieta() {
         return response;        
     }
 
-    return [listar];
+    async function salvar(dados) {
+        const result = await axios.post("http://localhost:8080/dietas",dados)
+                                .then((response) => {                                    
+                                    return response.data.id
+                                })
+                                .catch((error) => {                                    
+                                    return '';
+                                });
+        return result;
+    }
+
+    //return [listar,salvar];
+   // return [salvar];
+   return {listar,salvar};
 }
 
 export default useDieta;
