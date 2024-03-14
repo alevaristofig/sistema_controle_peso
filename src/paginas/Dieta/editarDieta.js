@@ -6,7 +6,9 @@ import { ToastContainer } from 'react-toastify';
 
 import { salvarDietaAlimento } from '../../redux/dieta/slice';
 import { listar } from '../../redux/alimento/slice';
+import { atualizar } from '../../redux/dieta/slice';
 import useDieta from "../../hooks/dietaHook";
+import useAlimento from '../../hooks/alimentoHook';
 
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
@@ -14,21 +16,29 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarDieta() {
     const dispatch = useDispatch();
-    const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
+    //const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
     const { id } = useParams();
 
     const {salvar,buscar,buscarAlimentoDieta} = useDieta();
+    const {listar} = useAlimento();
     const navigate = useNavigate();
 
+    const [loading,setLoading] = useState(true);
     const [nome,setNome] = useState('');
     const [dietaId,setDietaId] = useState('');
+    const [alimentos,setAlimentos] = useState([]);
     const [alimentosDieta,setAlimentosDieta] = useState([]);
     const [dadosAlimentos,setDadosAlimentos] = useState([]);
+    const [isChecked,setIsChecked] = useState([]);
+    const [dadost,setDadosT] = useState(0);
 
     useEffect(() => {        
-        dispatch(listar());
+        //dispatch(listar());
+
+       // setDadosT(alimentos.length);
 
         async function buscarDadosDieta() {
+            let alimentos = await listar();
             let dadosDieta = await buscar(id);
 
             setNome(dadosDieta.nome);
@@ -36,10 +46,24 @@ export default function EditarDieta() {
 
             let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
             setDadosAlimentos(dadosAlimentos);
-           // console.log(dadosAlimentos)
+
+            alimentos.forEach((e,i) => {
+                if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
+                    isChecked[i] = true;
+                } else {
+                    isChecked[i] = false;
+                }
+            });
+
+            console.log(isChecked);
+            setAlimentos(alimentos);
+           //setarValoresAlimento();
         }
 
         buscarDadosDieta();
+
+        setIsChecked(isChecked);
+        setLoading(false);
         
     },[]);
 
@@ -63,13 +87,22 @@ export default function EditarDieta() {
     async function salvarDados(e) {
         e.preventDefault();
 
-        let dados = {
-            'nome': nome
-        };
 
-        const idDieta = await salvar(dados);
 
-        if(idDieta !== '') {
+       // dispatch(atualizar({
+          //  'id': id,
+           // 'nome': nome
+       // }));
+        //const idDieta = await salvar(dados);
+alert(alimentosDieta.length);
+console.log(alimentosDieta)
+        if(alimentosDieta.length === 0) {
+                    
+        }
+
+        navigate('/dieta', {replace: true});
+
+       /* if(idDieta !== '') {
             if(alimentosDieta.length > 0) {
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
@@ -82,7 +115,19 @@ export default function EditarDieta() {
 
         setNome('');
 
-        navigate('/dieta', {replace: true})
+        navigate('/dieta', {replace: true})*/
+    }
+
+    function setarValoresAlimento() {
+        //console.log(id);
+       // alert('carregou '+alimentos.length);
+        console.log(alimentos.length);
+        //return (typeof dadosAlimentos.find((d) => d.alimento.id == id) == 'object') ? true : false;
+        //document.getElementById(id).checked = true;
+       // alert(id)
+       // if(document.getElementById(id) != null) {            
+           // console.log(document.getElementById(id)).checked = true;
+       // }
     }
 
     return(
@@ -106,7 +151,7 @@ export default function EditarDieta() {
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             :                                
-                                    alimentos.length === 0                                    
+                                    alimentos.length === 0                                                                          
                                         ?
                                             <div className="row mt-4">
                                                 <div className="col">
@@ -114,6 +159,7 @@ export default function EditarDieta() {
                                                 </div>
                                             </div>
                                         :
+                                            //setarValoresAlimento(); 
                                             <>
                                                 <div className="row mt-3">
                                                     <div className="col">
@@ -136,9 +182,8 @@ export default function EditarDieta() {
                                                 <div className="row mt-3">
                                                     
                                                         {
-                                                            alimentos.map((a,i) => {
-                                                                return(
-                                                                    
+                                                            alimentos.map((a,i) => {                                                                
+                                                                return(                                                                                                                                  
                                                                     <div className="col-sm-3 mb-4" key={i}>
                                                                         <div className="card">
                                                                             <div className="card-body">                                                                            
@@ -147,16 +192,19 @@ export default function EditarDieta() {
                                                                                         className='form-check-input' 
                                                                                         type='checkbox' 
                                                                                         value={a.id} 
-                                                                                        defaultChecked={typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object' ? 'checked' : ''}
+                                                                                        id={a.id}
+                                                                                        //checked={(typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object') ? true : false}                                                                
+                                                                                        //defaultChecked={(typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object') ? true : false}   
+                                                                                        //defaultChecked={setarValoresAlimento(a.id)}
+                                                                                        defaultChecked={isChecked[i]}
                                                                                         onChange={(e) => registrarValoresTreino(e)}
                                                                                     /> 
                                                                                     <label className="form-check-label">{a.nome} - {a.quantidade}</label>
                                                                                 </div>   
                                                                             </div> 
                                                                         </div>
-                                                                    </div>
-                                                                                                                    
-                                                                )
+                                                                    </div>                                                                                                                    
+                                                                )                                                                
                                                             })
                                                         }
                                                     

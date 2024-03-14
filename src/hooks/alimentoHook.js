@@ -13,6 +13,18 @@ function useAlimento() {
         return result;
     }
 
+    async function listar() {
+        const result = await axios.get("http://localhost:8080/alimentos")
+                                    .then((response) => {
+                                        return response.data;
+                                    })
+                                    .catch((error) => {
+                                        return '';
+                                   });
+
+        return result;
+    }
+
     function formatarCaloria(caloria) {
         if(caloria === '') {
             return '0.00';
@@ -30,7 +42,7 @@ function useAlimento() {
         } 
     }
 
-    return [buscar,formatarCaloria];
+    return {buscar,formatarCaloria,listar};
 }
 
 export default useAlimento;

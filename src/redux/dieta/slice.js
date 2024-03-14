@@ -20,6 +20,17 @@ export const dietaSlice = createSlice({
             state.loading = false;
             toast.error("Ocorreu um erro ao salvar a Dieta!");         
         },
+        atualizar(state,action){
+            state.loading = true;
+        },
+        atualizarSucesso(state){
+            state.loading = false;
+            toast.success("Dieta atualizada com Sucesso!");
+        },
+        atualizarError(state){
+            state.loading = false;
+            toast.error("Ocorreu um erro ao atualizar a Dieta!");   
+        },
         apagar(state,action) {
             state.loading = true;
         },
@@ -35,6 +46,7 @@ export const dietaSlice = createSlice({
 });
 
 export const { salvarDietaAlimento, salvarDietaAlimentoSucesso, salvarDietaAlimentoError, 
-               apagar, apagarSucesso, apagarError } = dietaSlice.actions;
+               apagar, apagarSucesso, apagarError, atualizar, atualizarSucesso,
+               atualizarError } = dietaSlice.actions;
 
 export default dietaSlice.reducer;
