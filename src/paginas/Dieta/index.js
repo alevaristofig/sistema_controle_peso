@@ -36,6 +36,7 @@ export default function Dieta() {
             'id': id
         }));
 
+       // window.location.reload();
         setLoadingApagar(true);
     }
 
@@ -88,7 +89,7 @@ export default function Dieta() {
                                                             <td>{d.dataCadastro}</td>
                                                             <td>{d.dataAtualizacao}</td>
                                                             <td>
-                                                                <Link to={`/editarpeso/${d.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                <Link to={`/editardieta/${d.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
                                                                 <button type='button' 
                                                                     className="btn btn-danger float-start" 
                                                                     onClick={() => apagarDieta(d.id)}>Apagar</button>

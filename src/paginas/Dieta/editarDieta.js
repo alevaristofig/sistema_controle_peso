@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiFoodMenu } from "react-icons/bi";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 import { salvarDietaAlimento } from '../../redux/dieta/slice';
 import { listar } from '../../redux/alimento/slice';
@@ -12,18 +12,35 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default function CadastroDieta() {
+export default function EditarDieta() {
     const dispatch = useDispatch();
     const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
+    const { id } = useParams();
 
-    const {salvar} = useDieta();
+    const {salvar,buscar,buscarAlimentoDieta} = useDieta();
     const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
+    const [dietaId,setDietaId] = useState('');
     const [alimentosDieta,setAlimentosDieta] = useState([]);
+    const [dadosAlimentos,setDadosAlimentos] = useState([]);
 
-    useEffect(() => {
+    useEffect(() => {        
         dispatch(listar());
+
+        async function buscarDadosDieta() {
+            let dadosDieta = await buscar(id);
+
+            setNome(dadosDieta.nome);
+            setDietaId(dadosDieta.id);
+
+            let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
+            setDadosAlimentos(dadosAlimentos);
+           // console.log(dadosAlimentos)
+        }
+
+        buscarDadosDieta();
+        
     },[]);
 
     function registrarValoresTreino(e) {
@@ -46,36 +63,33 @@ export default function CadastroDieta() {
     async function salvarDados(e) {
         e.preventDefault();
 
-        if(alimentosDieta.length > 0) {
+        let dados = {
+            'nome': nome
+        };
 
-            let dados = {
-                'nome': nome
-            };
+        const idDieta = await salvar(dados);
 
-             const idDieta = await salvar(dados);
-
-             if(idDieta !== '') {
+        if(idDieta !== '') {
+            if(alimentosDieta.length > 0) {
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
                         'dietaId': idDieta,
                         'alimentoId': element.idAlimento
                     }));
-                })                 
-             }
-
-             setNome('');
-
-            navigate('/dieta', {replace: true})
+                })
+            }
         }
 
-        toast.error("É necessário selecionar algum Alimento!");              
+        setNome('');
+
+        navigate('/dieta', {replace: true})
     }
 
     return(
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Cadastro Dieta">
+                <Titulo nome="Editar Dieta">
                     <BiFoodMenu color="#000" size={24} />
                 </Titulo>
 
@@ -133,9 +147,10 @@ export default function CadastroDieta() {
                                                                                         className='form-check-input' 
                                                                                         type='checkbox' 
                                                                                         value={a.id} 
+                                                                                        defaultChecked={typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object' ? 'checked' : ''}
                                                                                         onChange={(e) => registrarValoresTreino(e)}
                                                                                     /> 
-                                                                                    <label class="form-check-label" for="inlineCheckbox1">{a.nome} - {a.quantidade}</label>
+                                                                                    <label className="form-check-label">{a.nome} - {a.quantidade}</label>
                                                                                 </div>   
                                                                             </div> 
                                                                         </div>

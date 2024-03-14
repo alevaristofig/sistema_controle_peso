@@ -24,9 +24,32 @@ function useDieta() {
         return result;
     }
 
-    //return [listar,salvar];
-   // return [salvar];
-   return {listar,salvar};
+    async function buscar(id) {
+        const response = await axios.get(`http://localhost:8080/dietas/${id}`)
+                            .then((response) => {                                
+                                return response.data;
+                            })
+                            .catch((error) => {
+                                return false;
+                            });
+
+        return response;  
+    }
+
+    async function buscarAlimentoDieta(id) {
+        const response = await axios.get(`http://localhost:8080/alimentodieta/${id}`)
+                            .then((response) => {                                
+                                return response.data;
+                            })
+                            .catch((error) => {
+                                console.log(error.message)
+                                return false;
+                            });
+
+        return response;  
+    }
+
+   return {listar,salvar,buscar,buscarAlimentoDieta};
 }
 
 export default useDieta;
