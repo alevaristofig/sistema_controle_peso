@@ -20,6 +20,17 @@ export const historicoMedicoSlice = createSlice({
             state.loading = false;
             toast.error("Ocorreu um erro ao cadastrar o Histórico Médico!");
         },
+        atualizar(state,action) {
+            state.loading = true;
+        },
+        atualizarSucesso(state) {
+            state.loading = false;
+            toast.success("Histórico Médico atualizado com Sucesso!");
+        },
+        atualizarError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao atualizar o Histórico Médico!");
+        },
         apagar(state,action){
             state.loading = true;
         },
@@ -35,6 +46,6 @@ export const historicoMedicoSlice = createSlice({
 });
 
 export const { salvar, salvarSucesso, salvarError, apagar, apagarSucesso,
-               apagarError } = historicoMedicoSlice.actions;
+               apagarError, atualizar, atualizarSucesso, atualizarError } = historicoMedicoSlice.actions;
 
 export default historicoMedicoSlice.reducer;

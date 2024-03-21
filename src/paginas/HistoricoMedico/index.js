@@ -31,6 +31,12 @@ export default function HistoricoMedico() {
         setLoading(false);
     },[loading]);
 
+    function formatarData(dataFormatada) {
+        let data = new Date(dataFormatada);
+
+        return data.toLocaleDateString('pt-BR')
+    }
+
     function apagarHistoricoMedico(id) {
         dispatch(apagar({
             'id': id
@@ -92,10 +98,10 @@ export default function HistoricoMedico() {
                                                                 <td>{h.id}</td>
                                                                 <td>{h.descricao}</td>
                                                                 <td>{h.remedio}</td>
-                                                                <td>{h.dataCadastro}</td>
-                                                                <td>{h.dataAtualizacao}</td>
+                                                                <td>{formatarData(h.dataCadastro)}</td>
+                                                                <td>{formatarData(h.dataAtualizacao)}</td>
                                                                 <td>
-                                                                    <Link to={`/editarpeso/${h.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
+                                                                    <Link to={`/editarhistoricomedico/${h.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
                                                                     <button type='button' 
                                                                                 className="btn btn-danger float-start" 
                                                                                 onClick={() => apagarHistoricoMedico(h.id)}>Apagar</button>

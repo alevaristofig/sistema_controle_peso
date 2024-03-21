@@ -1,34 +1,63 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import { CiMedicalClipboard } from "react-icons/ci";
-import { ToastContainer } from 'react-toastify';
-
 import { useDispatch } from 'react-redux';
-import { salvar } from "../../redux/historicomedico/slice";
+import { ToastContainer } from "react-toastify";
 
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default function CadastroHistoricoMedico() {
+import useHistoricoMedico from "../../hooks/historicoMedicoHook";
+import { atualizar } from "../../redux/historicomedico/slice";
+
+export default function EditarHistoricoMedico() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [descricao,setDescricao] = useState('');
     const [remedio,setRemedio] = useState('');
+    const [pessoaId,setPessoaId] = useState('');
+    const [dataCadastro,setDataCadastro] = useState('');
 
-    function salvarDados(e) {
+    const { id } = useParams();
+    const { buscar } = useHistoricoMedico();
+
+    useEffect(() => {
+
+        async function buscarDados() {
+            let dados = await buscar(id);
+
+            setDescricao(dados.descricao);
+            setRemedio(dados.remedio);
+            setPessoaId(dados.pessoa.id);
+            setDataCadastro(dados.dataCadastro);
+
+        }
+
+        buscarDados();
+    },[])
+
+    function atualizarDados(e) {
         e.preventDefault();
 
-        dispatch(salvar({
-            'id': 1,
+        dispatch(atualizar({
+            'id': id,
+            'pessoaId': pessoaId,
             'descricao': descricao,
-            'remedio': remedio
+            'remedio': remedio,
+            'dataCadastro': dataCadastro
         }));
 
         setDescricao('');
         setRemedio('');
+        setDataCadastro('');
+        setPessoaId('');
+
+        navigate('/historicomedico', {replace: true})
     }
 
-    return(
+    return (
         <div>
             <Header />
             <div className="content">
@@ -36,12 +65,12 @@ export default function CadastroHistoricoMedico() {
                     <ToastContainer />
                 </div>
 
-                <Titulo nome="Cadastro Histórico Médico">
+                <Titulo nome="Editar Histórico Médico">
                     <CiMedicalClipboard color="#000" size={24} />
                 </Titulo>
 
                 <div className="container py-4">
-                    <form className="form-perfil" onSubmit={salvarDados}>
+                    <form className="form-perfil" onSubmit={atualizarDados}>
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Descrição</label>
@@ -72,9 +101,9 @@ export default function CadastroHistoricoMedico() {
 
                         <div className="row mt-3">
                             <div className="col">
-                                <button type="submit" className="btn btn-primary">Cadastrar</button>
+                                <button type="submit" className="btn btn-primary">Atualizar</button>
                             </div>
-                        </div>  
+                        </div> 
                     </form>
                 </div>
             </div>

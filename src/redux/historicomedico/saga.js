@@ -1,5 +1,6 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
-import { salvarSucesso, salvarError, apagarSucesso, apagarError } from './slice';
+import { salvarSucesso, salvarError, apagarSucesso, apagarError,
+         atualizarSucesso, atualizarError } from './slice';
 
 import axios from 'axios';
 
@@ -32,7 +33,28 @@ function* apagar(action) {
     }
 }
 
+function* atualizar(action) {
+    try {
+        let dados = {
+            'pessoa': {
+                'id': action.payload.pessoaId
+            },
+            'descricao': action.payload.descricao,
+            'remedio': action.payload.remedio,
+            'dataCadastro': action.payload.dataCadastro
+        };
+
+        yield call(axios.put,`http://localhost:8080/historicomedico/${action.payload.id}`,dados);
+
+        yield put(atualizarSucesso());
+    } catch(error) {
+        console.log(error)
+        yield put(atualizarError());
+    }
+}
+
 export default all([
     takeEvery('historicomedico/salvar', salvar),
-    takeEvery('historicomedico/apagar', apagar)
+    takeEvery('historicomedico/apagar', apagar),
+    takeEvery('historicomedico/atualizar', atualizar)
 ])

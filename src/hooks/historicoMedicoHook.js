@@ -13,7 +13,19 @@ function useHistoricoMedico() {
         return response;        
     }
 
-    return {listar}
+    async function buscar(id) {
+        const response = await axios.get(`http://localhost:8080/historicomedico/${id}`)
+                            .then((response) => {
+                                return response.data;
+                            })
+                            .catch((error) => {
+                                return false;
+                            });
+
+        return response;        
+    }
+
+    return {listar,buscar}
 }
 
 export default useHistoricoMedico;

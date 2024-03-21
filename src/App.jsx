@@ -19,6 +19,7 @@ import CadastroDieta from './paginas/Dieta/cadastrodieta';
 import EditarDieta from './paginas/Dieta/editarDieta';
 import HistoricoMedico from './paginas/HistoricoMedico';
 import CadastroHistoricoMedico from './paginas/HistoricoMedico/cadastrohistoricomedico';
+import EditarHistoricoMedico from './paginas/HistoricoMedico/editarHistoricoMedico';
 
 const router = createBrowserRouter([
   {
@@ -96,6 +97,10 @@ const router = createBrowserRouter([
   {
     path: '/cadastrohistoricomedico',
     element: <CadastroHistoricoMedico />
+  },
+  {
+    path: '/editarhistoricomedico/:id',
+    element: <EditarHistoricoMedico />
   }
 ])
 
