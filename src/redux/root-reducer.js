@@ -5,6 +5,7 @@ import exercicioSlice  from "./exercicio/slice";
 import treinoSlice  from "./treino/slice";
 import alimentoSlice  from "./alimento/slice";
 import dietaSlice  from "./dieta/slice";
+import historicoMedicoSlice from "./historicomedico/slice";
 
 export default combineReducers({
     pessoa: pessoaSlice,
@@ -12,5 +13,6 @@ export default combineReducers({
     exercicio: exercicioSlice,
     treino: treinoSlice,
     alimento: alimentoSlice,
-    dieta: dietaSlice
+    dieta: dietaSlice,
+    historicoMedico: historicoMedicoSlice
 });

@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { BiFoodMenu } from "react-icons/bi";
 import { ToastContainer } from 'react-toastify';
 
-import { salvarDietaAlimento } from '../../redux/dieta/slice';
+import { salvarDietaAlimento, apagarAlimentoDieta, atualizarDietaAlimento } from '../../redux/dieta/slice';
 import { listar } from '../../redux/alimento/slice';
 import { atualizar } from '../../redux/dieta/slice';
 import useDieta from "../../hooks/dietaHook";
@@ -30,13 +30,9 @@ export default function EditarDieta() {
     const [alimentosDieta,setAlimentosDieta] = useState([]);
     const [dadosAlimentos,setDadosAlimentos] = useState([]);
     const [isChecked,setIsChecked] = useState([]);
-    const [dadost,setDadosT] = useState(0);
+    const [numAlimentosDieta,setNumAlimentosDieta] = useState(0);
 
     useEffect(() => {        
-        //dispatch(listar());
-
-       // setDadosT(alimentos.length);
-
         async function buscarDadosDieta() {
             let alimentos = await listar();
             let dadosDieta = await buscar(id);
@@ -46,18 +42,24 @@ export default function EditarDieta() {
 
             let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
             setDadosAlimentos(dadosAlimentos);
+            setNumAlimentosDieta(dadosAlimentos.length);
 
             alimentos.forEach((e,i) => {
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
                     isChecked[i] = true;
+
+                    let dados = {
+                        'idAlimento': e.id,
+                    };
+
+                    alimentosDieta.push(dados);
                 } else {
                     isChecked[i] = false;
                 }
             });
 
-            console.log(isChecked);
             setAlimentos(alimentos);
-           //setarValoresAlimento();
+            setAlimentosDieta(alimentosDieta);
         }
 
         buscarDadosDieta();
@@ -87,17 +89,38 @@ export default function EditarDieta() {
     async function salvarDados(e) {
         e.preventDefault();
 
+        dispatch(atualizar({
+            'id': id,
+            'nome': nome
+        }));
+        
 
-
-       // dispatch(atualizar({
-          //  'id': id,
-           // 'nome': nome
-       // }));
-        //const idDieta = await salvar(dados);
-alert(alimentosDieta.length);
-console.log(alimentosDieta)
-        if(alimentosDieta.length === 0) {
-                    
+        if(alimentosDieta.length > numAlimentosDieta) {
+            alimentosDieta.forEach(element => {
+                if(typeof dadosAlimentos.find((d) => d.alimento.id == element.idAlimento) !== 'object') {
+                    dispatch(salvarDietaAlimento({
+                        'dietaId': id,
+                        'alimentoId': element.idAlimento
+                    }));
+                }
+            })  
+        } else if(alimentosDieta.length < numAlimentosDieta) {                        
+            dadosAlimentos.forEach(element => {
+                if(typeof alimentosDieta.find((d) => d.idAlimento == element.alimento.id) === 'undefined') {
+                    dispatch(apagarAlimentoDieta({
+                        'id': element.id,                        
+                    }));
+                }
+            })
+        } else if(alimentosDieta.length == numAlimentosDieta) {
+            alimentosDieta.forEach((element,i) => {                
+                dispatch(atualizarDietaAlimento({
+                    'id': dadosAlimentos[i].id,
+                    'dietaId': id,
+                    'alimentoId': element.idAlimento,
+                    'dataCriacao': dadosAlimentos[i].dataCriacao
+                }));
+            })
         }
 
         navigate('/dieta', {replace: true});
@@ -116,18 +139,6 @@ console.log(alimentosDieta)
         setNome('');
 
         navigate('/dieta', {replace: true})*/
-    }
-
-    function setarValoresAlimento() {
-        //console.log(id);
-       // alert('carregou '+alimentos.length);
-        console.log(alimentos.length);
-        //return (typeof dadosAlimentos.find((d) => d.alimento.id == id) == 'object') ? true : false;
-        //document.getElementById(id).checked = true;
-       // alert(id)
-       // if(document.getElementById(id) != null) {            
-           // console.log(document.getElementById(id)).checked = true;
-       // }
     }
 
     return(
@@ -192,10 +203,7 @@ console.log(alimentosDieta)
                                                                                         className='form-check-input' 
                                                                                         type='checkbox' 
                                                                                         value={a.id} 
-                                                                                        id={a.id}
-                                                                                        //checked={(typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object') ? true : false}                                                                
-                                                                                        //defaultChecked={(typeof dadosAlimentos.find((d) => d.alimento.id == a.id) == 'object') ? true : false}   
-                                                                                        //defaultChecked={setarValoresAlimento(a.id)}
+                                                                                        id={a.id}                                                                                        
                                                                                         defaultChecked={isChecked[i]}
                                                                                         onChange={(e) => registrarValoresTreino(e)}
                                                                                     /> 

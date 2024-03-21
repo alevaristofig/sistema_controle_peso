@@ -5,6 +5,7 @@ import { LiaWeightHangingSolid, LiaRunningSolid  } from 'react-icons/lia';
 import { GiWeightLiftingUp } from 'react-icons/gi';
 import { FaBowlFood } from 'react-icons/fa6';
 import { BiFoodMenu } from "react-icons/bi";
+import { CiMedicalClipboard } from "react-icons/ci";
 
 import './header.css';
 import avatarImg from '../../assets/avatar.png';
@@ -42,6 +43,10 @@ export default function Header(){
 
             <Link to="/dieta">
                 <BiFoodMenu  color="#fff" size={24} /> Dieta
+            </Link>
+
+            <Link to="/historicomedico">
+                <CiMedicalClipboard color='#fff' size={24} /> Histórico Médico
             </Link>
         </div>
     )

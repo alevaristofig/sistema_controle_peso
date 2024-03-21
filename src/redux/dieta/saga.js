@@ -1,7 +1,8 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { salvarDietaAlimentoSucesso, salvarDietaAlimentoError, 
          apagarSucesso, apagarError, atualizarSucesso,
-        atualizarError } from './slice';
+         atualizarError, apagarAlimentoDietaSucesso, apagarAlimentoDietaErro,
+         atualizarDietaAlimentoSucesso, atualizarDietaAlimentoError } from './slice';
 
 import axios from 'axios';
 
@@ -53,8 +54,44 @@ function* apagar(action) {
     }
 }
 
+function* apagarAlimentoDieta(action) {
+    try {
+        yield call(axios.delete,`http://localhost:8080/alimentodieta/${action.payload.id}`);
+
+        yield put(apagarAlimentoDietaSucesso());
+
+    } catch(error) {
+        yield put(apagarAlimentoDietaErro());
+    }
+}
+
+function* atualizarDietaAlimento(action) {
+    try {
+
+        let dados = {
+            'dietaId': {
+                'id': action.payload.dietaId
+            },
+            'alimentoId': {
+                'id': action.payload.alimentoId
+            },
+            'dataCriacao': action.payload.dataCriacao
+        };
+
+        yield call(axios.put,`http://localhost:8080/alimentodieta/${action.payload.id}`,dados);
+
+        yield put(atualizarDietaAlimentoSucesso());
+    } catch(error) {
+        alert('erro')
+        yield put(atualizarDietaAlimentoError());
+    }
+
+}
+
 export default all([
     takeEvery('dieta/salvarDietaAlimento', salvarDietaAlimento),
     takeEvery('dieta/apagar', apagar),
-    takeEvery('dieta/atualizar', atualizar)
+    takeEvery('dieta/atualizar', atualizar),
+    takeEvery('dieta/apagarAlimentoDieta', apagarAlimentoDieta),
+    takeEvery('dieta/atualizarDietaAlimento', atualizarDietaAlimento)
 ]);
