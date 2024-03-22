@@ -29,8 +29,8 @@ function useDieta() {
                             .then((response) => {                                
                                 return response.data;
                             })
-                            .catch((error) => {
-                                return false;
+                            .catch((error) => {                                
+                               return error.response.data.userMessage
                             });
 
         return response;  

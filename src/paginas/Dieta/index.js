@@ -36,7 +36,6 @@ export default function Dieta() {
             'id': id
         }));
 
-       // window.location.reload();
         setLoadingApagar(true);
     }
 

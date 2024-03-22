@@ -19,7 +19,7 @@ function useHistoricoMedico() {
                                 return response.data;
                             })
                             .catch((error) => {
-                                return false;
+                                return error.response.data.userMessage;
                             });
 
         return response;        

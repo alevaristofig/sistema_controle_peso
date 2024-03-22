@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { ToastContainer, toast } from 'react-toastify';
 import { LiaRunningSolid  } from 'react-icons/lia';
-
-import axios from 'axios';
 import { useDispatch } from 'react-redux';
 import { atualizar } from "../../redux/exercicio/slice";
+
+import useExercicio from '../../hooks/exercicioHook';
 
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
@@ -14,6 +14,7 @@ import 'bootstrap/dist/css/bootstrap.css';
 export default function EditarExercicio() {
 
     const { id } = useParams();
+    const {buscar} = useExercicio();
     const dispatch = useDispatch();
     const navigate = useNavigate();
 
@@ -21,22 +22,23 @@ export default function EditarExercicio() {
     const [frequencia,setFrequencia] = useState('');
     const [tempo,setTempo] = useState('');
     const [dataCadastro, setDataCadastro] = useState('');
+    const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
-        async function buscar() {
-            await axios.get(`http://localhost:8080/exercicio/${id}`)
-                               .then((response) => {                                
-                                    setNome(response.data.nome);
-                                    setFrequencia(response.data.frequencia);
-                                    setTempo(response.data.tempo);
-                                    setDataCadastro(response.data.dataCadastro);
-                               })
-                               .catch((error) => {
-                                    toast.success("Ocorreu um erro ao buscar o Exercício!");
-                               });
+        async function buscarDados() {
+            let result = await buscar(id);
+
+            if(typeof result === 'string') {
+                toast.error(result); 
+                setBuscarErro(true);
+            } else {
+                setNome(result.nome);
+                setFrequencia(result.frequencia);
+                setTempo(result.tempo);                
+            }
         }
 
-        buscar();
+        buscarDados();
     },[])
 
     function salvarDados(e) {
@@ -65,7 +67,16 @@ export default function EditarExercicio() {
                     <ToastContainer />
                 </div>
 
-                <div className="container py-4">
+                {
+                    buscarError
+                    ?
+                        <div className="container py-4">
+                            <div className="col">
+                                <Link to="/exercicio" className="btn btn-info float-start me-4">Voltar</Link>   
+                            </div>                                                                     
+                        </div>
+                    :
+                        <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>                        
                         <div className="row mt-3">
                             <div className="col">
@@ -115,7 +126,9 @@ export default function EditarExercicio() {
                             </div>
                         </div> 
                     </form>
-                </div>
+                        </div>
+                }
+
             </div>
         </div>
     )

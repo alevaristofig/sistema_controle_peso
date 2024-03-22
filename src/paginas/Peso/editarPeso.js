@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
+import { useParams, useNavigate, Link } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import InputMask from 'react-input-mask';
 
@@ -26,19 +26,26 @@ export default function EditarPeso() {
     const [data,setData] = useState('');
     const [idPessoa,setIdPessoa] = useState('');
     const [loading,setLoading] = useState(true);
+    const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
+
         async function buscarPeso() {
             let result = await buscar(id);
+
+            if(typeof result === 'string') {
+                toast.error(result); 
+                setBuscarErro(true);
+            } else {
+                setInputPeso(result.valor);
+                setImc(result.imc);
+                setAltura(result.pessoa.altura);
+                setIdPessoa(result.pessoa.id);
+
+                let dataPeso = new Date(result.data)
+                setData(dataPeso.toLocaleDateString('pt-BR'));
+            }
             
-            setInputPeso(result.valor);
-            setImc(result.imc);
-            setAltura(result.pessoa.altura);
-            setIdPessoa(result.pessoa.id);
-
-            let dataPeso = new Date(result.data)
-            setData(dataPeso.toLocaleDateString('pt-BR'));
-
             setLoading(false);
         }
 
@@ -110,54 +117,67 @@ export default function EditarPeso() {
                             <span className="visually-hidden">Loading...</span>
                         </div>
                     :
-                        <div className="container py-4">   
-                            <form className="form-perfil" onSubmit={salvarDados}>                                
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <label className="form-label">Peso</label>
-                                        <label className="form-label obrigatorio">*</label>
-                                        <input 
-                                            type='text' 
-                                            id='inputPeso'
-                                            className="form-control"
-                                            value={inputPeso}                                             
-                                            onChange={(e) => mascaraPeso(e.target.value)} 
-                                            onBlur={(e) => calcularImcPessoa(e.target.value)}
-                                        />
+                        buscarError
+                        ?
+                            <div className="container py-4">
+                                <div className="col">
+                                    <Link to="/peso" className="btn btn-info float-start me-4">Voltar</Link>   
+                                </div>                                                                     
+                            </div>
+                        :
+                            <div className="container py-4">   
+                                <form className="form-perfil" onSubmit={salvarDados}>                                
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label className="form-label">Peso</label>
+                                            <label className="form-label obrigatorio">*</label>
+                                            <input 
+                                                type='text' 
+                                                id='inputPeso'
+                                                className="form-control"
+                                                value={inputPeso}                                             
+                                                onChange={(e) => mascaraPeso(e.target.value)} 
+                                                onBlur={(e) => calcularImcPessoa(e.target.value)}
+                                                required
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <label className="form-label">Imc</label>
-                                        <label className="form-label obrigatorio">*</label>
-                                        <input 
-                                            type='text' 
-                                            className="form-control"
-                                            value={imc}      
-                                            readOnly                                                                              
-                                        />
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label className="form-label">Imc</label>
+                                            <label className="form-label obrigatorio">*</label>
+                                            <input 
+                                                type='text' 
+                                                className="form-control"
+                                                value={imc}      
+                                                readOnly                                                                              
+                                            />
+                                        </div>
                                     </div>
-                                </div>
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <label className="form-label">Data</label>
-                                        <label className="form-label obrigatorio">*</label>
-                                        <InputMask 
-                                            mask="99/99/9999" 
-                                            name="data" 
-                                            value={data}
-                                            className="form-control" 
-                                            onChange={ event => setData(event.target.value)}
-                                        /> 
-                                    </div>
-                                </div> 
-                                <div className="row mt-3">
-                                    <div className="col">
-                                        <button type="submit" className="btn btn-primary" onClick={salvarDados}>Cadastrar</button>
-                                    </div>
-                                </div>  
-                            </form>                 
-                        </div>
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <label className="form-label">Data</label>
+                                            <label className="form-label obrigatorio">*</label>
+                                            <InputMask 
+                                                mask="99/99/9999" 
+                                                name="data" 
+                                                value={data}
+                                                className="form-control" 
+                                                onChange={ event => setData(event.target.value)}
+                                                required
+                                            /> 
+                                        </div>
+                                    </div> 
+                                    <div className="row mt-3">
+                                        <div className="col">
+                                            <button 
+                                                type="submit" 
+                                                className="btn btn-primary" 
+                                                onClick={salvarDados}>Atualizar</button>
+                                        </div>
+                                    </div>  
+                                </form>                 
+                            </div>
                 }
                 
             </div>

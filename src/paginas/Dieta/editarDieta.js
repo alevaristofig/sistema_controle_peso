@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useNavigate, useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import { BiFoodMenu } from "react-icons/bi";
-import { ToastContainer } from 'react-toastify';
+import { ToastContainer, toast } from 'react-toastify';
 
 import { salvarDietaAlimento, apagarAlimentoDieta, atualizarDietaAlimento } from '../../redux/dieta/slice';
 import { listar } from '../../redux/alimento/slice';
@@ -16,7 +16,6 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarDieta() {
     const dispatch = useDispatch();
-    //const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
     const { id } = useParams();
 
     const {salvar,buscar,buscarAlimentoDieta} = useDieta();
@@ -31,18 +30,27 @@ export default function EditarDieta() {
     const [dadosAlimentos,setDadosAlimentos] = useState([]);
     const [isChecked,setIsChecked] = useState([]);
     const [numAlimentosDieta,setNumAlimentosDieta] = useState(0);
+    const [buscarError,setBuscarErro] = useState(false);
+
 
     useEffect(() => {        
         async function buscarDadosDieta() {
             let alimentos = await listar();
             let dadosDieta = await buscar(id);
 
-            setNome(dadosDieta.nome);
-            setDietaId(dadosDieta.id);
+            if(typeof dadosDieta === 'string') {
+                toast.error(dadosDieta);  
+                setBuscarErro(true);                                                 
+            } else {
 
-            let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
-            setDadosAlimentos(dadosAlimentos);
-            setNumAlimentosDieta(dadosAlimentos.length);
+                setNome(dadosDieta.nome);
+                setDietaId(dadosDieta.id);
+    
+                let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
+                setDadosAlimentos(dadosAlimentos);
+                setNumAlimentosDieta(dadosAlimentos.length);
+            }
+
 
             alimentos.forEach((e,i) => {
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
@@ -124,21 +132,6 @@ export default function EditarDieta() {
         }
 
         navigate('/dieta', {replace: true});
-
-       /* if(idDieta !== '') {
-            if(alimentosDieta.length > 0) {
-                alimentosDieta.forEach(element => {
-                    dispatch(salvarDietaAlimento({
-                        'dietaId': idDieta,
-                        'alimentoId': element.idAlimento
-                    }));
-                })
-            }
-        }
-
-        setNome('');
-
-        navigate('/dieta', {replace: true})*/
     }
 
     return(
@@ -161,7 +154,15 @@ export default function EditarDieta() {
                                 <div className="spinner-border text-primary mt-3" role="status">
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
-                            :                                
+                            :
+                                buscarError
+                                ?
+                                    <div className="container py-4">
+                                        <div className="col">
+                                            <Link to="/dieta" className="btn btn-info float-start me-4">Voltar</Link>   
+                                        </div>                                                                     
+                                    </div>
+                                :                                
                                     alimentos.length === 0                                                                          
                                         ?
                                             <div className="row mt-4">
@@ -169,8 +170,7 @@ export default function EditarDieta() {
                                                     <span>Nenhuma alimento encontrado </span>                                    
                                                 </div>
                                             </div>
-                                        :
-                                            //setarValoresAlimento(); 
+                                        :                                            
                                             <>
                                                 <div className="row mt-3">
                                                     <div className="col">
@@ -219,7 +219,10 @@ export default function EditarDieta() {
                                                 </div>
                                                 <div className="row mt-3">
                                                     <div className="col">
-                                                        <button type="submit" className="btn btn-primary">Cadastrar</button>
+                                                        <button 
+                                                            type="submit" 
+                                                            className="btn btn-primary"
+                                                        >Atualizar</button>
                                                     </div>
                                                 </div> 
                                             </>

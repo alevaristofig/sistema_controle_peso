@@ -6,8 +6,8 @@ function useAlimento() {
                                     .then((response) => {
                                         return response.data;
                                     })
-                                    .catch((error) => {
-                                        return '';
+                                    .catch((error) => {                                        
+                                        return error.response.data.userMessage
                                    });
 
         return result;

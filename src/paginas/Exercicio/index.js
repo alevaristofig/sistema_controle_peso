@@ -42,7 +42,7 @@ export default function Exercicio(){
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Pessoa">
+                <Titulo nome="Exercício">
                     <LiaRunningSolid color="#000" size={24} />
                 </Titulo>
 

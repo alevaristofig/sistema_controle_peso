@@ -10,7 +10,7 @@ function usePeso() {
                                     return response.data
                                })
                                .catch((error) => {
-                                    return '';
+                                    return error.response.data.userMessage;
                                });
         return result;
 

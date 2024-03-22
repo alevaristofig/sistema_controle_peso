@@ -1,8 +1,8 @@
 import { useState, useEffect } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams, useNavigate, Link } from "react-router-dom";
 import { CiMedicalClipboard } from "react-icons/ci";
 import { useDispatch } from 'react-redux';
-import { ToastContainer } from "react-toastify";
+import { ToastContainer, toast } from "react-toastify";
 
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
@@ -19,6 +19,7 @@ export default function EditarHistoricoMedico() {
     const [remedio,setRemedio] = useState('');
     const [pessoaId,setPessoaId] = useState('');
     const [dataCadastro,setDataCadastro] = useState('');
+    const [buscarError,setBuscarErro] = useState(false);
 
     const { id } = useParams();
     const { buscar } = useHistoricoMedico();
@@ -28,11 +29,15 @@ export default function EditarHistoricoMedico() {
         async function buscarDados() {
             let dados = await buscar(id);
 
-            setDescricao(dados.descricao);
-            setRemedio(dados.remedio);
-            setPessoaId(dados.pessoa.id);
-            setDataCadastro(dados.dataCadastro);
-
+            if(typeof dados === 'string') {
+                toast.error(dados); 
+                setBuscarErro(true);
+            } else {
+                setDescricao(dados.descricao);
+                setRemedio(dados.remedio);
+                setPessoaId(dados.pessoa.id);
+                setDataCadastro(dados.dataCadastro);
+            }
         }
 
         buscarDados();
@@ -69,43 +74,53 @@ export default function EditarHistoricoMedico() {
                     <CiMedicalClipboard color="#000" size={24} />
                 </Titulo>
 
-                <div className="container py-4">
-                    <form className="form-perfil" onSubmit={atualizarDados}>
-                        <div className="row mt-3">
+                {
+                    buscarError
+                    ?
+                        <div className="container py-4">
                             <div className="col">
-                                <label className="form-label">Descrição</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    value={descricao}
-                                    onChange={(e) => setDescricao(e.target.value)}                                    
-                                    required 
-                                /> 
-                            </div>
+                                <Link to="/historicomedico" className="btn btn-info float-start me-4">Voltar</Link>   
+                            </div>                                                                     
                         </div>
-
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label className="form-label">Remédio</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    value={remedio}
-                                    onChange={(e) => setRemedio(e.target.value)}                                    
-                                    required 
-                                /> 
+                    :
+                        <div className="container py-4">
+                        <form className="form-perfil" onSubmit={atualizarDados}>
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Descrição</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        value={descricao}
+                                        onChange={(e) => setDescricao(e.target.value)}                                    
+                                        required 
+                                    /> 
+                                </div>
                             </div>
+
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Remédio</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        value={remedio}
+                                        onChange={(e) => setRemedio(e.target.value)}                                    
+                                        required 
+                                    /> 
+                                </div>
+                            </div>
+
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <button type="submit" className="btn btn-primary">Atualizar</button>
+                                </div>
+                            </div> 
+                        </form>
                         </div>
-
-                        <div className="row mt-3">
-                            <div className="col">
-                                <button type="submit" className="btn btn-primary">Atualizar</button>
-                            </div>
-                        </div> 
-                    </form>
-                </div>
+                }                
             </div>
         </div>
     )
