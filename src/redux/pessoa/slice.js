@@ -21,17 +21,6 @@ export const pessoaSlice = createSlice({
             state.loading = false;
             toast.error("Ocorreu um erro ao listar as Pessoas!");
         },
-        buscar: (state,action) => {            
-            state.loading = true;
-        },
-        buscarSucesso: (state,action) => {
-            state.loading = true;
-            state.pessoas = action.payload;
-        },
-        buscarError: (state) => {
-            state.loading = false;
-            toast.error("Ocorreu um erro ao buscar a Pessoa!");
-        },
         salvar: (state,action) => {
             state.loading = true;
         },
@@ -58,8 +47,6 @@ export const pessoaSlice = createSlice({
 });
 
 export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
-               buscar, buscarSucesso, buscarError, atualizar, atualizarSucesso,
-               atualizarError 
-            } = pessoaSlice.actions;
+               atualizar, atualizarSucesso,atualizarError } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;

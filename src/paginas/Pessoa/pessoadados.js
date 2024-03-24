@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
-import { atualizar, buscar } from '../../redux/pessoa/slice';
+import { atualizar } from '../../redux/pessoa/slice';
 import { VscPerson } from "react-icons/vsc";
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -15,18 +15,31 @@ export default function PessoaDados() {
     const dispatch = useDispatch();
     const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa);
     const { id } = useParams();
+    const { buscar } = usePessoa();
 
     const [nome,setNome] = useState('');
     const [email,setEmail] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
-
-    const [validar] = usePessoa();
+    const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
-        dispatch(buscar({
-            'pessoa': id
-        }))
+        
+        async function buscarDados() {
+            let dados = await buscar(id);
+
+            if(typeof dados === 'string') {
+                toast.error(dados);  
+                setBuscarErro(true);       
+            } else {
+                setNome(dados.nome);
+                setEmail(dados.email);
+                setAltura(dados.altura);
+                setEndereco(dados.endereco);
+            }
+        }
+
+        buscarDados();
     },[])
 
     function salvarDados(e) {
@@ -38,19 +51,14 @@ export default function PessoaDados() {
             'altura': altura,
             'endereco': endereco
         };
-
-        if(validar(data)) {
             
-            dispatch(atualizar({
-                'pessoa': id,
-                'nome': nome,
-                'email': email,
-                'altura': altura,
-                'endereco': endereco
-            }))
-        } else {
-            toast.error("Os campos não podem ficar em branco!");
-        }
+        dispatch(atualizar({
+            'pessoa': id,
+            'nome': nome,
+            'email': email,
+            'altura': altura,
+            'endereco': endereco
+        }));         
     }
 
     return(
@@ -64,67 +72,83 @@ export default function PessoaDados() {
                     <VscPerson color="#000" size={24} />
                 </Titulo>
 
-                <div className="container py-4">
-                    <form className="form-perfil" onSubmit={salvarDados}>
-                        <div className="row mt-3">
+                {
+                    buscarError
+                    ?
+                        <div className="container py-4">
                             <div className="col">
-                                <label className="form-label">Nome</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"                                    
-                                    defaultValue={ pessoas != null ? pessoas.nome : ''}
-                                    onChange={(e) => setNome(e.target.value)} 
-                                /> 
-                            </div>
+                                <Link to="/pessoa" className="btn btn-info float-start me-4">Voltar</Link>   
+                            </div>                                                                     
                         </div>
+                    :
+                        <div className="container py-4">
+                        <form className="form-perfil" onSubmit={salvarDados}>
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Nome</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"                                    
+                                        defaultValue={nome}
+                                        onChange={(e) => setNome(e.target.value)} 
+                                        required
+                                    /> 
+                                </div>
+                            </div>
+                            
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">E-mail</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        defaultValue={email}
+                                        onChange={(e) => setEmail(e.target.value)} 
+                                        required
+                                    /> 
+                                </div>
+                            </div>
+
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Altura</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        defaultValue={altura}
+                                        onChange={(e) => setAltura(e.target.value)} 
+                                        required
+                                    />  
+                                </div>
+                            </div>
+
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Endereço</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="text" 
+                                        className="form-control"
+                                        defaultValue={endereco}
+                                        onChange={(e) => setEndereco(e.target.value)} 
+                                        required
+                                    />   
+                                </div>
+                            </div>
                         
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label className="form-label">E-mail</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    defaultValue={ pessoas != null ? pessoas.email : ''}
-                                    onChange={(e) => setEmail(e.target.value)} 
-                                /> 
-                            </div>
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <button type="submit" className="btn btn-primary">Atualizar</button>
+                                </div>
+                            </div>                      
+                        </form>
                         </div>
+                }
 
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label className="form-label">Altura</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    defaultValue={ pessoas != null ? pessoas.altura : ''}
-                                    onChange={(e) => setAltura(e.target.value)} 
-                                />  
-                            </div>
-                        </div>
-
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label className="form-label">Endereço</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <input 
-                                    type="text" 
-                                    className="form-control"
-                                    defaultValue={ pessoas != null ? pessoas.endereco : ''}
-                                    onChange={(e) => setEndereco(e.target.value)} 
-                                />   
-                            </div>
-                        </div>
-                    
-                        <div className="row mt-3">
-                            <div className="col">
-                                <button type="submit" className="btn btn-primary">Cadastrar</button>
-                            </div>
-                        </div>                      
-                    </form>
-                </div>
+                
             </div>
     </div>
     )

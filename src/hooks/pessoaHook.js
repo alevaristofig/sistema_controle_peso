@@ -14,17 +14,19 @@ function usePessoa() {
             return response;        
     }
 
-   /* function validar(dados) {
-        if(dados.nome === '' && dados.email === '' && dados.altura === '' &&  dados.endereco === '') {            
-            return false;
-        }
+    async function buscar(id) {
+        const response = await axios.get(`http://localhost:8080/pessoas/${id}`)
+                                .then((response) => {
+                                    return response.data;
+                                })
+                                .catch((error) => {
+                                    return error.response.data.userMessage
+                                });
 
-        return true;
-    }*/
+        return response;   
+    }
 
-    //return [validar,listar];
-
-    return [listar]
+    return {listar,buscar}
 }
 
 export default usePessoa;

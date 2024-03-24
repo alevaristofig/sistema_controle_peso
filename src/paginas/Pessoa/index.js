@@ -10,10 +10,8 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Pessoa() {
 
-    //const dispatch = useDispatch();
-    //const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa)
     const [pessoas,setPessoas] = useState([]);
-    const [listar] = usePessoa();
+    const {listar} = usePessoa();
 
     useEffect(() => {    
 
