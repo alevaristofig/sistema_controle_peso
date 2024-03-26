@@ -26,7 +26,11 @@ export default function CadastroAlimento() {
             'nome': nome,
             'quantidade': quantidade,
             'caloria': caloria
-        }))
+        }));
+
+        setNome('');
+        setQuantidade('');
+        setCaloria('');
     }
 
     return (

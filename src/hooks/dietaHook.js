@@ -19,7 +19,7 @@ function useDieta() {
                                     return response.data.id
                                 })
                                 .catch((error) => {                                    
-                                    return '';
+                                    return error.response.data.userMessage;
                                 });
         return result;
     }

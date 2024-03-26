@@ -28,9 +28,9 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             toast.success("Exercício cadastrado com Sucesso!");
         },
-        salvarError(state) {
+        salvarError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao salvar o Exercício!");
+            toast.error(action.payload);
         },
         remover(state,action) {
             state.loading = true;

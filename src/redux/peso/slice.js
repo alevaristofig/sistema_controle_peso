@@ -28,9 +28,9 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.success("Peso cadastrado com Sucesso!");
         },
-        salvarError(state) {
+        salvarError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao salvar o Peso!");
+            toast.error(action.payload);
         },
         atualizar(state,action) {
             state.loading = true;

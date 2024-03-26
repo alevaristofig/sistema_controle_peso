@@ -18,7 +18,7 @@ function* salvar(action) {
 
         yield put(salvarSucesso());
     } catch(error) {
-        yield put(salvarError());
+        yield put(salvarError(error.response.data.userMessage));
     }
 }
 
@@ -48,7 +48,6 @@ function* atualizar(action) {
 
         yield put(atualizarSucesso());
     } catch(error) {
-        console.log(error)
         yield put(atualizarError());
     }
 }

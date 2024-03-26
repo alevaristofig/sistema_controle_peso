@@ -27,8 +27,8 @@ function* salvar(action) {
 
         yield put(salvarSucesso());
 
-    } catch(error) {
-        yield put(salvarError());
+    } catch(error) {        
+        yield put(salvarError(error.response.data.userMessage));
     }
 }
 

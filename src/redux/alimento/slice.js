@@ -28,9 +28,9 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.success("Alimento cadastrado com Sucesso!");
         },
-        salvarError: (state) => {
+        salvarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao cadastrar o Alimento!");
+            toast.error(action.payload);
         },
         atualizar: (state,action) => {
             state.loading = true;

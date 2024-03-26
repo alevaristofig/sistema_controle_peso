@@ -28,9 +28,9 @@ export const pessoaSlice = createSlice({
             state.loading = false;
             toast.success("Pessoa cadastrada com Sucesso!");
         },
-        salvarError: (state) => {
+        salvarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao salvar a Pessoa!");
+            toast.error(action.payload);
         },
         atualizar(state,action) {
             state.loading = true;

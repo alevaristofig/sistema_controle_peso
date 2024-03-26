@@ -7,7 +7,6 @@ import CurrencyInput from 'react-currency-masked-input';
 import { useDispatch, useSelector } from 'react-redux';
 import { listar } from '../../redux/pessoa/slice';
 import { salvar } from '../../redux/peso/slice';
-import usePeso from '../../hooks/pesoHook';
 
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
@@ -22,7 +21,6 @@ export default function CadastroPeso() {
     const [pesoValor,setPesoValor] = useState('0.00');
     const [imc,setImc] = useState('0.00');
     const [data,setData] = useState('');
-    const [validar] = usePeso();
 
     useEffect(() => {
         dispatch(listar());
@@ -32,31 +30,26 @@ export default function CadastroPeso() {
         e.preventDefault();
 
         let dados = {
-            'nome': nomes,
             'valor': pesoValor,
             'imc': imc,
-            'data': data
         }
-        
-        if(validar(dados)) {
 
-            let dataBanco = data.split('/');
-            let dataAtual = new Date();
+        let dataBanco = data.split('/');
+        let dataAtual = new Date();
 
-            dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+        dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
             
-            dados.pessoa = {
-                'id': pessoas[0].id
-            }
-
-            dispatch(salvar({
-                dados
-            }));
-
-           setPesoValor('');
-           setImc('');
-           setData('');
+        dados.pessoa = {
+            'id': pessoas[0].id
         }
+
+        dispatch(salvar({
+            dados
+        }));
+
+        setPesoValor('');
+        setImc('');
+        setData('');
     }
 
     function calcularImc(valor) {
@@ -135,6 +128,7 @@ export default function CadastroPeso() {
                                     name="data" 
                                     className="form-control" 
                                     onChange={ event => setData(event.target.value)}
+                                    required
                                 /> 
                             </div>
                         </div> 

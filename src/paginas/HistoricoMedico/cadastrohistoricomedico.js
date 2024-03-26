@@ -20,7 +20,7 @@ export default function CadastroHistoricoMedico() {
 
         dispatch(salvar({
             'id': 1,
-            'descricao': descricao,
+            //'descricao': descricao,
             'remedio': remedio
         }));
 

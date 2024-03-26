@@ -52,23 +52,24 @@ export default function CadastroDieta() {
                 'nome': nome
             };
 
-             const idDieta = await salvar(dados);
+             const resultDieta = await salvar(dados);
 
-             if(idDieta !== '') {
+             if(typeof resultDieta !== 'string') {
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
-                        'dietaId': idDieta,
+                        'dietaId': resultDieta,
                         'alimentoId': element.idAlimento
                     }));
                 })                 
+             } else {
+                toast.error(resultDieta);
              }
 
              setNome('');
 
-            navigate('/dieta', {replace: true})
-        }
-
-        toast.error("É necessário selecionar algum Alimento!");              
+        } else {
+            toast.error("É necessário selecionar algum Alimento!");   
+        }                   
     }
 
     return(
