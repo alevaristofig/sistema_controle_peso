@@ -57,7 +57,7 @@ function* atualizar(action) {
         yield put(atualizarSucesso());
     } catch(error) {
         console.log(error)
-        yield put(atualizarError());
+        yield put(atualizarError(error.response.data.userMessage));
     }
 }
 

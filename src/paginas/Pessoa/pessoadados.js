@@ -44,13 +44,6 @@ export default function PessoaDados() {
 
     function salvarDados(e) {
         e.preventDefault();
-
-        let data = {
-            'nome': nome,
-            'email': email,
-            'altura': altura,
-            'endereco': endereco
-        };
             
         dispatch(atualizar({
             'pessoa': id,

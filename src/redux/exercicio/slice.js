@@ -50,9 +50,9 @@ export const exercicioSlice = createSlice({
             state.loading = false;
             toast.success("Exercício atualizado com Sucesso!");
         },
-        atualizarError(state) {
+        atualizarError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao atualizar o Exercício!");
+            toast.error(action.payload);
         },
     }
 });

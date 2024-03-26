@@ -40,9 +40,9 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.success("Peso atualizado com Sucesso!");
         },
-        atualizarError(state) {
+        atualizarError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao atualizar o peso!");
+            toast.error(action.payload);
         },
         apagar(state,action) {
             state.loading = true;

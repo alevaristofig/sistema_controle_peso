@@ -48,7 +48,7 @@ function* atualizar(action) {
 
         yield put(atualizarSucesso());
     } catch(error) {
-        yield put(atualizarError());
+        yield put(atualizarError(error.response.data.userMessage));
     }
 }
 

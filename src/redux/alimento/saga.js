@@ -38,12 +38,12 @@ function* atualizar(action) {
             'quantidade': action.payload.quantidade,
             'caloria': action.payload.caloria
         };
-
+console.log(data)
         yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data);
     
         yield put(atualizarSucesso());
     } catch(error) {
-        yield put(atualizarError());
+        yield put(atualizarError(error.response.data.userMessage));
     }
 
 }

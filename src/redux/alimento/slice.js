@@ -41,7 +41,7 @@ export const alimentoSlice = createSlice({
         },
         atualizarError: (state,action) => {
             state.loading = false;
-            toast.error("Ocorreu um erro ao atualizar o Alimento!");
+            toast.error(action.payload);
         },
         apagar: (state,action) => {
             state.loading = true;

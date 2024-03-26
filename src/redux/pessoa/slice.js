@@ -39,9 +39,9 @@ export const pessoaSlice = createSlice({
             state.loading = true;
             toast.success("Pessoa atualizada com Sucesso!");
         },
-        atualizarError(state) {
+        atualizarError(state,action) {
             state.loading = true;
-            toast.error("Ocorreu um erro ao atualizar a Pessoa!");
+            toast.error(action.payload);
         }
     }
 });
