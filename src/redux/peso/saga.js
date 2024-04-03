@@ -5,11 +5,17 @@ import { listarSucesso, listarError, salvarSucesso, salvarError,
 
 import axios from 'axios';
 
-function* listar(){
-    try {
-        const response = yield call(axios.get,"http://localhost:8080/peso");
+function* listar(action){
+    try {        
+        const response = yield call(axios.get,`http://localhost:8080/pesos?page=${action.payload.page}`);
 
-        yield put(listarSucesso(response.data));
+        let responsePeso = {
+            dados: response.data._embedded.pesoModelList,
+            paginacao: response.data.page,
+            links: response.data._links
+        }
+       
+        yield put(listarSucesso(responsePeso));
     } catch(error) {
         yield put(listarError());
     }
@@ -17,11 +23,11 @@ function* listar(){
 
 function* salvar(action) {
     try {
-        yield call(axios.post,"http://localhost:8080/peso",action.payload.dados);
+        yield call(axios.post,"http://localhost:8080/pesos",action.payload.dados);
 
         yield put(salvarSucesso());
 
-    } catch(error) {        
+    } catch(error) {     
         yield put(salvarError(error.response.data.userMessage));
     }
 }

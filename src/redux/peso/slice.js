@@ -10,7 +10,7 @@ export const pesoSlice = createSlice({
     name: 'peso',
     initialState,
     reducers: {
-        listar: (state) => {                        
+        listar: (state,action) => {                        
             state.loading = true;
         },
         listarSucesso(state,action) {

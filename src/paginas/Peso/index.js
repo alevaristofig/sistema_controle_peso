@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
 import { listar, apagar } from '../../redux/peso/slice';
@@ -10,16 +10,21 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function Peso() {
 
     const dispatch = useDispatch();
     const { pesos, loading } = useSelector((rootReducer) => rootReducer.peso);
     const navigate = useNavigate();
+    const {page} = useParams();
 
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
-        dispatch(listar());
+        dispatch(listar({
+            'page': page
+        }));
 
         setLoadingDel(false);
     },[loadingDel]);
@@ -54,7 +59,7 @@ export default function Peso() {
                         <div className="col">
                             <Link to="/cadastropeso" className="btn btn-success">Novo Peso</Link>
                         </div>
-                    </div>
+                    </div>                    
                     {
                         loading 
                             ? 
@@ -85,7 +90,7 @@ export default function Peso() {
                                                 </thead>
                                                 <tbody>
                                                     {                                                        
-                                                        pesos.map((m,i) => {
+                                                        pesos.dados.map((m,i) => {
                                                             return(
                                                                 <tr key={i}>
                                                                     <td>{m.id}</td>
@@ -96,20 +101,21 @@ export default function Peso() {
                                                                         }
                                                                     </td>
                                                                     <td>                                                                        
-                                                                        {
+                                                                        {                                                                                                                                                
                                                                             i === 0
                                                                             ?
                                                                                 0
                                                                             :
-                                                                                (pesos[i].valor - pesos[i-1].valor) > 0
+                                                                                (pesos.dados[i].valor - pesos.dados[i-1].valor) > 0
                                                                                  ?
                                                                                  <span className='text-danger'>
-                                                                                    {(pesos[i].valor - pesos[i-1].valor).toFixed(2)}
+                                                                                    {(pesos.dados[i].valor - pesos.dados[i-1].valor).toFixed(2)}
                                                                                  </span>
                                                                                  :
                                                                                     <span className='text-success'>
-                                                                                        {(pesos[i].valor - pesos[i-1].valor).toFixed(2)}
+                                                                                        {(pesos.dados[i].valor - pesos.dados[i-1].valor).toFixed(2)}
                                                                                     </span>
+                                                                                    
                                                                         }
                                                                     </td>
                                                                     <td>
@@ -121,39 +127,52 @@ export default function Peso() {
                                                                 </tr>
                                                             )
                                                         })
+                                                        
                                                     }
                                                     <tr>
                                                         <td>Total Imc</td>
                                                         <td>
                                                             {
-                                                                pesos[pesos.length-1].imc - pesos[0].imc < 0
+                                                                pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc < 0
                                                                 ?
                                                                     <span className='text-success'>
-                                                                        {(pesos[pesos.length-1].imc - pesos[0].imc).toFixed(2)}
+                                                                        {(pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc).toFixed(2)}
                                                                     </span>
                                                                 :
                                                                 <span className='text-danger'>
-                                                                    {(pesos[pesos.length-1].imc - pesos[0].imc).toFixed(2)}
+                                                                    {(pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc).toFixed(2)}
                                                                 </span>
+                                                                
                                                             }
                                                         </td>
                                                         <td>Total Peso</td>
                                                         <td colSpan={3}>
                                                             {
-                                                                pesos[pesos.length-1].valor - pesos[0].valor < 0
+                                                                pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor < 0
                                                                 ?
                                                                     <span className='text-success'>
-                                                                        {(pesos[pesos.length-1].valor - pesos[0].valor).toFixed(2)}
+                                                                        {(pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor).toFixed(2)}
                                                                     </span>
                                                                 :
                                                                 <span className='text-danger'>
-                                                                    {(pesos[pesos.length-1].valor - pesos[0].valor).toFixed(2)}
+                                                                    {(pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor).toFixed(2)}
                                                                 </span>
+                                                                
                                                             }
                                                         </td>
                                                     </tr>
                                                 </tbody>
                                             </table>
+                                            {
+                                                pesos.paginacao.totalElements > 0
+                                                ?
+                                                    <div className='row'>
+                                                        <Paginacao dados={pesos} />
+                                                    </div>
+                                                :
+                                                    'nao'
+                                            }
+                                            
                                         </div>
                                     </div>
                                     

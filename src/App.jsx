@@ -39,7 +39,7 @@ const router = createBrowserRouter([
     element: <PessoaDados />
   },
   {
-    path: '/peso',
+    path: '/peso/:page',
     element: <Peso />
   },
   {

@@ -39,8 +39,6 @@ function usePeso() {
         } 
     }
 
-    //return [validar, buscar];
-
     return [buscar,formatarPeso,calcularImc];
 }
 

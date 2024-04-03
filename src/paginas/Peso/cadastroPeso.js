@@ -22,9 +22,9 @@ export default function CadastroPeso() {
     const [imc,setImc] = useState('0.00');
     const [data,setData] = useState('');
 
-    useEffect(() => {
+    /*useEffect(() => {
         dispatch(listar());
-    },[])
+    },[])*/
 
     function salvarDados(e) {
         e.preventDefault();
@@ -40,7 +40,7 @@ export default function CadastroPeso() {
         dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
             
         dados.pessoa = {
-            'id': pessoas[0].id
+            'id': 1
         }
 
         dispatch(salvar({
@@ -54,7 +54,7 @@ export default function CadastroPeso() {
 
     function calcularImc(valor) {
         setPesoValor(valor);
-        let imcValor = valor / (pessoas[0].altura * pessoas[0].altura);
+        let imcValor = valor / (1.70 * 1.70);
         setImc(imcValor.toFixed(2));
     }
 
@@ -72,29 +72,6 @@ export default function CadastroPeso() {
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>
-                        <div className="row mt-3">
-                            <div className="col">
-                                <label className="form-label">Pessoa</label>
-                                <label className="form-label obrigatorio">*</label>
-                                <select                                     
-                                    className="form-select"
-                                    value={nomes}
-                                    onChange={(e) => setNomes(e.target.value)} 
-                                > 
-                                    <option value='' disabled>Selecione uma Opção</option>
-                                    {
-                                        !loading
-                                        ?
-                                            pessoas.map((p,i) => {
-                                                return <option value={p.id} key={i}>{p.nome}</option>
-                                            })                                          
-                                        :    
-                                            ''                                    
-                                    }
-                                </select>
-                            </div>
-                        </div>
-
                         <div className="row mt-3">
                             <div className="col">
                                 <label className="form-label">Peso</label>

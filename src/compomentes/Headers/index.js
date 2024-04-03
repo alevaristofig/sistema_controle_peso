@@ -25,7 +25,7 @@ export default function Header(){
                 <VscPerson color="#fff" size={24} /> Pessoa
             </Link>
 
-            <Link to="/peso">
+            <Link to="/peso/0">
                 <LiaWeightHangingSolid color="#fff" size={24} /> Peso
             </Link>
 
