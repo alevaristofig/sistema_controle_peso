@@ -10,7 +10,7 @@ export const exercicioSlice = createSlice({
     name: 'exercicio',
     initialState,
     reducers: {
-        listar: (state) => {                        
+        listar: (state,action) => {                        
             state.loading = true;
         },
         listarSucesso(state,action) {

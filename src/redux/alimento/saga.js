@@ -4,11 +4,18 @@ import { salvarSucesso, salvarError, listarSucesso, listarError,
 
 import axios from 'axios';
 
-function* listar(){
+function* listar(action){
     try {
-        const response = yield call(axios.get,"http://localhost:8080/alimentos");
+        const response = yield call(axios.get,`http://localhost:8080/alimentos?page=${action.payload.page}`);
 
-        yield put(listarSucesso(response.data));
+        let responseAlimento = {
+            dados: response.data._embedded.alimentoModelList,
+            paginacao: response.data.page,
+            links: response.data._links,
+            url: 'alimento'
+        }
+
+        yield put(listarSucesso(responseAlimento));
     } catch(error) {
         yield put(listarError());
     }

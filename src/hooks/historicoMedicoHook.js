@@ -1,10 +1,15 @@
 import axios from 'axios';
 
 function useHistoricoMedico() {
-    async function listar() {
-        const response = await axios.get("http://localhost:8080/historicomedico")
+    async function listar(page) {
+        const response = await axios.get(`http://localhost:8080/historicomedico?page=${page}`)
                             .then((response) => {
-                                return response.data;
+                                return {
+                                    dados: response.data._embedded.historicoMedicoModelList,
+                                    paginacao: response.data.page,
+                                    links: response.data._links,
+                                    url: 'historicomedico'
+                                }
                             })
                             .catch((error) => {
                                 return false;

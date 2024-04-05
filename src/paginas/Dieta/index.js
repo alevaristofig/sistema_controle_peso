@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { BiFoodMenu } from "react-icons/bi";
 import { ToastContainer } from 'react-toastify';
@@ -11,10 +11,13 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function Dieta() {
     const dispatch = useDispatch();
 
     const {listar} = useDieta();
+    const { page } = useParams();
 
     const [dietas,setDietas] = useState([]);
     const [loadingApagar,setLoadingApagar] = useState(true);
@@ -22,7 +25,7 @@ export default function Dieta() {
     useEffect(() => {    
 
         async function listarDietas() {
-            let dieta = await listar();
+            let dieta = await listar(page);
             setDietas(dieta);
         }
         
@@ -80,7 +83,7 @@ export default function Dieta() {
                                         </thead>
                                         <tbody>
                                             {
-                                                dietas.map((d,i) => {
+                                                dietas.dados.map((d,i) => {
                                                     return(
                                                         <tr>
                                                             <td>{d.id}</td>
@@ -99,6 +102,15 @@ export default function Dieta() {
                                             }
                                         </tbody>
                                     </table>
+                                    {
+                                        dietas.paginacao.totalPages > 1
+                                        ?
+                                            <div className='row'>
+                                                <Paginacao dados={dietas} />
+                                            </div>
+                                        :
+                                            ''
+                                    }
                                 </div>
                             </div>
                     }

@@ -7,9 +7,16 @@ import axios from 'axios';
 
 function* listar(action) {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/exercicio");
+        const response = yield call(axios.get,`http://localhost:8080/exercicios?page=${action.payload.page}`);
 
-        yield put(listarSucesso(response.data));
+        let responseExercicio = {
+            dados: response.data._embedded.exercicioModelList,
+            paginacao: response.data.page,
+            links: response.data._links,
+            url: 'exercicio'
+        }
+
+        yield put(listarSucesso(responseExercicio));
     } catch(error) {
         yield put(listarError());
     }

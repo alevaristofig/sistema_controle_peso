@@ -51,7 +51,7 @@ const router = createBrowserRouter([
     element: <EditarPeso />
   },
   {
-    path: '/exercicio',
+    path: '/exercicio/:page',
     element: <Exercicio />
   },
   {
@@ -67,7 +67,7 @@ const router = createBrowserRouter([
     element: <Treino />
   },
   {
-    path: '/alimento',
+    path: '/alimento/:page',
     element: <Alimento />
   },
   {
@@ -79,7 +79,7 @@ const router = createBrowserRouter([
     element: <EditarAlimento />
   },
   {
-    path: '/dieta',
+    path: '/dieta/:page',
     element: <Dieta />
   },
   {
@@ -91,7 +91,7 @@ const router = createBrowserRouter([
     element: <EditarDieta />
   },
   {
-    path: '/historicomedico',
+    path: '/historicomedico/:page',
     element: <HistoricoMedico />
   },
   {

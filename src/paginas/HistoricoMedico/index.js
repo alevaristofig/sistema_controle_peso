@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { CiMedicalClipboard } from "react-icons/ci";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch } from 'react-redux';
 import { apagar } from '../../redux/historicomedico/slice';
@@ -11,10 +11,13 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function HistoricoMedico() {
 
     const dispatch = useDispatch();
     const { listar } = useHistoricoMedico();
+    const { page } = useParams();
 
     const [historicosMedico,setHistoricosMedico] = useState([]);
     const [loading,setLoading] = useState(true);
@@ -22,7 +25,7 @@ export default function HistoricoMedico() {
     useEffect(() => {
 
         async function listarHistoricosMedico() {
-            let dados = await listar();
+            let dados = await listar(page);
 
             setHistoricosMedico(dados);
         }
@@ -92,7 +95,7 @@ export default function HistoricoMedico() {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    historicosMedico.map((h,i) => {
+                                                    historicosMedico.dados.map((h,i) => {
                                                         return (
                                                             <tr key={i}>
                                                                 <td>{h.id}</td>
@@ -113,6 +116,15 @@ export default function HistoricoMedico() {
                                                 }
                                             </tbody>
                                         </table>
+                                        {
+                                            historicosMedico.paginacao.totalPages > 1
+                                            ?
+                                                <div className='row'>
+                                                    <Paginacao dados={historicosMedico} />
+                                                </div>
+                                            :
+                                                ''
+                                    }
                                     </div>
                                 </div>
                     }

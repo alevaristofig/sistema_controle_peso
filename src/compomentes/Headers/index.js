@@ -29,7 +29,7 @@ export default function Header(){
                 <LiaWeightHangingSolid color="#fff" size={24} /> Peso
             </Link>
 
-            <Link to="/exercicio">
+            <Link to="/exercicio/0">
                 <LiaRunningSolid  color="#fff" size={24} /> Exercício
             </Link>
 
@@ -37,15 +37,15 @@ export default function Header(){
                 <GiWeightLiftingUp  color="#fff" size={24} /> Treino
             </Link>
 
-            <Link to="/alimento">
+            <Link to="/alimento/0">
                 <FaBowlFood  color="#fff" size={24} /> Alimento
             </Link>
 
-            <Link to="/dieta">
+            <Link to="/dieta/0">
                 <BiFoodMenu  color="#fff" size={24} /> Dieta
             </Link>
 
-            <Link to="/historicomedico">
+            <Link to="/historicomedico/0">
                 <CiMedicalClipboard color='#fff' size={24} /> Histórico Médico
             </Link>
         </div>

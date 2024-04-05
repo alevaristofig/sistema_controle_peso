@@ -12,7 +12,8 @@ function* listar(action){
         let responsePeso = {
             dados: response.data._embedded.pesoModelList,
             paginacao: response.data.page,
-            links: response.data._links
+            links: response.data._links,
+            url: 'peso'
         }
        
         yield put(listarSucesso(responsePeso));

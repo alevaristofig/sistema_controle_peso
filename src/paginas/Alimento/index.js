@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listar, apagar } from "../../redux/alimento/slice";
@@ -11,14 +11,19 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function Alimento() {
+    const { page } = useParams();
     const dispatch = useDispatch();
     const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
 
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
-        dispatch(listar());
+        dispatch(listar({
+            'page': page
+        }));
 
         setLoadingDel(false);
     },[loadingDel]);
@@ -86,7 +91,7 @@ export default function Alimento() {
                                             </thead>
                                             <tbody>
                                                 {
-                                                    alimentos.map((a,i) => {
+                                                    alimentos.dados.map((a,i) => {
                                                         return(
                                                             <tr key={i}>
                                                                 <td>{a.id}</td>
@@ -107,6 +112,15 @@ export default function Alimento() {
                                                 }
                                             </tbody>
                                         </table>
+                                        {
+                                            alimentos.paginacao.totalPages > 1
+                                            ?
+                                                <div className='row'>
+                                                    <Paginacao dados={alimentos} />
+                                                </div>
+                                            :
+                                                ''
+                                        }
                                     </div>
                                 </div>
                     }

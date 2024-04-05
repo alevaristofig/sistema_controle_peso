@@ -1,10 +1,15 @@
 import axios from 'axios';
 
 function useDieta() {
-    function listar() {
-        const response =  axios.get("http://localhost:8080/dietas")
+    function listar(page) {
+        const response =  axios.get(`http://localhost:8080/dietas?page=${page}`)
                             .then((response) => {
-                                return response.data;
+                                return {
+                                    dados: response.data._embedded.dietaModelList,
+                                    paginacao: response.data.page,
+                                    links: response.data._links,
+                                    url: 'dieta'
+                                }
                             })
                             .catch((error) => {
                                 return false;

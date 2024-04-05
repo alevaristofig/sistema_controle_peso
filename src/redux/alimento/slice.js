@@ -10,7 +10,7 @@ export const alimentoSlice = createSlice({
     name: 'alimento',
     initialState,
     reducers: {
-        listar: (state) => {
+        listar: (state,action) => {
             state.loading = true;
         },
         listarSucesso: (state,action) => {

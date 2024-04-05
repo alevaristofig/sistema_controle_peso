@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import { LiaRunningSolid  } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
@@ -11,15 +11,20 @@ import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function Exercicio(){
 
     const dispatch = useDispatch();
     const { exercicios, loading } = useSelector((rootReducer) => rootReducer.exercicio);
+    const { page } = useParams();
 
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
-        dispatch(listar());
+        dispatch(listar({
+            'page': page
+        }));
 
         setLoadingDel(false);
     },[loadingDel]);
@@ -88,7 +93,7 @@ export default function Exercicio(){
                                                 </thead>
                                                 <tbody>
                                                     {
-                                                        exercicios.map((m,i) => {
+                                                        exercicios.dados.map((m,i) => {
                                                             return(
                                                                 <tr key={i}>
                                                                     <td>{m.id}</td>
@@ -111,6 +116,15 @@ export default function Exercicio(){
                                                     }
                                                 </tbody>
                                         </table>
+                                        {
+                                            exercicios.paginacao.totalPages > 1
+                                            ?
+                                                <div className='row'>
+                                                    <Paginacao dados={exercicios} />
+                                                </div>
+                                            :
+                                                ''
+                                        }
                                     </div>
                                 </div>
                     }
