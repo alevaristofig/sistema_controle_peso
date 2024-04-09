@@ -25,7 +25,7 @@ export default function CadastroAlimento() {
         dispatch(salvar({
             'nome': nome,
             'quantidade': quantidade,
-            'caloria': caloria
+            'calorias': caloria
         }));
 
         setNome('');

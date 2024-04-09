@@ -59,7 +59,7 @@ export default function EditarHistoricoMedico() {
         setDataCadastro('');
         setPessoaId('');
 
-        navigate('/historicomedico', {replace: true})
+        navigate('/historicomedico/0', {replace: true})
     }
 
     return (

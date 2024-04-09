@@ -26,7 +26,7 @@ function* salvar(action) {
         let dados = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
-            'caloria': action.payload.caloria
+            'calorias': action.payload.calorias
         }
 
         yield call(axios.post,"http://localhost:8080/alimentos",dados);
@@ -43,9 +43,10 @@ function* atualizar(action) {
         let data = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
-            'caloria': action.payload.caloria
+            'calorias': action.payload.calorias,
+            'dataCadastro': action.payload.dataCadastro
         };
-console.log(data)
+
         yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data);
     
         yield put(atualizarSucesso());

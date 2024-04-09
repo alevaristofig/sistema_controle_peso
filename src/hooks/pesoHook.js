@@ -5,8 +5,8 @@ import axios from 'axios';
 function usePeso() {
 
     async function buscar(id) {
-        const result = await axios.get(`http://localhost:8080/peso/${id}`)
-                               .then((response) => {                                
+        const result = await axios.get(`http://localhost:8080/pesos/${id}`)
+                               .then((response) => {                                                           
                                     return response.data
                                })
                                .catch((error) => {

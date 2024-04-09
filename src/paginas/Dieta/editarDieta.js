@@ -37,7 +37,7 @@ export default function EditarDieta() {
         async function buscarDadosDieta() {
             let alimentos = await listar();
             let dadosDieta = await buscar(id);
-
+console.log(alimentos)
             if(typeof dadosDieta === 'string') {
                 toast.error(dadosDieta);  
                 setBuscarErro(true);                                                 

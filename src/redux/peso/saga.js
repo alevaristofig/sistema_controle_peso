@@ -42,7 +42,7 @@ function* atualizar(action) {
             'pessoa': action.payload.pessoa
         };
 
-        yield call(axios.put,`http://localhost:8080/peso/${action.payload.id}`,data);
+        yield call(axios.put,`http://localhost:8080/pesos/${action.payload.id}`,data);
 
         yield put(atualizarSucesso());
     } catch(error) {
@@ -52,7 +52,7 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/peso/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/pesos/${action.payload.id}`);
 
         yield put(apgarSucesso());
 

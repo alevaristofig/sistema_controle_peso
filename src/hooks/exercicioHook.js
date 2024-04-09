@@ -2,7 +2,7 @@ import axios from 'axios';
 
 function useExercicio() {
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/exercicio/${id}`)
+        const response = await axios.get(`http://localhost:8080/exercicios/${id}`)
                                .then((response) => {                                
                                     return response.data;
                                })

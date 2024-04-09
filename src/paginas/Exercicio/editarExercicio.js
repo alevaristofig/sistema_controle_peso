@@ -52,7 +52,7 @@ export default function EditarExercicio() {
             'dataCadastro': dataCadastro
         }));
 
-        navigate('/exercicio', {replace: true});
+        navigate('/exercicio/0', {replace: true});
     }
 
     return(

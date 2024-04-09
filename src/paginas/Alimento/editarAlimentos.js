@@ -21,6 +21,7 @@ export default function EditarAlimento() {
     const [nome,setNome] = useState('');
     const [quantidade,setQuantidade] = useState('');
     const [caloria,setCaloria] = useState('');
+    const [dataCadastro,setDataCadastro] = useState('');
     const [buscarError,setBuscarErro] = useState(false);    
 
     useEffect(() => {
@@ -35,6 +36,7 @@ export default function EditarAlimento() {
                 setNome(result.nome);
                 setQuantidade(result.quantidade);
                 setCaloria(result.calorias);
+                setDataCadastro(result.dataCadastro);
             }
         }
 
@@ -43,7 +45,7 @@ export default function EditarAlimento() {
     },[]);
 
     function mascaraCaloria(inputCaloria) {
-        setCaloria(formatarCaloria(inputCaloria));
+        setCaloria(formatarCaloria(inputCaloria));        
      }
 
 
@@ -54,10 +56,11 @@ export default function EditarAlimento() {
             'id': id,
             'nome': nome,
             'quantidade': quantidade,
-            'caloria': caloria
+            'calorias': caloria,
+            'dataCadastro': dataCadastro
         }));
 
-        navigate('/alimento', {replace: true});        
+        navigate('/alimento/0', {replace: true});        
     }
 
     return (

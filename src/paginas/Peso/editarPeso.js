@@ -62,7 +62,7 @@ export default function EditarPeso() {
             let dataAtual = new Date();
 
             dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
-
+alert(inputPeso);
             dispatch(atualizar({
                 'id': id,
                 'valor': inputPeso,
@@ -76,7 +76,7 @@ export default function EditarPeso() {
             setIdPessoa('');
             setImc('');
 
-            navigate('/peso', {replace: true})
+            navigate('/peso/0', {replace: true})
         }
         
     }

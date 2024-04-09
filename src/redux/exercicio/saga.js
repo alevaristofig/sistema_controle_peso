@@ -30,7 +30,7 @@ function* salvar(action) {
             'tempo': action.payload.tempo
         };
 
-        yield call(axios.post,"http://localhost:8080/exercicio",dados);
+        yield call(axios.post,"http://localhost:8080/exercicios",dados);
 
         yield put(salvarSucesso());
 
@@ -41,7 +41,7 @@ function* salvar(action) {
 
 function* remover(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/exercicio/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/exercicios/${action.payload.id}`);
 
         yield put(removerSucesso());
 
@@ -59,7 +59,7 @@ function* atualizar(action) {
             'dataCadastro': action.payload.dataCadastro
         };
 
-        yield call(axios.put,`http://localhost:8080/exercicio/${action.payload.id}`,data);
+        yield call(axios.put,`http://localhost:8080/exercicios/${action.payload.id}`,data);
 
         yield put(atualizarSucesso());
     } catch(error) {
