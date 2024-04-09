@@ -3,7 +3,7 @@ import { GiWeightLiftingUp } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
-import { listar } from "../../redux/exercicio/slice";
+import { listarSemPaginacao } from "../../redux/exercicio/slice";
 import { listarTreino, salvar } from '../../redux/treino/slice';
 
 import Header from "../../compomentes/Headers";
@@ -56,7 +56,7 @@ export default function Treino() {
     }
 
     useEffect(() => {
-        dispatch(listar());
+        dispatch(listarSemPaginacao());
 
         dispatch(listarTreino());
 
@@ -156,7 +156,7 @@ export default function Treino() {
         <>
             <Header />
             <div className="content">
-                <Titulo nome="Pessoa">
+                <Titulo nome="Treino">
                     <GiWeightLiftingUp color="#000" size={24} />
                 </Titulo>
 
@@ -186,7 +186,7 @@ export default function Treino() {
                                         <span>Nenhuma exercício encontrado </span>                                    
                                     </div>
                                 </div>
-                            :
+                            :                            
                                 <>
                                     <form method='post' onSubmit={registrarTreino}>
                                         <div className="row">                                    

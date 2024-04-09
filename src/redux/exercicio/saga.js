@@ -1,7 +1,8 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { listarSucesso, listarError, salvarSucesso, salvarError,
          removerSucesso, removerError, atualizarSucesso,
-        atualizarError } from './slice';
+         atualizarError, listarSemPaginacaoSucesso, 
+         listarSemPaginacaoError } from './slice';
 
 import axios from 'axios';
 
@@ -20,6 +21,18 @@ function* listar(action) {
     } catch(error) {
         yield put(listarError());
     }
+}
+
+function* listarSemPaginacao() {
+    try {
+        const response = yield call(axios.get,"http://localhost:8080/exercicios/listarexercicios");
+console.log(response);
+        yield put(listarSemPaginacaoSucesso(response.data))
+    } catch(error) {
+        alert('error')
+        yield put(listarSemPaginacaoError());
+    }
+    
 }
 
 function* salvar(action) {
@@ -70,6 +83,7 @@ function* atualizar(action) {
 
 export default all([
     takeEvery('exercicio/listar', listar),
+    takeEvery('exercicio/listarSemPaginacao', listarSemPaginacao),
     takeEvery('exercicio/salvar', salvar),
     takeEvery('exercicio/remover', remover),
     takeEvery('exercicio/atualizar', atualizar)

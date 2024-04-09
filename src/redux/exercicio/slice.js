@@ -10,7 +10,7 @@ export const exercicioSlice = createSlice({
     name: 'exercicio',
     initialState,
     reducers: {
-        listar: (state,action) => {                        
+        listar: (state,action) => {                                  
             state.loading = true;
         },
         listarSucesso(state,action) {
@@ -20,6 +20,17 @@ export const exercicioSlice = createSlice({
         listarError(state,action) {
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Exercícios!");         
+        },
+        listarSemPaginacao(state) {
+            state.loading = true;
+        },
+        listarSemPaginacaoSucesso(state,action) {
+            state.loading = false;
+            state.exercicios = action.payload;
+        },
+        listarSemPaginacaoError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar os Exercícios!");    
         },
         salvar(state,action) {
             state.loading = true;
@@ -59,6 +70,7 @@ export const exercicioSlice = createSlice({
 
 export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
                remover, removerSucesso, removerError, atualizar, atualizarSucesso, 
-               atualizarError } = exercicioSlice.actions;
+               atualizarError, listarSemPaginacao, listarSemPaginacaoSucesso,
+               listarSemPaginacaoError } = exercicioSlice.actions;
 
 export default exercicioSlice.reducer;
