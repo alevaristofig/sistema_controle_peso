@@ -3,7 +3,7 @@ import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { Link, useNavigate, useParams } from "react-router-dom";
 
 import { useDispatch, useSelector } from 'react-redux';
-import { listar, apagar } from '../../redux/peso/slice';
+import { listar, apagar, buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 
 import { ToastContainer } from 'react-toastify';
 import Header from "../../compomentes/Headers";
@@ -15,7 +15,7 @@ import Paginacao from '../../compomentes/Paginacao';
 export default function Peso() {
 
     const dispatch = useDispatch();
-    const { pesos, loading } = useSelector((rootReducer) => rootReducer.peso);
+    const { pesos, loading, primeiroPeso, ultimoPeso } = useSelector((rootReducer) => rootReducer.peso);
     const navigate = useNavigate();
     const {page} = useParams();
 
@@ -25,6 +25,10 @@ export default function Peso() {
         dispatch(listar({
             'page': page
         }));
+
+        dispatch(buscarPrimeiroPeso());
+
+        dispatch(buscarUltimoPeso());
 
         setLoadingDel(false);
     },[loadingDel]);
@@ -132,31 +136,37 @@ export default function Peso() {
                                                     <tr>
                                                         <td>Total Imc</td>
                                                         <td>
+                                                            <span>
+                                                                {primeiroPeso.imc} - {ultimoPeso.imc} = 
+                                                            </span>
                                                             {
-                                                                pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc < 0
+                                                                ultimoPeso.imc - primeiroPeso.imc < 0
                                                                 ?
-                                                                    <span className='text-success'>
-                                                                        {(pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc).toFixed(2)}
+                                                                    <span className='text-success ms-1'>                                                                        
+                                                                        {(ultimoPeso.imc - primeiroPeso.imc).toFixed(2)}
                                                                     </span>
                                                                 :
-                                                                <span className='text-danger'>
-                                                                    {(pesos.dados[pesos.dados.length-1].imc - pesos.dados[0].imc).toFixed(2)}
+                                                                <span className='text-danger ms-1'>
+                                                                    {(ultimoPeso.imc - primeiroPeso.imc).toFixed(2)}
                                                                 </span>
                                                                 
                                                             }
                                                         </td>
-                                                        <td>Total Peso</td>
+                                                        <td>Total Peso Perdido</td>
                                                         <td colSpan={3}>
+                                                            <span>
+                                                                {primeiroPeso.valor} - {ultimoPeso.valor} = 
+                                                            </span>
                                                             {
-                                                                pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor < 0
+                                                                primeiroPeso.valor - ultimoPeso.valor > 0
                                                                 ?
-                                                                    <span className='text-success'>
-                                                                        {(pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor).toFixed(2)}
+                                                                    <span className='text-success ms-2'>
+                                                                        {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)}
                                                                     </span>
                                                                 :
-                                                                <span className='text-danger'>
-                                                                    {(pesos.dados[pesos.dados.length-1].valor - pesos.dados[0].valor).toFixed(2)}
-                                                                </span>
+                                                                    <span className='text-danger ms-2'>
+                                                                        {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)}
+                                                                    </span>
                                                                 
                                                             }
                                                         </td>
@@ -170,7 +180,7 @@ export default function Peso() {
                                                         <Paginacao dados={pesos} />
                                                     </div>
                                                 :
-                                                    'nao'
+                                                    ''
                                             }
                                             
                                         </div>

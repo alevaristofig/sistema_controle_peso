@@ -1,7 +1,8 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { listarSucesso, listarError, salvarSucesso, salvarError,
          atualizarSucesso, atualizarError, apgarSucesso,
-        apgarError } from './slice';
+         apgarError, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError,
+        buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
 
 import axios from 'axios';
 
@@ -61,9 +62,31 @@ function* apagar(action) {
     }
 }
 
+function* buscarPrimeiroPeso() {
+    try {
+        const response = yield call(axios.get,"http://localhost:8080/pesos/buscarprimeiropeso");
+
+        yield put(buscarPrimeiroPesoSucesso(response.data));
+    } catch(error) {
+        yield put(buscarPrimeiroPesoError());
+    }
+}
+
+function* buscarUltimoPeso() {
+    try {
+        const response = yield call(axios.get,"http://localhost:8080/pesos/buscarultimoropeso");
+
+        yield put(buscarUltimoPesoSucesso(response.data));
+    } catch(error) {
+        yield put(buscarUltimoPesoError());
+    }
+}
+
 export default all([
     takeEvery('peso/listar', listar),
     takeEvery('peso/salvar', salvar),
     takeEvery('peso/atualizar', atualizar),
-    takeEvery('peso/apagar', apagar)
+    takeEvery('peso/apagar', apagar),
+    takeEvery('peso/buscarPrimeiroPeso', buscarPrimeiroPeso),
+    takeEvery('peso/buscarUltimoPeso', buscarUltimoPeso)
 ])

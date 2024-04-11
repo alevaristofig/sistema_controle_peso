@@ -26,7 +26,7 @@ function* salvar(action) {
         let dados = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
-            'calorias': action.payload.calorias
+            'calorias': action.payload.calorias,            
         }
 
         yield call(axios.post,"http://localhost:8080/alimentos",dados);

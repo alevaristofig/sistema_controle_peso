@@ -46,7 +46,7 @@ export default function EditarAlimento() {
 
     function mascaraCaloria(inputCaloria) {
         setCaloria(formatarCaloria(inputCaloria));        
-     }
+    }
 
 
     function salvarDados(e) {

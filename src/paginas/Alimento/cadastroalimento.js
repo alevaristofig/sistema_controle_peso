@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import CurrencyInput from 'react-currency-masked-input';
 
 import { salvar } from '../../redux/alimento/slice';
+import useAlimento from '../../hooks/alimentoHook';
 
 import { FaBowlFood } from 'react-icons/fa6';
 import { ToastContainer } from 'react-toastify';
@@ -14,10 +15,15 @@ import 'bootstrap/dist/css/bootstrap.css';
 export default function CadastroAlimento() {
 
     const dispatch = useDispatch();
+    const {formatarCaloria} = useAlimento();
 
     const [nome,setNome] = useState('');
     const [quantidade,setQuantidade] = useState('');
     const [caloria,setCaloria] = useState('');
+
+    function mascaraCaloria(inputCaloria) {
+        setCaloria(formatarCaloria(inputCaloria));        
+    }
 
     function salvarDados(e) {
         e.preventDefault();
@@ -25,7 +31,7 @@ export default function CadastroAlimento() {
         dispatch(salvar({
             'nome': nome,
             'quantidade': quantidade,
-            'calorias': caloria
+            'calorias': caloria,            
         }));
 
         setNome('');
@@ -79,12 +85,13 @@ export default function CadastroAlimento() {
                             <div className="col">
                                 <label className="form-label">Calorias</label>
                                 <label className="form-label obrigatorio">*</label>
-                                <CurrencyInput 
-                                    name="caloria" 
-                                    className="form-control"                                    
-                                    onChange={(e) => setCaloria(e.target.value)} 
-                                    required 
-                                />                                                                
+                                <input 
+                                    type='text' 
+                                    id='inputCaloria'
+                                    className="form-control"
+                                    value={caloria}                                             
+                                    onChange={(e) => mascaraCaloria(e.target.value)}                                         
+                                />                                                                  
                             </div>
                         </div>
 

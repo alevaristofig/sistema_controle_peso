@@ -3,6 +3,8 @@ import { toast } from 'react-toastify';
 
 const initialState = {
     pesos: [],
+    primeiroPeso: '',
+    ultimoPeso: '',
     loading: false
 }
 
@@ -33,8 +35,7 @@ export const pesoSlice = createSlice({
             toast.error(action.payload);
         },
         atualizar(state,action) {
-            state.loading = true;
-            console.log(action)
+            state.loading = true;            
         },
         atualizarSucesso(state) {
             state.loading = false;
@@ -54,12 +55,36 @@ export const pesoSlice = createSlice({
         apgarError(state) {
             state.loading = false;
             toast.success("Ocorreu um erro ao apagar o peso!");
-        }
+        },
+        buscarPrimeiroPeso(state) {
+            state.loading = true;
+        },
+        buscarPrimeiroPesoSucesso(state,action) {
+            state.loading = false;
+            state.primeiroPeso = action.payload;
+        },
+        buscarPrimeiroPesoError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar o primeiro Peso!");
+        },
+        buscarUltimoPeso(state) {
+            state.loading = true;
+        },
+        buscarUltimoPesoSucesso(state,action) {
+            state.loading = false;
+            state.ultimoPeso = action.payload;
+        },
+        buscarUltimoPesoError(state) {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar o último Peso!");
+        },
     }
 });
 
 export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
                atualizar, atualizarSucesso, atualizarError, apagar, apgarSucesso, 
-               apgarError  } = pesoSlice.actions;
+               apgarError, buscarPrimeiroPeso, buscarPrimeiroPesoSucesso,
+               buscarPrimeiroPesoError, buscarUltimoPeso, buscarUltimoPesoSucesso,
+               buscarUltimoPesoError  } = pesoSlice.actions;
 
 export default pesoSlice.reducer;
