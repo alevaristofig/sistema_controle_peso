@@ -1,5 +1,5 @@
-import { all, takeEvery, call, put, take } from 'redux-saga/effects';
-import { listarSucesso, listarError, salvarSucesso, salvarError } from './slice';
+import { all, takeEvery, call, put } from 'redux-saga/effects';
+import { listarSucesso, listarError, salvarSucesso, salvarError} from './slice';
 
 import axios from 'axios';
 
@@ -37,5 +37,5 @@ function* salvar(action) {
 
 export default all([
     takeEvery('treino/listarTreino', listarTreino),
-    takeEvery('treino/salvar', salvar)
+    takeEvery('treino/salvar', salvar),
 ])

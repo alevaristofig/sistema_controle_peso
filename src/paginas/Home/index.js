@@ -3,12 +3,14 @@ import { Link } from "react-router-dom";
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid } from 'react-icons/lia';
+import { GiWeightLiftingUp } from 'react-icons/gi';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
 
 import { buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 import usePessoa from "../../hooks/pessoaHook";
+import useTreino from '../../hooks/treinoHook';
 
 import Header from '../../compomentes/Headers';
 import Titulo from "../../compomentes/Titulo";
@@ -21,10 +23,13 @@ export default function Home() {
 
     const { primeiroPeso, ultimoPeso } = useSelector((rootReducer) => rootReducer.peso);
     const { buscar } = usePessoa();
+    const { listarQuantidadeTreinos } = useTreino();
 
     const [nome,setNome] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
+    const [treinosFeitos,setTreinosFeitos] = useState('');
+    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState('');
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
@@ -41,9 +46,24 @@ export default function Home() {
             }
         }
 
+        async function buscarQuantidadeTreinoFeito(treino) {
+            let dados = await listarQuantidadeTreinos(treino);
+
+            setTreinosFeitos(dados);
+        }
+
+        async function buscarQuantidadeTreinoNaoFeito(treino) {
+            let dados = await listarQuantidadeTreinos(treino);
+
+            setTreinosNaoFeitos(dados);
+        }
+
         buscarDados();
+        buscarQuantidadeTreinoFeito('S');
+        buscarQuantidadeTreinoNaoFeito('N');
         dispatch(buscarPrimeiroPeso());
         dispatch(buscarUltimoPeso());
+        
     },[])
 
     return(
@@ -94,8 +114,45 @@ export default function Home() {
                                                     <label>Ganhou: {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)} </label>
                                             }
                                         </span>
+                                        <span className='ms-4'>IMC Inicial: {primeiroPeso.imc}</span>
+                                        <span className='ms-2'>IMC Atual: {ultimoPeso.imc}</span>
+                                        <span className='ms-2'>
+                                            {
+                                                primeiroPeso.imc - ultimoPeso.imc > 0
+                                                ?
+                                                    <label>Perdeu: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
+                                                :
+                                                    <label>Ganhou: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
+                                            }
+                                        </span>
                                         <span className='ms-3 float-end'>
                                             <Link to={`/peso/0`} className="btn btn-info">Ver Pesos</Link>
+                                        </span>
+                                    </div>
+                                    <hr />
+                                </div>
+                                <div className='row'>                                    
+                                    <div className="text-body-secondary pt-3 col">
+                                        <GiWeightLiftingUp color="#000" size={24} />
+                                        {
+                                            treinosFeitos.length > 0
+                                            ?
+                                                treinosFeitos.map((t,i) => {
+                                                    return (
+                                                        <>
+                                                        <span className='ms-2' key={i}>{t.nome}:</span>
+                                                        <span className='ms-2' key={i}>
+                                                            <label>Feitos: {t.quantidade} | Não Feitos: {treinosNaoFeitos[i].quantidade}</label>                                                        
+                                                        </span>
+                                                        </>
+                                                    
+                                                    )
+                                                })
+                                            :
+                                             ''                                            
+                                        }
+                                        <span className='ms-3 float-end'>
+                                            <Link to={`/treino`} className="btn btn-info">Ver Treinos</Link>
                                         </span>
                                     </div>
                                 </div>

@@ -21,7 +21,7 @@ export const treinoSlice = createSlice({
         listarError: (state) => {
             state.loadingTreino = false;
             toast.error("Ocorreu um erro ao listar os Treinos!");
-        },
+        },        
         salvar(state,action) {
             state.loadingTreino = true;  
         },
@@ -37,6 +37,6 @@ export const treinoSlice = createSlice({
 });
 
 export const { listarTreino, listarSucesso, listarError, salvar, salvarSucesso, 
-               salvarError } = treinoSlice.actions;
+              salvarError} = treinoSlice.actions;
 
 export default treinoSlice.reducer;
