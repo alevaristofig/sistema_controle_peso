@@ -63,7 +63,7 @@ const router = createBrowserRouter([
     element: <EditarExercicio />
   },
   {
-    path: '/treino',
+    path: '/treino/:page',
     element: <Treino />
   },
   {

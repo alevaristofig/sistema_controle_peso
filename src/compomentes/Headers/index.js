@@ -33,7 +33,7 @@ export default function Header(){
                 <LiaRunningSolid  color="#fff" size={24} /> Exercício
             </Link>
 
-            <Link to="/treino">
+            <Link to="/treino/0">
                 <GiWeightLiftingUp  color="#fff" size={24} /> Treino
             </Link>
 

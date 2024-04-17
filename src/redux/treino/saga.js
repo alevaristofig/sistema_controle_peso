@@ -3,11 +3,18 @@ import { listarSucesso, listarError, salvarSucesso, salvarError} from './slice';
 
 import axios from 'axios';
 
-function* listarTreino() {
+function* listarTreino(action) {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/pessoaexercicio");
+        const response = yield call(axios.get,`http://localhost:8080/pessoaexercicio?page=${action.payload.page}`);
 
-        yield put(listarSucesso(response.data));
+        let responsePessoaExercicio = {
+            dados: response.data._embedded.pessoaExercicioModelList,
+            paginacao: response.data.page,
+            links: response.data._links,
+            url: 'treino'
+        }
+
+        yield put(listarSucesso(responsePessoaExercicio));
     } catch(error) {
         yield put(listarError());
     }
@@ -17,13 +24,13 @@ function* salvar(action) {
     try {
         let dados = {
             'pessoaId': {
-                'id': action.payload.pessoaId
+                'id': action.payload.dados.pessoaId
             },
             'exercicioId': {
-                'id': action.payload.exercicioId
+                'id': action.payload.dados.exercicioId
             },
-            'treino': action.payload.treino,
-            'data': action.payload.data
+            'treino': action.payload.dados.treino,
+            'data': action.payload.dados.data
         };
 
         yield call(axios.post,"http://localhost:8080/pessoaexercicio",dados);

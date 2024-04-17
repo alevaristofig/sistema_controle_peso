@@ -1,6 +1,6 @@
 import { useEffect } from "react"
 
-export default function Treinos({children,dados}) {
+export default function Treinos({children, treinoDados}) {
 
     function formatarDiaSemana(dataFormatacao) {
 
@@ -44,9 +44,9 @@ export default function Treinos({children,dados}) {
     }
 
     return(     
-        dados.length > 0   
+        typeof treinoDados.dados == 'object'   
         ?
-            dados.map((d,i) => {
+            treinoDados.dados.map((d,i) => {
                 return(
                     <div className="col-sm-3 mb-4" aria-disabled key={i}>
                         <div className="card">
@@ -60,7 +60,6 @@ export default function Treinos({children,dados}) {
                 )
             })
         :
-            ''
-                
+            ''                
     )
 }

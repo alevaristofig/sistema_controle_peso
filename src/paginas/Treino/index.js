@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
 import { GiWeightLiftingUp } from 'react-icons/gi';
 import { ToastContainer } from 'react-toastify';
 
@@ -11,15 +12,22 @@ import Titulo from "../../compomentes/Titulo";
 import Treinos from '../../compomentes/Treinos';
 import 'bootstrap/dist/css/bootstrap.css';
 
+import Paginacao from '../../compomentes/Paginacao';
+
 export default function Treino() {
 
     const dispatch = useDispatch();
+
+    const {page} = useParams();
     const { exercicios, loading } = useSelector((rootReducer) => rootReducer.exercicio);
-    const { treinos, loadingTreino } = useSelector((rootReducer) => rootReducer.treino);
+    const { treinos, loadingTreino } = useSelector((rootReducer) => rootReducer.treino); 
+    const navigate = useNavigate();   
 
     const [data,setData] = useState([]);
     const [diaSemana,setDiaSemana] = useState('');
     const [treino,setTreino] = useState(false);
+    const [treinoFeito,setTreinoFeito] = useState('S');
+    const [treinoNaoFeito,setTreinoNaoFeito] = useState('N');
     const [valoresTreino,setValoresTreino] = useState([]);
     const [loadingRegistro,setLoadingRegistro] = useState(true);
 
@@ -58,7 +66,9 @@ export default function Treino() {
     useEffect(() => {
         dispatch(listarSemPaginacao());
 
-        dispatch(listarTreino());
+        dispatch(listarTreino({
+            'page': page
+        }));
 
         let dataAtual = new Date();
 
@@ -83,70 +93,47 @@ export default function Treino() {
             };
 
             valoresTreino.push(dados)     
-        }
-         
-        setValoresTreino(valoresTreino);
+        }        
     }
 
     function registrarTreino(e) {
         e.preventDefault();
-
+        
         let dataBanco = data.split('/');
         let dataAtual = new Date();
 
         dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
 
-        if(valoresTreino.length === 0) {
-            exercicios.forEach(element => {
-                dispatch(salvar({
-                    'pessoaId': treinos[0].pessoaId.id,
-                    'exercicioId': element.id,
-                    'treino': 'N',
-                    'data': dataBanco
-                }));
-            });
-        } else if(valoresTreino.length === 1) {
-            let indice = exercicios.findIndex((i) => i.id == valoresTreino[0].id);
-          
-            exercicios.forEach((e,i) => {
-                if(i !== indice) {
-                    dispatch(salvar({
-                        'pessoaId': treinos[0].pessoaId.id,
-                        'exercicioId': e.id,
-                        'treino': 'N',
-                        'data': dataBanco
-                    }));
-                }
-            });
-
-            dispatch(salvar({
-                'pessoaId': treinos[0].pessoaId.id,
-                'exercicioId': valoresTreino[0].id,
-                'treino': valoresTreino[0].treino,
+        exercicios.forEach(e => {
+            let dados = {
+                'pessoaId': 1,
+                'exercicioId': e.id,                
                 'data': dataBanco
-            }));
-        } else {
-            valoresTreino.forEach(element => {
-                dispatch(salvar({
-                    'pessoaId': treinos[0].pessoaId.id,
-                    'exercicioId': element.id,
-                    'treino': element.treino,
-                    'data': dataBanco
-                }));
-            });
-        }
+            };
+            let indice = valoresTreino.findIndex((i) => i.id == e.id);
 
-        setLoadingRegistro(true);
+            if(indice != -1) {
+                dados.treino = valoresTreino[indice].treino;
+            } else {
+                dados.treino = treinoNaoFeito;
+            }
+            
+            dispatch(salvar({
+                dados
+            }));
+        })
+
+        navigate('/', {replace: true}); 
     }
 
     function mostrarDivTreino() {
-        if(treinos.length > 0) {
+        if(typeof treinos.dados == 'object') {
 
             let dataAtual = new Date();
             let dataDivTreino = dataAtual.toLocaleDateString().split('/');
             dataDivTreino = dataDivTreino[2]+'-'+dataDivTreino[1]+'-'+dataDivTreino[0];
 
-            let result = treinos.findIndex((e) => e.data.substring(0,10) === dataDivTreino);
+            let result = treinos.dados.findIndex((e) => e.data.substring(0,10) === dataDivTreino);
 
             return result;
         }
@@ -163,7 +150,7 @@ export default function Treino() {
                 <div>
                     <ToastContainer />
                 </div>
-                
+               
                 <div className="container py-4">
                     {
                         loading
@@ -172,8 +159,8 @@ export default function Treino() {
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         :  
-                            <div className='row'>
-                                <Treinos dados={treinos} />
+                            <div className='row'>                                
+                                <Treinos treinoDados={treinos} />                              
                             </div>
                             
                         }
@@ -216,6 +203,19 @@ export default function Treino() {
                                                 })                                        
                                             }                                                                                                      
                                         </div>
+                                        {      
+                                            typeof treinos.paginacao == 'object'   
+                                            ?
+                                                treinos.paginacao.totalPages > 1
+                                                ?
+                                                    <div className='row'>
+                                                        <Paginacao dados={treinos} />
+                                                    </div>
+                                                :
+                                                    ''
+                                            :
+                                                ''                                                                       
+                                        }
                                         <div className="row mt-3">
                                             <div className="col">
                                                 <button type="submit" className="btn btn-primary">Registrar</button>

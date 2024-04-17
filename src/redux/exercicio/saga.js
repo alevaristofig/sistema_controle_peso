@@ -26,7 +26,7 @@ function* listar(action) {
 function* listarSemPaginacao() {
     try {
         const response = yield call(axios.get,"http://localhost:8080/exercicios/listarexercicios");
-console.log(response);
+
         yield put(listarSemPaginacaoSucesso(response.data))
     } catch(error) {
         alert('error')

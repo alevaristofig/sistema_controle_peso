@@ -22,7 +22,7 @@ export const treinoSlice = createSlice({
             state.loadingTreino = false;
             toast.error("Ocorreu um erro ao listar os Treinos!");
         },        
-        salvar(state,action) {
+        salvar(state,action) {            
             state.loadingTreino = true;  
         },
         salvarSucesso(state) {
