@@ -21,17 +21,6 @@ export const pessoaSlice = createSlice({
             state.loading = false;
             toast.error("Ocorreu um erro ao listar as Pessoas!");
         },
-        salvar: (state,action) => {
-            state.loading = true;
-        },
-        salvarSucesso: (state) => {
-            state.loading = false;
-            toast.success("Pessoa cadastrada com Sucesso!");
-        },
-        salvarError: (state,action) => {
-            state.loading = false;
-            toast.error(action.payload);
-        },
         atualizar(state,action) {
             state.loading = true;
         },
@@ -46,7 +35,7 @@ export const pessoaSlice = createSlice({
     }
 });
 
-export const { listar, listarSucesso, listarError, salvar, salvarSucesso, salvarError,
-               atualizar, atualizarSucesso,atualizarError } = pessoaSlice.actions;
+export const { listar, listarSucesso, listarError, atualizar, 
+               atualizarSucesso,atualizarError } = pessoaSlice.actions;
 
 export default pessoaSlice.reducer;

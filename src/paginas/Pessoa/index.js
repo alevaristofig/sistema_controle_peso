@@ -34,11 +34,6 @@ export default function Pessoa() {
                 </Titulo>
 
                 <div className="container py-4">
-                    <div className="row">
-                        <div className="col">
-                            <Link to="/cadastropessoa" className="btn btn-success">Nova Pessoa</Link>
-                        </div>
-                    </div>
                     {    
                                      
                         pessoas.length == 0

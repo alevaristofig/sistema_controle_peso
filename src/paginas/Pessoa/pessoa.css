@@ -27,5 +27,14 @@
 
 .obrigatorio{
     color: #ff0000;
-    font-size: 20px;
+    margin-left: 5px;
+}
+
+.tela_resposta {
+    display: flex;
+    align-items: center;
+    justify-self: center;
+    /*position: absolute;
+    top: 43%;
+    left: 10%;*/
 }

@@ -1,64 +1,70 @@
 import { useState } from "react";
-import { useDispatch } from 'react-redux';
-import { salvar } from '../../redux/pessoa/slice';
+import { useNavigate } from "react-router-dom";
 
 import { toast, ToastContainer } from 'react-toastify';
-import { VscPerson } from "react-icons/vsc";
 
-import Header from "../../compomentes/Headers"
-import Titulo from "../../compomentes/Titulo"
+import usePessoa from "../../hooks/pessoaHook";
+
+import TituloLogin from '../../compomentes/Titulo/tituloLogin';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import './pessoa.css';
 
 export default function CadastroPessoa() {
-    const dispatch = useDispatch();
+
+    const {salvar, formatarAltura} = usePessoa();
+    const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
     const [email,setEmail] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
+    const [senha,setSenha] = useState('');
 
     function salvarDados(e) {
         e.preventDefault();    
         
-        if(validar()) {
-
-            dispatch(salvar({
-                'nome': nome,
-                'email': email,
-                'altura': altura,
-                'endereco': endereco
-            }));
-
-            setNome('');
-            setEmail('');
-            setAltura('');
-            setEndereco('');
-        }
-    }
-
-    function validar() {
-        if(nome === '' && email === '' && altura === '' &&  endereco === '') {
-            toast.error("Os campos não podem ficar em branco!");
-            return false;
+        let dataBanco = new Date();
+        let dados = {
+            'nome': nome,
+            'email': email,
+            'altura': altura,
+            'endereco': endereco,
+            'senha': senha,
+            'dataCadastro': dataBanco.toISOString(),
+            'dataAtualizacao': ''
         }
 
-        return true;
+        const resp = salvar(dados);
+
+        if(resp) {
+            toast.success("Pessoa cadastrada com Sucesso!");
+            setTimeout(() => {
+                navigate('/login');
+            },7000)
+        } else {
+            toast.error('Ocorreu um erro ao cadastrar a Pessoa');
+        }
+
+        setNome('');
+        setEmail('');
+        setAltura('');
+        setEndereco('');
+        setSenha('');        
     }
 
+    function mascaraAltura(altura) {
+        console.log(altura)
+        setAltura(formatarAltura(altura));
+    }
 
-    return(
-        <div>
-            <Header />
-            <div className="content">
+    return(                 
+            <div>
                 <div>
                     <ToastContainer />
                 </div> 
-                <Titulo nome="Cadastro de Pessoa">
-                    <VscPerson color="#000" size={24} />
-                </Titulo>
+                <TituloLogin nome="Cadastro de Pessoa"></TituloLogin>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>
@@ -71,6 +77,7 @@ export default function CadastroPessoa() {
                                     className="form-control"
                                     value={nome}
                                     onChange={(e) => setNome(e.target.value)} 
+                                    required
                                 /> 
                             </div>
                         </div>
@@ -84,6 +91,7 @@ export default function CadastroPessoa() {
                                     className="form-control"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)} 
+                                    required
                                 /> 
                             </div>
                         </div>
@@ -96,7 +104,8 @@ export default function CadastroPessoa() {
                                     type="text" 
                                     className="form-control"
                                     value={altura}
-                                    onChange={(e) => setAltura(e.target.value)} 
+                                    onChange={(e) => mascaraAltura(e.target.value)} 
+                                    required
                                 />  
                             </div>
                         </div>
@@ -110,6 +119,21 @@ export default function CadastroPessoa() {
                                     className="form-control"
                                     value={endereco}
                                     onChange={(e) => setEndereco(e.target.value)} 
+                                    required
+                                />   
+                            </div>
+                        </div>
+
+                        <div className="row mt-3">
+                            <div className="col">
+                                <label className="form-label">Senha</label>
+                                <label className="form-label obrigatorio">*</label>
+                                <input 
+                                    type="password" 
+                                    className="form-control"
+                                    value={senha}
+                                    onChange={(e) => setSenha(e.target.value)} 
+                                    required
                                 />   
                             </div>
                         </div>
@@ -122,6 +146,6 @@ export default function CadastroPessoa() {
                     </form>
                 </div>
             </div>
-        </div>
+        
     )
 }

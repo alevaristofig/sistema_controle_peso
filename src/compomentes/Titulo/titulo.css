@@ -8,8 +8,32 @@
     padding: 0.8em;
 }
 
+.titulo2{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 1rem 0;
+    border-radius: 5px;
+    background-color: #cde0c9;
+    padding: 0.8em;
+    width: 97%;
+    margin-left: 20px;
+}
+
 .titulo span{
     margin-left: 0.8em;
     font-size: 1.5em;
     font-weight: bold;
+}
+
+.titulo2 span{
+    margin-left: 0.8em;
+    font-size: 1.5em;
+    font-weight: bold;
+    color: #fff;
+}
+
+.spanLogin {
+    width: 100%;
+    text-align: center;
 }
