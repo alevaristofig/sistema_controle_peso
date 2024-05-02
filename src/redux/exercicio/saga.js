@@ -8,7 +8,11 @@ import axios from 'axios';
 
 function* listar(action) {
     try {
-        const response = yield call(axios.get,`http://localhost:8080/exercicios?page=${action.payload.page}`);
+        const response = yield call(axios.get,`http://localhost:8080/exercicios?page=${action.payload.page}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         let responseExercicio = {
             dados: response.data._embedded.exercicioModelList,
@@ -25,7 +29,11 @@ function* listar(action) {
 
 function* listarSemPaginacao() {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/exercicios/listarexercicios");
+        const response = yield call(axios.get,"http://localhost:8080/exercicios/listarexercicios",{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(listarSemPaginacaoSucesso(response.data))
     } catch(error) {

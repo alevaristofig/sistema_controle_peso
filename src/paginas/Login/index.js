@@ -1,58 +1,114 @@
-import { useState } from 'react';
-
-import TituloLogin from '../../compomentes/Titulo/tituloLogin';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../Pessoa/pessoa.css';
 
 export default function Login() {
-    const [email,setEmail] = useState();
-    const [senha,setSenha] = useState();
+    const [clientId,setClientId] = useState('sisetemacontrolepesobackend');
+    const [authorizeUrl,setAuthorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
+    const [tokenUrl,setTokenUrl] = useState('http://localhost:8080/oauth2/token');
+    const [callbackUrl,setCallbackUrl] = useState('http://localhost:3000/login');
+    
+    const navigate = useNavigate();
 
-    return(
-        <div>
-            <TituloLogin nome="Sistema de Controle de Peso"></TituloLogin>
+   useEffect(async() => {
+        let params = new URLSearchParams(window.location.search);
 
-            <div className="container py-4">
-                <form className="form-perfil" onSubmit="">
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label className="form-label">Email</label>
-                            <label className="form-label obrigatorio">*</label>
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                value={email}
-                                onChange={(e) => setEmail(e.target.value)} 
-                                required
-                            /> 
-                        </div>
-                    </div>
+        if(params == '') {          
+            let codeVerifier = generateRandomString();
+            let codeChallenge = await challenge_from_verifier(codeVerifier);
 
-                    <div className="row mt-3">
-                        <div className="col">
-                            <label className="form-label">Senha</label>
-                            <label className="form-label obrigatorio">*</label>
-                            <input 
-                                type="text" 
-                                className="form-control"
-                                value={senha}
-                                onChange={(e) => setSenha(e.target.value)} 
-                                required
-                            /> 
-                        </div>
-                    </div>
+            sessionStorage.setItem("codeVerifier", codeVerifier);
+          
+            window.location.href = `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
+           
+        } else {
+           let token = await gerarAccessToken(params.get("code"));
 
-                    <div className="row mt-3">
-                        <div className="col">
-                            <button type="submit" className="btn btn-primary">Logar</button>
-                        </div>
-                    </div>      
-                </form>
-            </div>
-        </div>
+           if(token) {
+            sessionStorage.setItem("token", token);
+            navigate('/', {replace: true})
+           }
+        }
+   },[]);
+
+   function dec2Hex(dec) {
+    return ('0', dec.toString(16)).substr(-2);  
+   }
+
+   function generateRandomString() {
+    let array = new Uint32Array(56/2);
+    window.crypto.getRandomValues(array);
+
+    return Array.from(array, dec2Hex).join('');
+   }
+
+   function sha256(plain) {
+      let encoder = new TextEncoder();
+      let data = encoder.encode(plain);
+
+      return window.crypto.subtle.digest('SHA-256', data);
+   }
+
+   function base64urlencode(codigo) {
+    let str = '';
+    let bytes = new Uint8Array(codigo);
+    let len = bytes.byteLength;
+
+    for(let i = 0; i < len; i++) {
+      str+= String.fromCharCode(bytes[i]);
+    }
+
+    return btoa(str)
+      .replace(/\+/g, "-")
+      .replace(/\//g, "_")
+      .replace(/=+$/, "");
+   }
+
+   async function challenge_from_verifier(codeVerifier) {
+    let hashed = await sha256(codeVerifier);
+    let base64encoded = base64urlencode(hashed);
+    
+    return base64encoded;
+   }
 
 
-    )
+  function generateCodeVerifier() {
+    let codeVerifier = generateRandomString(128);
+    sessionStorage.setItem("codeVerifier", codeVerifier);
+  
+    return codeVerifier;
+  }
+
+  async function gerarAccessToken(code) {
+    let params = {
+      'grant_type': 'authorization_code',
+      'code': code,
+      'redirect_uri': callbackUrl,
+      'code_verifier': sessionStorage.getItem('codeVerifier')
+    };
+
+    const resp = await axios.post(tokenUrl,params,{
+      headers: {
+        "Content-Type": 'application/x-www-form-urlencoded',
+      },
+      auth: {
+        username: clientId,
+        password: '123'
+      } 
+    })
+    .then((response) => {  
+      console.log(response)    
+      return response.data.access_token;
+    })
+    .catch((error) => {
+      return false;      
+    });
+
+    return resp;
+  }
+
 }

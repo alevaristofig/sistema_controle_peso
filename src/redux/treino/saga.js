@@ -5,7 +5,11 @@ import axios from 'axios';
 
 function* listarTreino(action) {
     try {
-        const response = yield call(axios.get,`http://localhost:8080/pessoaexercicio?page=${action.payload.page}`);
+        const response = yield call(axios.get,`http://localhost:8080/pessoaexercicio?page=${action.payload.page}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         let responsePessoaExercicio = {
             dados: response.data._embedded.pessoaExercicioModelList,

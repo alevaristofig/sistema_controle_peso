@@ -101,7 +101,7 @@ export default function Peso() {
                                                                     <td>{m.valor}</td>
                                                                     <td>{m.imc}</td>
                                                                     <td>{
-                                                                            formatarData(m.data)
+                                                                            formatarData(m.dataCadastro)
                                                                         }
                                                                     </td>
                                                                     <td>                                                                        

@@ -6,6 +6,7 @@ import { GiWeightLiftingUp } from 'react-icons/gi';
 import { FaBowlFood } from 'react-icons/fa6';
 import { BiFoodMenu } from "react-icons/bi";
 import { CiMedicalClipboard } from "react-icons/ci";
+import { TbLogout2 } from 'react-icons/tb';
 
 import './header.css';
 import avatarImg from '../../assets/avatar.png';
@@ -47,6 +48,10 @@ export default function Header(){
 
             <Link to="/historicomedico/0">
                 <CiMedicalClipboard color='#fff' size={24} /> Histórico Médico
+            </Link>
+
+            <Link to="/logout">
+                <TbLogout2 color='#fff' size={24} /> Sair
             </Link>
         </div>
     )

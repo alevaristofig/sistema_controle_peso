@@ -37,7 +37,12 @@ export default function CadastroPeso() {
         let dataBanco = data.split('/');
         let dataAtual = new Date();
 
-        dados.data = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+        let dataCadastro = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
+                                    +dataBanco[0]
+                                    +`T${dataAtual.toLocaleTimeString()}`);
+        
+        dados.dataCadastro = dataCadastro.toISOString();
+        dados.dataAtualizacao = null;
             
         dados.pessoa = {
             'id': 1

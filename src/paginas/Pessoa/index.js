@@ -10,17 +10,17 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function Pessoa() {
 
-    const [pessoas,setPessoas] = useState([]);
-    const {listar} = usePessoa();
+    const [pessoas,setPessoas] = useState('');
+    const {buscar} = usePessoa();
 
     useEffect(() => {    
 
-        async function listarPessoa() {
-            let pessoa = await listar();
+        async function buscarPessoa() {
+            let pessoa = await buscar(1);            
             setPessoas(pessoa);
         }
         
-        listarPessoa();
+        buscarPessoa();
 
     },[]);
 
@@ -36,7 +36,8 @@ export default function Pessoa() {
                 <div className="container py-4">
                     {    
                                      
-                        pessoas.length == 0
+                        //pessoas.length == 0
+                        pessoas == ''
                         ?
                             <div className="row mt-4">
                                 <div className="col">
@@ -57,9 +58,9 @@ export default function Pessoa() {
                                             <th>#</th>                                                                              
                                         </tr>
                                     </thead>
+                                    
                                     <tbody>
-                                    {
-                                        
+                                    {                                        
                                         pessoas.map((p,i) => {
                                             return(
                                                 <tr key={i}>

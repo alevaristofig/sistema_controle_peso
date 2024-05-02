@@ -15,11 +15,20 @@ function usePessoa() {
     }
 
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/pessoas/${id}`)
-                                .then((response) => {
+        const response = await axios.get(`http://localhost:8080/pessoas/${id}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                                })
+                                .then((response) => {                                                                 
                                     return response.data;
                                 })
-                                .catch((error) => {
+                                .catch((error) => {   
+                                    if(typeof error.response.data.userMessage == 'undefined') {
+                                        return 'Ocorreu um erro interno inesperado no sistema.'
+                                        + 'Tente novamente e se o problema persistir, entre em contato com o administrador do sistema';
+                                    }
+                                                         
                                     return error.response.data.userMessage
                                 });
 
@@ -48,6 +57,20 @@ function usePessoa() {
         return result;
     }
 
+    async function removerToken(token) {
+        const response = await axios.delete(`http://localhost:8080/pessoas/${token}`,{
+            headers: {
+                "Authorization": `Bearer ${token}` ,
+            }
+            })
+            /*.then((response) => {                                
+               
+            })
+            .catch((error) => {                                    
+                return error.response.data.userMessage
+            });*/
+    }
+
     function formatarAltura(altura) {
         if(altura === '') {
             return '0.00';
@@ -65,7 +88,7 @@ function usePessoa() {
         } 
     }
 
-    return {listar,buscar, salvar, formatarAltura}
+    return {listar,buscar, salvar, formatarAltura, removerToken}
 }
 
 export default usePessoa;

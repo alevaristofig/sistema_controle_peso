@@ -6,7 +6,11 @@ import axios from 'axios';
 
 function* listar(action){
     try {
-        const response = yield call(axios.get,`http://localhost:8080/alimentos?page=${action.payload.page}`);
+        const response = yield call(axios.get,`http://localhost:8080/alimentos?page=${action.payload.page}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         let responseAlimento = {
             dados: response.data._embedded.alimentoModelList,

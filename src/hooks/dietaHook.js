@@ -2,7 +2,11 @@ import axios from 'axios';
 
 function useDieta() {
     function listar(page) {
-        const response =  axios.get(`http://localhost:8080/dietas?page=${page}`)
+        const response =  axios.get(`http://localhost:8080/dietas?page=${page}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                            })
                             .then((response) => {
                                 return {
                                     dados: response.data._embedded.dietaModelList,

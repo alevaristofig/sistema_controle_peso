@@ -21,6 +21,7 @@ export default function PessoaDados() {
     const [email,setEmail] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
+    const [senha,setSenha] = useState('');
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
@@ -32,10 +33,10 @@ export default function PessoaDados() {
                 toast.error(dados);  
                 setBuscarErro(true);       
             } else {
-                setNome(dados.nome);
-                setEmail(dados.email);
-                setAltura(dados.altura);
-                setEndereco(dados.endereco);
+                setNome(dados[0].nome);
+                setEmail(dados[0].email);
+                setAltura(dados[0].altura.toFixed(2));
+                setEndereco(dados[0].endereco);
             }
         }
 
@@ -127,6 +128,20 @@ export default function PessoaDados() {
                                         className="form-control"
                                         defaultValue={endereco}
                                         onChange={(e) => setEndereco(e.target.value)} 
+                                        required
+                                    />   
+                                </div>
+                            </div>
+
+                            <div className="row mt-3">
+                                <div className="col">
+                                    <label className="form-label">Senha</label>
+                                    <label className="form-label obrigatorio">*</label>
+                                    <input 
+                                        type="password" 
+                                        className="form-control"
+                                        defaultValue={senha}
+                                        onChange={(e) => setSenha(e.target.value)} 
                                         required
                                     />   
                                 </div>

@@ -2,7 +2,11 @@ import axios from 'axios';
 
 function useHistoricoMedico() {
     async function listar(page) {
-        const response = await axios.get(`http://localhost:8080/historicomedico?page=${page}`)
+        const response = await axios.get(`http://localhost:8080/historicomedico?page=${page}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                            })
                             .then((response) => {
                                 return {
                                     dados: response.data._embedded.historicoMedicoModelList,

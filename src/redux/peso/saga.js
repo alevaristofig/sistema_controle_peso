@@ -8,7 +8,11 @@ import axios from 'axios';
 
 function* listar(action){
     try {        
-        const response = yield call(axios.get,`http://localhost:8080/pesos?page=${action.payload.page}`);
+        const response = yield call(axios.get,`http://localhost:8080/pesos?page=${action.payload.page}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         let responsePeso = {
             dados: response.data._embedded.pesoModelList,
@@ -25,6 +29,7 @@ function* listar(action){
 
 function* salvar(action) {
     try {
+        console.log(action.payload.dados);
         yield call(axios.post,"http://localhost:8080/pesos",action.payload.dados);
 
         yield put(salvarSucesso());

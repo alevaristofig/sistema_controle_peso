@@ -150,7 +150,9 @@ export default function Treino() {
                 <div>
                     <ToastContainer />
                 </div>
-               
+               {
+                //console.log(exercicios)
+               }
                 <div className="container py-4">
                     {
                         loading

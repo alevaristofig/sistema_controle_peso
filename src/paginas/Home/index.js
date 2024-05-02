@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid } from 'react-icons/lia';
@@ -24,22 +24,28 @@ export default function Home() {
     const { primeiroPeso, ultimoPeso } = useSelector((rootReducer) => rootReducer.peso);
     const { buscar } = usePessoa();
     const { listarQuantidadeTreinos } = useTreino();
+    const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
     const [treinosFeitos,setTreinosFeitos] = useState('');
-    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState('');
+    const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
+    
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarDados() {
             let dados = await buscar(1);
 
             if(typeof dados === 'string') {
                 toast.error(dados);  
                 setBuscarErro(true);       
-            } else {
+            } else {                
                 setNome(dados.nome);               
                 setAltura(dados.altura);   
                 setEndereco(dados.endereco);             
@@ -61,8 +67,8 @@ export default function Home() {
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
-        dispatch(buscarPrimeiroPeso());
-        dispatch(buscarUltimoPeso());
+       // dispatch(buscarPrimeiroPeso());
+       // dispatch(buscarUltimoPeso());
         
     },[])
 
@@ -131,6 +137,9 @@ export default function Home() {
                                     </div>
                                     <hr />
                                 </div>
+                                {
+                                    console.log(treinosNaoFeitos.length)
+                                }
                                 <div className='row'>                                    
                                     <div className="text-body-secondary pt-3 col">
                                         <GiWeightLiftingUp color="#000" size={24} />
@@ -142,7 +151,7 @@ export default function Home() {
                                                         <>
                                                         <span className='ms-2' key={i}>{t.nome}:</span>
                                                         <span className='ms-2' key={i}>
-                                                            <label>Feitos: {t.quantidade} | Não Feitos: {treinosNaoFeitos[i].quantidade}</label>                                                        
+                                                            <label>Feitos: {t.quantidade} | Não Feitos: {treinosNaoFeitos[0].quantidade}</label>                                                        
                                                         </span>
                                                         </>
                                                     
