@@ -34,7 +34,11 @@ function useDieta() {
     }
 
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/dietas/${id}`)
+        const response = await axios.get(`http://localhost:8080/dietas/${id}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                            })
                             .then((response) => {                                
                                 return response.data;
                             })

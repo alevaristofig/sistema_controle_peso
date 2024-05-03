@@ -11,7 +11,7 @@ import usePessoa from "../../hooks/pessoaHook";
 
 import 'bootstrap/dist/css/bootstrap.css';
 
-export default function PessoaDados() {
+export default function EditarPessoa() {
     const dispatch = useDispatch();
     const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa);
     const { id } = useParams();
@@ -33,10 +33,10 @@ export default function PessoaDados() {
                 toast.error(dados);  
                 setBuscarErro(true);       
             } else {
-                setNome(dados[0].nome);
-                setEmail(dados[0].email);
-                setAltura(dados[0].altura.toFixed(2));
-                setEndereco(dados[0].endereco);
+                setNome(dados.nome);
+                setEmail(dados.email);
+                setAltura(dados.altura.toFixed(2));
+                setEndereco(dados.endereco);
             }
         }
 

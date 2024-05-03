@@ -2,9 +2,18 @@ import axios from 'axios';
 
 function useAlimento() {
     async function buscar(id) {
-        const result = await axios.get(`http://localhost:8080/alimentos/${id}`)
+        const result = await axios.get(`http://localhost:8080/alimentos/${id}`,{
+                                        headers: {
+                                            "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                        }
+                                    })
                                     .then((response) => {
-                                        return response.data;
+                                        return {
+                                            dados: response.data._embedded.alimentoModelList,
+                                            paginacao: response.data.page,
+                                            links: response.data._links,
+                                            url: 'dieta'
+                                        }
                                     })
                                     .catch((error) => {                                        
                                         return error.response.data.userMessage
@@ -14,9 +23,18 @@ function useAlimento() {
     }
 
     async function listar() {
-        const result = await axios.get("http://localhost:8080/alimentos")
+        const result = await axios.get("http://localhost:8080/alimentos",{
+                                        headers: {
+                                            "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                        }
+                                    })
                                     .then((response) => {
-                                        return response.data;
+                                        return {
+                                            dados: response.data._embedded.alimentoModelList,
+                                            paginacao: response.data.page,
+                                            links: response.data._links,
+                                            url: 'dieta'
+                                        }
                                     })
                                     .catch((error) => {
                                         return '';

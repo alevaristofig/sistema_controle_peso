@@ -37,7 +37,7 @@ export default function EditarDieta() {
         async function buscarDadosDieta() {
             let alimentos = await listar();
             let dadosDieta = await buscar(id);
-console.log(alimentos)
+
             if(typeof dadosDieta === 'string') {
                 toast.error(dadosDieta);  
                 setBuscarErro(true);                                                 
@@ -51,8 +51,7 @@ console.log(alimentos)
                 setNumAlimentosDieta(dadosAlimentos.length);
             }
 
-
-            alimentos.forEach((e,i) => {
+            alimentos.dados.forEach((e,i) => {
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
                     isChecked[i] = true;
 
@@ -193,7 +192,7 @@ console.log(alimentos)
                                                 <div className="row mt-3">
                                                     
                                                         {
-                                                            alimentos.map((a,i) => {                                                                
+                                                            alimentos.dados.map((a,i) => {                                                                
                                                                 return(                                                                                                                                  
                                                                     <div className="col-sm-3 mb-4" key={i}>
                                                                         <div className="card">

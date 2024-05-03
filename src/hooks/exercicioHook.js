@@ -2,7 +2,11 @@ import axios from 'axios';
 
 function useExercicio() {
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/exercicios/${id}`)
+        const response = await axios.get(`http://localhost:8080/exercicios/${id}`,{
+                                    headers: {
+                                        "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                    }
+                                })
                                .then((response) => {                                
                                     return response.data;
                                })

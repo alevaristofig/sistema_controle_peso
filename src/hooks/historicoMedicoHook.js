@@ -23,7 +23,11 @@ function useHistoricoMedico() {
     }
 
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/historicomedico/${id}`)
+        const response = await axios.get(`http://localhost:8080/historicomedico/${id}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                            })
                             .then((response) => {
                                 return response.data;
                             })

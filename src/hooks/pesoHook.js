@@ -5,7 +5,11 @@ import axios from 'axios';
 function usePeso() {
 
     async function buscar(id) {
-        const result = await axios.get(`http://localhost:8080/pesos/${id}`)
+        const result = await axios.get(`http://localhost:8080/pesos/${id}`,{
+                                    headers: {
+                                        "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                    }
+                                })
                                .then((response) => {                                                           
                                     return response.data
                                })

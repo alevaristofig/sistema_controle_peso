@@ -4,7 +4,7 @@ import Login from './paginas/Login';
 import Home from './paginas/Home';
 import Pessoa from './paginas/Pessoa';
 import CadastroPessoa from './paginas/Pessoa/cadastropessoa';
-import PessoaDados from './paginas/Pessoa/pessoadados';
+import EditarPessoa from './paginas/Pessoa/editarpessoa';
 import Peso from './paginas/Peso';
 import CadastroPeso from './paginas/Peso/cadastroPeso';
 import EditarPeso from './paginas/Peso/editarPeso';
@@ -42,7 +42,7 @@ const router = createBrowserRouter([
   },
   {
     path: 'pessoadados/:id',
-    element: <PessoaDados />
+    element: <EditarPessoa />
   },
   {
     path: '/peso/:page',

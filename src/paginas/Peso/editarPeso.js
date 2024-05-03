@@ -42,7 +42,7 @@ export default function EditarPeso() {
                 setAltura(result.pessoa.altura);
                 setIdPessoa(result.pessoa.id);
 
-                let dataPeso = new Date(result.data)
+                let dataPeso = new Date(result.dataCadastro)
                 setData(dataPeso.toLocaleDateString('pt-BR'));
             }
             

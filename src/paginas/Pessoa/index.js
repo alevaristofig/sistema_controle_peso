@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { VscPerson } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import Header from "../../compomentes/Headers";
@@ -12,11 +13,16 @@ export default function Pessoa() {
 
     const [pessoas,setPessoas] = useState('');
     const {buscar} = usePessoa();
+    const navigate = useNavigate();
 
     useEffect(() => {    
 
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarPessoa() {
-            let pessoa = await buscar(1);            
+            let pessoa = [await buscar(1)];            
             setPessoas(pessoa);
         }
         
@@ -58,7 +64,7 @@ export default function Pessoa() {
                                             <th>#</th>                                                                              
                                         </tr>
                                     </thead>
-                                    
+
                                     <tbody>
                                     {                                        
                                         pessoas.map((p,i) => {
