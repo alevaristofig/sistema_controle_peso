@@ -22,6 +22,11 @@ export default function Peso() {
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         dispatch(listar({
             'page': page
         }));

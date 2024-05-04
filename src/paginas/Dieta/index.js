@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch } from 'react-redux';
 import { BiFoodMenu } from "react-icons/bi";
 import { ToastContainer } from 'react-toastify';
@@ -18,11 +18,16 @@ export default function Dieta() {
 
     const {listar} = useDieta();
     const { page } = useParams();
+    const navigate = useNavigate();
 
     const [dietas,setDietas] = useState([]);
     const [loadingApagar,setLoadingApagar] = useState(true);
 
     useEffect(() => {    
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
 
         async function listarDietas() {
             let dieta = await listar(page);

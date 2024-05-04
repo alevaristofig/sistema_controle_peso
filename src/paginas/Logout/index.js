@@ -10,9 +10,11 @@ export default function Logout() {
     useEffect(() => {
 
         async function remover() {
-            await removerToken(sessionStorage.getItem('token'));
+           // await removerToken(sessionStorage.getItem('token'));
             sessionStorage.removeItem('token');
-            navigate('/login');
+           // navigate('/login');
+         //  window.location.href = 'http://localhost:8080/logout';
+         alert(sessionStorage.getItem('token'))
         }
 
         remover();

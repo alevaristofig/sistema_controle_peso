@@ -26,6 +26,10 @@ export default function EditarAlimento() {
 
     useEffect(() => {
 
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarAlimento() {
             let result = await buscar(id);
 
@@ -52,12 +56,15 @@ export default function EditarAlimento() {
     function salvarDados(e) {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         dispatch(atualizar({
             'id': id,
             'nome': nome,
             'quantidade': quantidade,
             'calorias': caloria,
-            'dataCadastro': dataCadastro
+            'dataCadastro': dataCadastro,
+            'dataAtualizacao': dataAtual.toISOString()
         }));
 
         navigate('/alimento/0', {replace: true});        

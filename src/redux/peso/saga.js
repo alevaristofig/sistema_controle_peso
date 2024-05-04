@@ -44,11 +44,16 @@ function* atualizar(action) {
         let data = {
             'valor': action.payload.valor,
             'imc': action.payload.imc,
-            'data': action.payload.data,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao,
             'pessoa': action.payload.pessoa
         };
 
-        yield call(axios.put,`http://localhost:8080/pesos/${action.payload.id}`,data);
+        yield call(axios.put,`http://localhost:8080/pesos/${action.payload.id}`,data,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(atualizarSucesso());
     } catch(error) {

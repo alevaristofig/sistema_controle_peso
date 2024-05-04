@@ -29,11 +29,20 @@ export default function EditarDieta() {
     const [alimentosDieta,setAlimentosDieta] = useState([]);
     const [dadosAlimentos,setDadosAlimentos] = useState([]);
     const [isChecked,setIsChecked] = useState([]);
+    const [dataCadastro,setDataCadastro] = useState('');
+    const [dataAtualizacao,setDataAtualizacao] = useState('');
     const [numAlimentosDieta,setNumAlimentosDieta] = useState(0);
     const [buscarError,setBuscarErro] = useState(false);
 
 
-    useEffect(() => {        
+    useEffect(() => {     
+        
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
+        let dadosAlimentos = '';
+
         async function buscarDadosDieta() {
             let alimentos = await listar();
             let dadosDieta = await buscar(id);
@@ -45,13 +54,13 @@ export default function EditarDieta() {
 
                 setNome(dadosDieta.nome);
                 setDietaId(dadosDieta.id);
+                setDataCadastro(dadosDieta.dataCadastro)
     
-                let dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);
-                setDadosAlimentos(dadosAlimentos);
+                dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);                
                 setNumAlimentosDieta(dadosAlimentos.length);
             }
 
-            alimentos.dados.forEach((e,i) => {
+            alimentos.dados.forEach((e,i) => {                  
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
                     isChecked[i] = true;
 
@@ -96,9 +105,13 @@ export default function EditarDieta() {
     async function salvarDados(e) {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         dispatch(atualizar({
             'id': id,
-            'nome': nome
+            'nome': nome,
+            'dataCadastro': dataCadastro,
+            'dataAtualizacao': dataAtual.toISOString()
         }));
         
 
@@ -107,7 +120,9 @@ export default function EditarDieta() {
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == element.idAlimento) !== 'object') {
                     dispatch(salvarDietaAlimento({
                         'dietaId': id,
-                        'alimentoId': element.idAlimento
+                        'alimentoId': element.idAlimento,
+                        'dataCadastro': dataAtual.toISOString(),
+                        'dataAtualizacao': null
                     }));
                 }
             })  
@@ -125,12 +140,13 @@ export default function EditarDieta() {
                     'id': dadosAlimentos[i].id,
                     'dietaId': id,
                     'alimentoId': element.idAlimento,
-                    'dataCriacao': dadosAlimentos[i].dataCriacao
+                    'dataCadastro': dataCadastro,
+                    'dataAtualizacao': dataAtual.toISOString()
                 }));
             })
         }
 
-        navigate('/dieta', {replace: true});
+        navigate('/dieta/0', {replace: true});
     }
 
     return(

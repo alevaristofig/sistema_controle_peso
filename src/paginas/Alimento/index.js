@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 
 import { listar, apagar } from "../../redux/alimento/slice";
@@ -17,10 +17,16 @@ export default function Alimento() {
     const { page } = useParams();
     const dispatch = useDispatch();
     const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
+    const navigate = useNavigate();
 
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         dispatch(listar({
             'page': page
         }));

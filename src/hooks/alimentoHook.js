@@ -8,14 +8,18 @@ function useAlimento() {
                                         }
                                     })
                                     .then((response) => {
-                                        return {
+                                       /* return {
                                             dados: response.data._embedded.alimentoModelList,
                                             paginacao: response.data.page,
                                             links: response.data._links,
                                             url: 'dieta'
-                                        }
+                                        }*/
+                            
+                                        return response.data;
                                     })
-                                    .catch((error) => {                                        
+                                    .catch((error) => {    
+                                        alert('error')   
+                                        console.log(error)                            
                                         return error.response.data.userMessage
                                    });
 

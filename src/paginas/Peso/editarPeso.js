@@ -30,6 +30,10 @@ export default function EditarPeso() {
 
     useEffect(() => {
 
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarPeso() {
             let result = await buscar(id);
 
@@ -61,13 +65,16 @@ export default function EditarPeso() {
             let dataBanco = data.split('/');
             let dataAtual = new Date();
 
-            dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+            let dataAtualizacao = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
+                                    +dataBanco[0]
+                                    +`T${dataAtual.toLocaleTimeString()}`);            
 
             dispatch(atualizar({
                 'id': id,
                 'valor': inputPeso,
                 'imc': imc,
-                'data': dataBanco,
+                'dataCadastro': dataAtualizacao.toISOString(),
+                'dataAtualizacao': dataAtual.toISOString(), 
                 'pessoa': {
                     'id': idPessoa
                 }

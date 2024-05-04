@@ -26,6 +26,10 @@ export default function EditarHistoricoMedico() {
 
     useEffect(() => {
 
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarDados() {
             let dados = await buscar(id);
 
@@ -46,12 +50,15 @@ export default function EditarHistoricoMedico() {
     function atualizarDados(e) {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         dispatch(atualizar({
             'id': id,
             'pessoaId': pessoaId,
             'descricao': descricao,
             'remedio': remedio,
-            'dataCadastro': dataCadastro
+            'dataCadastro': dataCadastro,
+            'dataAtualizacao': dataAtual.toISOString()
         }));
 
         setDescricao('');

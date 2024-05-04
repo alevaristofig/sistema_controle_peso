@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from 'react-redux';
 import { atualizar } from '../../redux/pessoa/slice';
 import { VscPerson } from "react-icons/vsc";
@@ -16,12 +16,14 @@ export default function EditarPessoa() {
     const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa);
     const { id } = useParams();
     const { buscar } = usePessoa();
+    const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
     const [email,setEmail] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
     const [senha,setSenha] = useState('');
+    const [dataCadastro,setDataCadastro] = useState('');
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
@@ -37,6 +39,8 @@ export default function EditarPessoa() {
                 setEmail(dados.email);
                 setAltura(dados.altura.toFixed(2));
                 setEndereco(dados.endereco);
+                setSenha(dados.senha);
+                setDataCadastro(dados.dataCadastro);
             }
         }
 
@@ -46,13 +50,23 @@ export default function EditarPessoa() {
     function salvarDados(e) {
         e.preventDefault();
             
+        let dataAtualizacao = new Date();
+
         dispatch(atualizar({
             'pessoa': id,
             'nome': nome,
             'email': email,
             'altura': altura,
-            'endereco': endereco
-        }));         
+            'endereco': endereco,
+            'senha': senha,
+            'dataCadastro': dataCadastro,
+            'dataAtualizacao': dataAtualizacao.toISOString()
+        }));   
+        
+        setTimeout(() => {
+            navigate('/pessoa', {replace: true})
+        },7000)
+        
     }
 
     return(

@@ -58,6 +58,7 @@ function usePessoa() {
     }
 
     async function removerToken(token) {
+        alert('entrou')
         const response = await axios.delete(`http://localhost:8080/pessoas/${token}`,{
             headers: {
                 "Authorization": `Bearer ${token}` ,

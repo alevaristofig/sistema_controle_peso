@@ -41,10 +41,15 @@ function* atualizar(action) {
             },
             'descricao': action.payload.descricao,
             'remedio': action.payload.remedio,
-            'dataCadastro': action.payload.dataCadastro
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/historicomedico/${action.payload.id}`,dados);
+        yield call(axios.put,`http://localhost:8080/historicomedico/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(atualizarSucesso());
     } catch(error) {

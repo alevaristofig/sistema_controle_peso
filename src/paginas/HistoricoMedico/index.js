@@ -18,11 +18,16 @@ export default function HistoricoMedico() {
     const dispatch = useDispatch();
     const { listar } = useHistoricoMedico();
     const { page } = useParams();
+    const navigate = useNavigate();
 
     const [historicosMedico,setHistoricosMedico] = useState([]);
     const [loading,setLoading] = useState(true);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
 
         async function listarHistoricosMedico() {
             let dados = await listar(page);

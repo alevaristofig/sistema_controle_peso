@@ -50,7 +50,11 @@ function useDieta() {
     }
 
     async function buscarAlimentoDieta(id) {
-        const response = await axios.get(`http://localhost:8080/alimentodieta/${id}`)
+        const response = await axios.get(`http://localhost:8080/alimentodieta/${id}`,{
+                                headers: {
+                                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                                }
+                            })
                             .then((response) => {                                
                                 return response.data;
                             })

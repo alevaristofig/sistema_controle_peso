@@ -15,10 +15,16 @@ function* salvarDietaAlimento(action) {
             },
             'alimentoId': {
                 'id': action.payload.alimentoId
-            }
+            },
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.post,"http://localhost:8080/alimentodieta",dados);
+        yield call(axios.post,"http://localhost:8080/alimentodieta",dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(salvarDietaAlimentoSucesso());
     }catch(error) {
@@ -31,10 +37,16 @@ function* atualizar(action) {
     try {
 
         let dados = {
-            'nome': action.payload.nome
+            'nome': action.payload.nome,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/dietas/${action.payload.id}`,dados);
+        yield call(axios.put,`http://localhost:8080/dietas/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(atualizarSucesso());
     }catch(error) {
@@ -75,10 +87,15 @@ function* atualizarDietaAlimento(action) {
             'alimentoId': {
                 'id': action.payload.alimentoId
             },
-            'dataCriacao': action.payload.dataCriacao
+            'dataCadastro': action.payload.dataCriacao,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/alimentodieta/${action.payload.id}`,dados);
+        yield call(axios.put,`http://localhost:8080/alimentodieta/${action.payload.id}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(atualizarDietaAlimentoSucesso());
     } catch(error) {

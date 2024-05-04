@@ -22,7 +22,8 @@ export default function Login() {
             let codeChallenge = await challenge_from_verifier(codeVerifier);
 
             sessionStorage.setItem("codeVerifier", codeVerifier);
-          
+         
+          //console.log(`${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`);
             window.location.href = `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
            
         } else {

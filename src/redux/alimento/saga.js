@@ -48,13 +48,19 @@ function* atualizar(action) {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
             'calorias': action.payload.calorias,
-            'dataCadastro': action.payload.dataCadastro
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
-
-        yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data);
+console.log(data)
+        yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
     
         yield put(atualizarSucesso());
     } catch(error) {
+        console.log(error)
         yield put(atualizarError(error.response.data.userMessage));
     }
 

@@ -18,10 +18,17 @@ function* atualizar(action) {
             'nome': action.payload.nome,
             'email': action.payload.email,
             'altura': action.payload.altura,
-            'endereco': action.payload.endereco
+            'endereco': action.payload.endereco,
+            'senha': action.payload.senha,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
-
-        yield call(axios.put,`http://localhost:8080/pessoas/${action.payload.pessoa}`,data);
+console.log(data)
+        yield call(axios.put,`http://localhost:8080/pessoas/${action.payload.pessoa}`,data,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(atualizarSucesso());
     } catch(error) {

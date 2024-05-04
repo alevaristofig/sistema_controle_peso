@@ -55,7 +55,6 @@ export default function CadastroPessoa() {
     }
 
     function mascaraAltura(altura) {
-        console.log(altura)
         setAltura(formatarAltura(altura));
     }
 
