@@ -1,11 +1,11 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
 import InputMask from 'react-input-mask';
 import CurrencyInput from 'react-currency-masked-input';
 
-import { useDispatch, useSelector } from 'react-redux';
-import { listar } from '../../redux/pessoa/slice';
+import { useDispatch } from 'react-redux';
 import { salvar } from '../../redux/peso/slice';
 
 import Header from "../../compomentes/Headers";
@@ -15,37 +15,37 @@ import 'bootstrap/dist/css/bootstrap.css';
 export default function CadastroPeso() {
 
     const dispatch = useDispatch();
-    const {pessoas,loading} = useSelector((rootReducer) => rootReducer.pessoa)
+    const navigate = useNavigate();
 
-    const [nomes,setNomes] = useState([]);
     const [pesoValor,setPesoValor] = useState('0.00');
     const [imc,setImc] = useState('0.00');
-    const [data,setData] = useState('');
+    const [dataCadastro,setDataCadastro] = useState('');
+    const [dataAtualizacao,setDataAtualizacao] = useState(null);
 
-    /*useEffect(() => {
-        dispatch(listar());
-    },[])*/
+    useEffect(() => {
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+    },[])
 
     function salvarDados(e) {
         e.preventDefault();
 
+        let dataBanco = dataCadastro.split('/');
+        let dataAtual = new Date();
+
+        let data = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
+                                    +dataBanco[0]
+                                    +`T${dataAtual.toLocaleTimeString()}`);
+
         let dados = {
             'valor': pesoValor,
             'imc': imc,
-        }
-
-        let dataBanco = data.split('/');
-        let dataAtual = new Date();
-
-        let dataCadastro = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
-                                    +dataBanco[0]
-                                    +`T${dataAtual.toLocaleTimeString()}`);
-        
-        dados.dataCadastro = dataCadastro.toISOString();
-        dados.dataAtualizacao = null;
-            
-        dados.pessoa = {
-            'id': 1
+            'dataCadastro': data.toISOString(),
+            'dataAtualizacao': dataAtualizacao,
+            'pessoa': {
+                'id': 1
+            }
         }
 
         dispatch(salvar({
@@ -54,7 +54,7 @@ export default function CadastroPeso() {
 
         setPesoValor('');
         setImc('');
-        setData('');
+        setDataCadastro('');
     }
 
     function calcularImc(valor) {
@@ -109,7 +109,7 @@ export default function CadastroPeso() {
                                     mask="99/99/9999" 
                                     name="data" 
                                     className="form-control" 
-                                    onChange={ event => setData(event.target.value)}
+                                    onChange={ event => setDataCadastro(event.target.value)}
                                     required
                                 /> 
                             </div>

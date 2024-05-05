@@ -7,7 +7,7 @@ function useDieta() {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }
                             })
-                            .then((response) => {
+                            .then((response) => {                                
                                 return {
                                     dados: response.data._embedded.dietaModelList,
                                     paginacao: response.data.page,
@@ -15,7 +15,7 @@ function useDieta() {
                                     url: 'dieta'
                                 }
                             })
-                            .catch((error) => {
+                            .catch((error) => {                                
                                 return false;
                             });
 
@@ -23,7 +23,11 @@ function useDieta() {
     }
 
     async function salvar(dados) {
-        const result = await axios.post("http://localhost:8080/dietas",dados)
+        const result = await axios.post("http://localhost:8080/dietas",dados,{
+                                    headers: {
+                                        "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+                                    }
+                                })
                                 .then((response) => {                                    
                                     return response.data.id
                                 })

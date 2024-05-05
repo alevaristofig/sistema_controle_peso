@@ -11,10 +11,16 @@ function* salvar(action) {
                 'id': action.payload.id
             },
             'descricao': action.payload.descricao,
-            'remedio': action.payload.remedio
+            'remedio': action.payload.remedio,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.post,"http://localhost:8080/historicomedico",dados);
+        yield call(axios.post,"http://localhost:8080/historicomedico",dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(salvarSucesso());
     } catch(error) {
@@ -24,7 +30,11 @@ function* salvar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/historicomedico/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/historicomedico/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(apagarSucesso());
 

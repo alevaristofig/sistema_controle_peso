@@ -30,7 +30,11 @@ function* listar(action){
 function* salvar(action) {
     try {
         console.log(action.payload.dados);
-        yield call(axios.post,"http://localhost:8080/pesos",action.payload.dados);
+        yield call(axios.post,"http://localhost:8080/pesos",action.payload.dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(salvarSucesso());
 
@@ -63,7 +67,11 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/pesos/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/pesos/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(apgarSucesso());
 

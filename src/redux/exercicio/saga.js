@@ -48,10 +48,16 @@ function* salvar(action) {
         let dados = {
             'nome': action.payload.nome,
             'frequencia': action.payload.frequencia,
-            'tempo': action.payload.tempo
+            'tempo': action.payload.tempo,
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizar': action.payload.dataAtualizar
         };
 
-        yield call(axios.post,"http://localhost:8080/exercicios",dados);
+        yield call(axios.post,"http://localhost:8080/exercicios",dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(salvarSucesso());
 
@@ -62,7 +68,11 @@ function* salvar(action) {
 
 function* remover(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/exercicios/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/exercicios/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(removerSucesso());
 

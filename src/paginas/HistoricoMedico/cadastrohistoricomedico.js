@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { CiMedicalClipboard } from "react-icons/ci";
 import { ToastContainer } from 'react-toastify';
 
@@ -11,17 +12,28 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroHistoricoMedico() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [descricao,setDescricao] = useState('');
     const [remedio,setRemedio] = useState('');
 
+    useEffect(() => {
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+    })
+
     function salvarDados(e) {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         dispatch(salvar({
             'id': 1,
-            //'descricao': descricao,
-            'remedio': remedio
+            'descricao': descricao,
+            'remedio': remedio,
+            'dataCadastro': dataAtual.toISOString(),
+            'dataAtualizacao': null
         }));
 
         setDescricao('');

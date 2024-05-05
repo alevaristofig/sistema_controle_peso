@@ -21,6 +21,7 @@ function* listar(action){
 
         yield put(listarSucesso(responseAlimento));
     } catch(error) {
+        console.log(error)
         yield put(listarError());
     }
 }
@@ -30,10 +31,16 @@ function* salvar(action) {
         let dados = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
-            'calorias': action.payload.calorias,            
+            'calorias': action.payload.calorias,  
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizacao': action.payload.dataAtualizacao          
         }
 
-        yield call(axios.post,"http://localhost:8080/alimentos",dados);
+        yield call(axios.post,"http://localhost:8080/alimentos",dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(salvarSucesso());
 
@@ -51,7 +58,7 @@ function* atualizar(action) {
             'dataCadastro': action.payload.dataCadastro,
             'dataAtualizacao': action.payload.dataAtualizacao
         };
-console.log(data)
+
         yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
@@ -68,7 +75,11 @@ console.log(data)
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/alimentos/${action.payload.id}`);
+            yield call(axios.delete,`http://localhost:8080/alimentos/${action.payload.id}`,{
+                headers: {
+                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+                }
+            });
 
         yield put(apagarSucesso());
 

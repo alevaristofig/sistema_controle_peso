@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch } from 'react-redux';
 import CurrencyInput from 'react-currency-masked-input';
 
@@ -16,10 +17,17 @@ export default function CadastroAlimento() {
 
     const dispatch = useDispatch();
     const {formatarCaloria} = useAlimento();
+    const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
     const [quantidade,setQuantidade] = useState('');
     const [caloria,setCaloria] = useState('');
+
+    useEffect(() => {
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+    })
 
     function mascaraCaloria(inputCaloria) {
         setCaloria(formatarCaloria(inputCaloria));        
@@ -27,11 +35,15 @@ export default function CadastroAlimento() {
 
     function salvarDados(e) {
         e.preventDefault();
+
+        let dataAtual = new Date();
         
         dispatch(salvar({
             'nome': nome,
             'quantidade': quantidade,
-            'calorias': caloria,            
+            'calorias': caloria,  
+            'dataCadastro': dataAtual.toISOString(),
+            'dataAtualizacao': null          
         }));
 
         setNome('');

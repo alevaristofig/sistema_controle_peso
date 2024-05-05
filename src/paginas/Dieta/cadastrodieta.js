@@ -23,6 +23,11 @@ export default function CadastroDieta() {
     const [alimentosDieta,setAlimentosDieta] = useState([]);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         dispatch(listar());
     },[]);
 
@@ -46,10 +51,14 @@ export default function CadastroDieta() {
     async function salvarDados(e) {
         e.preventDefault();
 
+        let dataAtual = new Date();
+
         if(alimentosDieta.length > 0) {
 
             let dados = {
-                'nome': nome
+                'nome': nome,
+                'dataCadastro': dataAtual.toISOString(),
+                'dataAtualizacao': null
             };
 
              const resultDieta = await salvar(dados);

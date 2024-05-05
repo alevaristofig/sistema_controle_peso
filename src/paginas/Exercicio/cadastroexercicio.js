@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import { LiaRunningSolid  } from 'react-icons/lia';
 
@@ -11,18 +12,29 @@ import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroExercicio() {
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
     const [frequencia,setFrequencia] = useState('');
     const [tempo,setTempo] = useState('');
 
+    useEffect(() => {
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+    })
+
     function salvarDados(e) {
         e.preventDefault();
+
+        let dataAtual = new Date();
        
         dispatch(salvar({
             'nome': nome,
             'frequencia': frequencia,
-            'tempo': tempo
+            'tempo': tempo,
+            'dataCadastro': dataAtual.toISOString(),
+            'dataAtualizar': null
         }));
 
         setNome('');
