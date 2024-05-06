@@ -5,7 +5,7 @@ import { BiFoodMenu } from "react-icons/bi";
 import { ToastContainer, toast } from 'react-toastify';
 
 import { salvarDietaAlimento } from '../../redux/dieta/slice';
-import { listar } from '../../redux/alimento/slice';
+import { listarAlimentos } from '../../redux/alimento/slice';
 import useDieta from "../../hooks/dietaHook";
 
 import Header from "../../compomentes/Headers";
@@ -28,7 +28,7 @@ export default function CadastroDieta() {
             navigate('/login');
         }
 
-        dispatch(listar());
+        dispatch(listarAlimentos());
     },[]);
 
     function registrarValoresTreino(e) {
@@ -67,7 +67,9 @@ export default function CadastroDieta() {
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
                         'dietaId': resultDieta,
-                        'alimentoId': element.idAlimento
+                        'alimentoId': element.idAlimento,
+                        'dataCadastro': dataAtual.toISOString(),
+                        'dataAtualizacao': null
                     }));
                 })                 
              } else {

@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function useTreino() {
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     async function listarQuantidadeTreinos(treino) {
-        const result = await axios.get(`http://localhost:8080/pessoaexercicio/listartreinos/${treino}`,{
+        
+        const result = await axios.get(`${url.pessoaexercicio.href}/listartreinos/${treino}`,{
                                     headers: {
                                         "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                     }

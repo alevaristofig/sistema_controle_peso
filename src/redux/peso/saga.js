@@ -6,6 +6,10 @@ import { listarSucesso, listarError, salvarSucesso, salvarError,
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+const PRIMEIROPESO = "buscarprimeiropeso";
+const ULTIMOPESO = "buscarultimopeso";
+
 function* listar(action){
     try {        
         const response = yield call(axios.get,`http://localhost:8080/pesos?page=${action.payload.page}`,{
@@ -81,22 +85,30 @@ function* apagar(action) {
 }
 
 function* buscarPrimeiroPeso() {
-    try {
-        const response = yield call(axios.get,"http://localhost:8080/pesos/buscarprimeiropeso");
+    try {        
+        const response = yield call(axios.get,`${URL.pesos.href}/${PRIMEIROPESO}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(buscarPrimeiroPesoSucesso(response.data));
     } catch(error) {
-        yield put(buscarPrimeiroPesoError());
+        yield put(buscarPrimeiroPesoError(error));
     }
 }
 
 function* buscarUltimoPeso() {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/pesos/buscarultimoropeso");
+        const response = yield call(axios.get,`${URL.pesos.href}/${ULTIMOPESO}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(buscarUltimoPesoSucesso(response.data));
     } catch(error) {
-        yield put(buscarUltimoPesoError());
+        yield put(buscarUltimoPesoError(error));
     }
 }
 

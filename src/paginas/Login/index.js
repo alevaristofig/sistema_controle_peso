@@ -11,28 +11,40 @@ export default function Login() {
     const [authorizeUrl,setAuthorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
     const [tokenUrl,setTokenUrl] = useState('http://localhost:8080/oauth2/token');
     const [callbackUrl,setCallbackUrl] = useState('http://localhost:3000/login');
+    const [t,setT] = useState('');
+    const [c,setC] = useState(false);
+    const [code,setCode] = useState('');
     
     const navigate = useNavigate();
 
-   useEffect(async() => {
+   useEffect(() => {
         let params = new URLSearchParams(window.location.search);
 
         if(params == '') {          
             let codeVerifier = generateRandomString();
-            let codeChallenge = await challenge_from_verifier(codeVerifier);
-
             sessionStorage.setItem("codeVerifier", codeVerifier);
-         
-          //console.log(`${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`);
-            window.location.href = `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
-           
-        } else {
-           let token = await gerarAccessToken(params.get("code"));
 
-           if(token) {
-            sessionStorage.setItem("token", token);
-            navigate('/', {replace: true})
-           }
+            const getCodeChallenge = async () => {
+              let codeChallenge = await challenge_from_verifier(codeVerifier);
+
+              if(codeChallenge != '') {
+                window.location.href = `${authorizeUrl}?response_type=code&client_id=${clientId}&redirect_uri=${callbackUrl}&code_challenge_method=S256&code_challenge=${codeChallenge}`;
+              }
+            }
+
+            getCodeChallenge();                     
+        } else {
+
+          const gerarToken = async () => {
+            let token = await gerarAccessToken(params.get("code"));
+
+            if(token != '') {
+              sessionStorage.setItem("token", token);
+              navigate('/', {replace: true})
+            }            
+          }
+
+          gerarToken();
         }
    },[]);
 
@@ -101,8 +113,7 @@ export default function Login() {
         password: '123'
       } 
     })
-    .then((response) => {  
-      console.log(response)    
+    .then((response) => {   
       return response.data.access_token;
     })
     .catch((error) => {

@@ -13,8 +13,8 @@ export default function Logout() {
            // await removerToken(sessionStorage.getItem('token'));
             sessionStorage.removeItem('token');
            // navigate('/login');
-         //  window.location.href = 'http://localhost:8080/logout';
-         alert(sessionStorage.getItem('token'))
+           window.location.href = 'http://localhost:8080/logout';
+         //alert(sessionStorage.getItem('token'))
         }
 
         remover();

@@ -1,6 +1,7 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { salvarSucesso, salvarError, listarSucesso, listarError, 
-         apagarSucesso, apagarError, atualizarSucesso, atualizarError } from './slice';
+         apagarSucesso, apagarError, atualizarSucesso, 
+         atualizarError, listarAlimentosSucesso, listarAlimentosError } from './slice';
 
 import axios from 'axios';
 
@@ -21,7 +22,6 @@ function* listar(action){
 
         yield put(listarSucesso(responseAlimento));
     } catch(error) {
-        console.log(error)
         yield put(listarError());
     }
 }
@@ -67,7 +67,6 @@ function* atualizar(action) {
     
         yield put(atualizarSucesso());
     } catch(error) {
-        console.log(error)
         yield put(atualizarError(error.response.data.userMessage));
     }
 
@@ -88,9 +87,24 @@ function* apagar(action) {
     }
 }
 
+function* listarAlimentos(action) {
+    try {
+        const response = yield call(axios.get,"http://localhost:8080/alimentos/listaralimentos",{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
+        
+        yield put(listarAlimentosSucesso(response.data));
+    } catch(error) {
+        yield put(listarAlimentosError());
+    }
+}
+
 export default all([
     takeEvery('alimento/salvar', salvar),
     takeEvery('alimento/listar', listar),
     takeEvery('alimento/apagar', apagar),
-    takeEvery('alimento/atualizar', atualizar)
+    takeEvery('alimento/atualizar', atualizar),
+    takeEvery('alimento/listarAlimentos', listarAlimentos)
 ])

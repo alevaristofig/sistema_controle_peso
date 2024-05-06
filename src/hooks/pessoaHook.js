@@ -1,6 +1,9 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function usePessoa() {
+
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
 
     function listar() {
             const response =  axios.get("http://localhost:8080/pessoas")
@@ -14,8 +17,8 @@ function usePessoa() {
             return response;        
     }
 
-    async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/pessoas/${id}`,{
+    async function buscar(id) {       
+        const response = await axios.get(`${url.pessoas.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }
@@ -58,7 +61,6 @@ function usePessoa() {
     }
 
     async function removerToken(token) {
-        alert('entrou')
         const response = await axios.delete(`http://localhost:8080/pessoas/${token}`,{
             headers: {
                 "Authorization": `Bearer ${token}` ,

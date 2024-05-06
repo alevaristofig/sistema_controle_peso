@@ -44,6 +44,10 @@ export default function Dieta() {
             'id': id
         }));
 
+        setTimeout(() => {
+            navigate('/dieta/0', {replace: true});
+        },7000);
+
         setLoadingApagar(true);
     }
 

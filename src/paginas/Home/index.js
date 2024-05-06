@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 import usePessoa from "../../hooks/pessoaHook";
 import useTreino from '../../hooks/treinoHook';
+import useHome from '../../hooks/homeHook';
 
 import Header from '../../compomentes/Headers';
 import Titulo from "../../compomentes/Titulo";
@@ -24,6 +25,7 @@ export default function Home() {
     const { primeiroPeso, ultimoPeso } = useSelector((rootReducer) => rootReducer.peso);
     const { buscar } = usePessoa();
     const { listarQuantidadeTreinos } = useTreino();
+    const { listarUrls } = useHome();
     const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
@@ -37,6 +39,12 @@ export default function Home() {
     
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
+        }
+
+        async function setUrls() {
+            let urls = await listarUrls();
+
+            sessionStorage.setItem('urls',JSON.stringify(urls._links));
         }
 
         async function buscarDados() {
@@ -64,11 +72,15 @@ export default function Home() {
             setTreinosNaoFeitos(dados);
         }
 
+        if(sessionStorage.getItem('urls') == null) {                       
+            setUrls();
+        }
+       
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
         buscarQuantidadeTreinoNaoFeito('N');
-       // dispatch(buscarPrimeiroPeso());
-       // dispatch(buscarUltimoPeso());
+        dispatch(buscarPrimeiroPeso());
+        dispatch(buscarUltimoPeso());
         
     },[])
 
@@ -137,9 +149,6 @@ export default function Home() {
                                     </div>
                                     <hr />
                                 </div>
-                                {
-                                    console.log(treinosNaoFeitos.length)
-                                }
                                 <div className='row'>                                    
                                     <div className="text-body-secondary pt-3 col">
                                         <GiWeightLiftingUp color="#000" size={24} />
@@ -149,8 +158,8 @@ export default function Home() {
                                                 treinosFeitos.map((t,i) => {
                                                     return (
                                                         <>
-                                                        <span className='ms-2' key={i}>{t.nome}:</span>
-                                                        <span className='ms-2' key={i}>
+                                                        <span className='ms-2' >{t.nome}:</span>
+                                                        <span className='ms-2' >
                                                             <label>Feitos: {t.quantidade} | Não Feitos: {treinosNaoFeitos[0].quantidade}</label>                                                        
                                                         </span>
                                                         </>

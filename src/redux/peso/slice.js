@@ -63,9 +63,9 @@ export const pesoSlice = createSlice({
             state.loading = false;
             state.primeiroPeso = action.payload;
         },
-        buscarPrimeiroPesoError(state) {
+        buscarPrimeiroPesoError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao listar o primeiro Peso!");
+            toast.error(action.payload.response.data.userMessage);
         },
         buscarUltimoPeso(state) {
             state.loading = true;
@@ -74,9 +74,9 @@ export const pesoSlice = createSlice({
             state.loading = false;
             state.ultimoPeso = action.payload;
         },
-        buscarUltimoPesoError(state) {
+        buscarUltimoPesoError(state,action) {
             state.loading = false;
-            toast.error("Ocorreu um erro ao listar o último Peso!");
+            toast.error(action.payload.response.data.userMessage);
         },
     }
 });

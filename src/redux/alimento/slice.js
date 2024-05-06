@@ -21,6 +21,17 @@ export const alimentoSlice = createSlice({
             state.loading = false;
             toast.error("Ocorreu um erro ao listar os Alimentos!");
         },
+        listarAlimentos: (state) => {
+            state.loading = true;
+        },
+        listarAlimentosSucesso: (state, action) => {
+            state.loading = false;
+            state.alimentos = action.payload
+        },
+        listarAlimentosError: (state) => {
+            state.loading = false;
+            toast.error("Ocorreu um erro ao listar os Alimentos!");
+        },
         salvar: (state,action) => {
             state.loading = true;
         },
@@ -59,6 +70,7 @@ export const alimentoSlice = createSlice({
 
 export const { salvar, salvarSucesso, salvarError, listar, listarSucesso, listarError,
                apagar, apagarSucesso, apagarError, atualizar, atualizarSucesso,
-               atualizarError } = alimentoSlice.actions;
+               atualizarError, listarAlimentos, listarAlimentosSucesso,
+               listarAlimentosError } = alimentoSlice.actions;
 
 export default alimentoSlice.reducer;

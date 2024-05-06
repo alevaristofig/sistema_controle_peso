@@ -57,7 +57,11 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/dietas/${action.payload.id}`);
+        yield call(axios.delete,`http://localhost:8080/dietas/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(apagarSucesso());
 
