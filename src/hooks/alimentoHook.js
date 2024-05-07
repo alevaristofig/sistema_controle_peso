@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function useAlimento() {
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     async function buscar(id) {
-        const result = await axios.get(`http://localhost:8080/alimentos/${id}`,{
+        const result = await axios.get(`${url.alimentos.href}/${id}`,{
                                         headers: {
                                             "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                         }
@@ -27,7 +30,7 @@ function useAlimento() {
     }
 
     async function listar() {
-        const result = await axios.get("http://localhost:8080/alimentos",{
+        const result = await axios.get(`${url.alimentos.href}`,{
                                         headers: {
                                             "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                         }

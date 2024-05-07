@@ -1,8 +1,12 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function useExercicio() {
+
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/exercicios/${id}`,{
+        const response = await axios.get(`${url.exercicios.href}/${id}`,{
                                     headers: {
                                         "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                     }

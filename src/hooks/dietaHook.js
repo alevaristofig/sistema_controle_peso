@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function useDieta() {
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     function listar(page) {
-        const response =  axios.get(`http://localhost:8080/dietas?page=${page}`,{
+        const response =  axios.get(`${url.dietas.href}?page=${page}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }
@@ -38,7 +41,7 @@ function useDieta() {
     }
 
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/dietas/${id}`,{
+        const response = await axios.get(`${url.dietas.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }
@@ -54,7 +57,7 @@ function useDieta() {
     }
 
     async function buscarAlimentoDieta(id) {
-        const response = await axios.get(`http://localhost:8080/alimentodieta/${id}`,{
+        const response = await axios.get(`${url.alimentodieta.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }

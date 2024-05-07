@@ -51,6 +51,12 @@ export default function Dieta() {
         setLoadingApagar(true);
     }
 
+    function formatarData(dataFormatada) {
+        let d = new Date(dataFormatada);
+
+        return d.toLocaleDateString('pt-BR')
+    }
+
     return(
         <div>
             <Header />
@@ -97,8 +103,8 @@ export default function Dieta() {
                                                         <tr>
                                                             <td>{d.id}</td>
                                                             <td>{d.nome}</td>
-                                                            <td>{d.dataCadastro}</td>
-                                                            <td>{d.dataAtualizacao}</td>
+                                                            <td>{formatarData(d.dataCadastro)}</td>
+                                                            <td>{formatarData(d.dataAtualizacao)}</td>
                                                             <td>
                                                                 <Link to={`/editardieta/${d.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        
                                                                 <button type='button' 

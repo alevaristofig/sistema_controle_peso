@@ -11,8 +11,8 @@ const PRIMEIROPESO = "buscarprimeiropeso";
 const ULTIMOPESO = "buscarultimopeso";
 
 function* listar(action){
-    try {        
-        const response = yield call(axios.get,`http://localhost:8080/pesos?page=${action.payload.page}`,{
+    try {      
+        const response = yield call(axios.get,`${URL.pesos.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -34,7 +34,7 @@ function* listar(action){
 function* salvar(action) {
     try {
         console.log(action.payload.dados);
-        yield call(axios.post,"http://localhost:8080/pesos",action.payload.dados,{
+        yield call(axios.post,`${URL.pesos.href}`,action.payload.dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -57,7 +57,7 @@ function* atualizar(action) {
             'pessoa': action.payload.pessoa
         };
 
-        yield call(axios.put,`http://localhost:8080/pesos/${action.payload.id}`,data,{
+        yield call(axios.put,`${URL.pesos.href}/${action.payload.id}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -71,7 +71,7 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/pesos/${action.payload.id}`,{
+        yield call(axios.delete,`${URL.pesos.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

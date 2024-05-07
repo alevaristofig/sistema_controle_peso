@@ -36,7 +36,6 @@ export default function Home() {
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
-    
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }

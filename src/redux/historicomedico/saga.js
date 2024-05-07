@@ -4,6 +4,8 @@ import { salvarSucesso, salvarError, apagarSucesso, apagarError,
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+
 function* salvar(action) {
     try {
         let dados = {
@@ -16,7 +18,7 @@ function* salvar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.post,"http://localhost:8080/historicomedico",dados,{
+        yield call(axios.post,`${URL.historicomedico.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -30,7 +32,7 @@ function* salvar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/historicomedico/${action.payload.id}`,{
+        yield call(axios.delete,`${URL.historicomedico.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -55,7 +57,7 @@ function* atualizar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/historicomedico/${action.payload.id}`,dados,{
+        yield call(axios.put,`${URL.historicomedico.href}/${action.payload.id}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

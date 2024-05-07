@@ -5,9 +5,11 @@ import { salvarSucesso, salvarError, listarSucesso, listarError,
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+
 function* listar(action){
     try {
-        const response = yield call(axios.get,`http://localhost:8080/alimentos?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${URL.alimentos.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -22,6 +24,7 @@ function* listar(action){
 
         yield put(listarSucesso(responseAlimento));
     } catch(error) {
+        console.log(error)
         yield put(listarError());
     }
 }
@@ -36,7 +39,7 @@ function* salvar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao          
         }
 
-        yield call(axios.post,"http://localhost:8080/alimentos",dados,{
+        yield call(axios.post,`${URL.alimentos.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -59,7 +62,7 @@ function* atualizar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/alimentos/${action.payload.id}`,data,{
+        yield call(axios.put,`${URL.alimentos.href}/${action.payload.id}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -74,7 +77,7 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-            yield call(axios.delete,`http://localhost:8080/alimentos/${action.payload.id}`,{
+            yield call(axios.delete,`${URL.alimentos.href}/${action.payload.id}`,{
                 headers: {
                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
                 }

@@ -6,6 +6,8 @@ import { salvarDietaAlimentoSucesso, salvarDietaAlimentoError,
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+
 function* salvarDietaAlimento(action) {
     try {
 
@@ -20,7 +22,7 @@ function* salvarDietaAlimento(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.post,"http://localhost:8080/alimentodieta",dados,{
+        yield call(axios.post,`${URL.alimentodieta.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -42,7 +44,7 @@ function* atualizar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/dietas/${action.payload.id}`,dados,{
+        yield call(axios.put,`${URL.dietas.href}/${action.payload.id}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }

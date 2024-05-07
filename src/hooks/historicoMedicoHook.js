@@ -1,8 +1,11 @@
+import { useState } from 'react';
 import axios from 'axios';
 
 function useHistoricoMedico() {
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     async function listar(page) {
-        const response = await axios.get(`http://localhost:8080/historicomedico?page=${page}`,{
+        const response = await axios.get(`${url.historicomedico.href}?page=${page}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }
@@ -23,7 +26,7 @@ function useHistoricoMedico() {
     }
 
     async function buscar(id) {
-        const response = await axios.get(`http://localhost:8080/historicomedico/${id}`,{
+        const response = await axios.get(`${url.historicomedico.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                 }

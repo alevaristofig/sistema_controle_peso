@@ -3,9 +3,11 @@ import { listarSucesso, listarError, salvarSucesso, salvarError} from './slice';
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+
 function* listarTreino(action) {
     try {
-        const response = yield call(axios.get,`http://localhost:8080/pessoaexercicio?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${URL.pessoaexercicio.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

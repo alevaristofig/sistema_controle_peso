@@ -25,6 +25,11 @@ export default function EditarExercicio() {
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         async function buscarDados() {
             let result = await buscar(id);
 
@@ -34,7 +39,8 @@ export default function EditarExercicio() {
             } else {
                 setNome(result.nome);
                 setFrequencia(result.frequencia);
-                setTempo(result.tempo);                
+                setTempo(result.tempo); 
+                setDataCadastro(result.dataCadastro)               
             }
         }
 
@@ -43,13 +49,16 @@ export default function EditarExercicio() {
 
     function salvarDados(e) {
         e.preventDefault();
+
+        let dataAtual = new Date();
         
         dispatch(atualizar({
             'id': id,
             'nome': nome,
             'frequencia': frequencia,
             'tempo': tempo,
-            'dataCadastro': dataCadastro
+            'dataCadastro': dataCadastro,
+            'dataAtualizar': dataAtual.toISOString()
         }));
 
         navigate('/exercicio/0', {replace: true});

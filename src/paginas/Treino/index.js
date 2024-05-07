@@ -64,6 +64,11 @@ export default function Treino() {
     }
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         dispatch(listarSemPaginacao());
 
         dispatch(listarTreino({

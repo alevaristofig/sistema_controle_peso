@@ -1,11 +1,12 @@
-//import { useDispatch, useSelector } from 'react-redux';
-//import { buscar } from '../redux/peso/slice';
+import { useState } from 'react';
 import axios from 'axios';
 
 function usePeso() {
 
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+
     async function buscar(id) {
-        const result = await axios.get(`http://localhost:8080/pesos/${id}`,{
+        const result = await axios.get(`${url.pesos.href}/${id}`,{
                                     headers: {
                                         "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                     }

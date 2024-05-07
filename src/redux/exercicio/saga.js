@@ -6,9 +6,12 @@ import { listarSucesso, listarError, salvarSucesso, salvarError,
 
 import axios from 'axios';
 
+const URL = JSON.parse(sessionStorage.getItem('urls'));
+const LISTAREXERCICIOS = 'listarexercicios';
+
 function* listar(action) {
     try {
-        const response = yield call(axios.get,`http://localhost:8080/exercicios?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${URL.exercicios.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -29,7 +32,7 @@ function* listar(action) {
 
 function* listarSemPaginacao() {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/exercicios/listarexercicios",{
+        const response = yield call(axios.get,`${URL.exercicios.href}/${LISTAREXERCICIOS}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -37,7 +40,6 @@ function* listarSemPaginacao() {
 
         yield put(listarSemPaginacaoSucesso(response.data))
     } catch(error) {
-        alert('error')
         yield put(listarSemPaginacaoError());
     }
     
@@ -53,7 +55,7 @@ function* salvar(action) {
             'dataAtualizar': action.payload.dataAtualizar
         };
 
-        yield call(axios.post,"http://localhost:8080/exercicios",dados,{
+        yield call(axios.post,`${URL.exercicios.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -68,7 +70,7 @@ function* salvar(action) {
 
 function* remover(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/exercicios/${action.payload.id}`,{
+        yield call(axios.delete,`${URL.exercicios.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -83,14 +85,16 @@ function* remover(action) {
 
 function* atualizar(action) {
     try {
+
         let data = {
             'nome': action.payload.nome,
             'frequencia': action.payload.frequencia,
             'tempo': action.payload.tempo,
-            'dataCadastro': action.payload.dataCadastro
+            'dataCadastro': action.payload.dataCadastro,
+            'dataAtualizar': action.payload.dataAtualizar
         };
-
-        yield call(axios.put,`http://localhost:8080/exercicios/${action.payload.id}`,data);
+        console.log(data)
+        yield call(axios.put,`${URL.exercicios.href}/${action.payload.id}`,data);
 
         yield put(atualizarSucesso());
     } catch(error) {

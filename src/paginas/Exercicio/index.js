@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 
 import { LiaRunningSolid  } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
@@ -18,10 +18,16 @@ export default function Exercicio(){
     const dispatch = useDispatch();
     const { exercicios, loading } = useSelector((rootReducer) => rootReducer.exercicio);
     const { page } = useParams();
+    const navigate = useNavigate();
 
     const [loadingDel,setLoadingDel] = useState(true);
 
     useEffect(() => {
+
+        if(sessionStorage.getItem('token') == null) {           
+            navigate('/login');
+        }
+
         dispatch(listar({
             'page': page
         }));
