@@ -7,13 +7,11 @@ import 'bootstrap/dist/css/bootstrap.css';
 import '../Pessoa/pessoa.css';
 
 export default function Login() {
-    const [clientId,setClientId] = useState('sisetemacontrolepesobackend');
-    const [authorizeUrl,setAuthorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
-    const [tokenUrl,setTokenUrl] = useState('http://localhost:8080/oauth2/token');
-    const [callbackUrl,setCallbackUrl] = useState('http://localhost:3000/login');
-    const [t,setT] = useState('');
-    const [c,setC] = useState(false);
-    const [code,setCode] = useState('');
+    const [clientId] = useState('sisetemacontrolepesobackend');
+    const [authorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
+    const [tokenUrl] = useState('http://localhost:8080/oauth2/token');
+    const [callbackUrl] = useState('http://localhost:3000/login');
+    const [urlPadrao] = useState('http://localhost:8080/v1');
     
     const navigate = useNavigate();
 
@@ -40,7 +38,9 @@ export default function Login() {
 
             if(token != '') {
               sessionStorage.setItem("token", token);
-              navigate('/', {replace: true})
+              let urls = await listarUrls();
+              sessionStorage.setItem('urls',JSON.stringify(urls._links));
+              navigate('/', {replace: true});
             }            
           }
 
@@ -88,14 +88,6 @@ export default function Login() {
     return base64encoded;
    }
 
-
-  function generateCodeVerifier() {
-    let codeVerifier = generateRandomString(128);
-    sessionStorage.setItem("codeVerifier", codeVerifier);
-  
-    return codeVerifier;
-  }
-
   async function gerarAccessToken(code) {
     let params = {
       'grant_type': 'authorization_code',
@@ -121,6 +113,23 @@ export default function Login() {
     });
 
     return resp;
+  }
+
+  async function listarUrls() {
+        
+    const result = await axios.get(urlPadrao,{
+                        headers: {
+                            "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                        }
+                    })
+                    .then((response) => {                        
+                        return response.data;
+                    })
+                    .catch((error) => {                            
+                        return false;
+                    }); 
+                    
+    return result;
   }
 
 }

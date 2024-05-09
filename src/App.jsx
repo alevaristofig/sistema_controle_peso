@@ -22,6 +22,7 @@ import HistoricoMedico from './paginas/HistoricoMedico';
 import CadastroHistoricoMedico from './paginas/HistoricoMedico/cadastrohistoricomedico';
 import EditarHistoricoMedico from './paginas/HistoricoMedico/editarHistoricoMedico';
 import Logout from './paginas/Logout';
+import Senha from './paginas/Senha';
 
 const router = createBrowserRouter([
   {
@@ -31,6 +32,10 @@ const router = createBrowserRouter([
   {
     path: '/login',
     element: <Login />
+  },
+  {
+    path: '/recuperarsenha',
+    element: <Senha />
   },
   {
     path: '/pessoa',

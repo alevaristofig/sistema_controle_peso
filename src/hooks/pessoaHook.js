@@ -1,9 +1,10 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 function usePessoa() {
 
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+    const [removertoken,setRemovertoken] = useState('removertoken');
 
     function listar() {
             const response =  axios.get("http://localhost:8080/pessoas")
@@ -17,7 +18,9 @@ function usePessoa() {
             return response;        
     }
 
-    async function buscar(id) {       
+    async function buscar(id) {   
+       // alert('entrou hook, '+typeof url) 
+      //  console.log(url.pessoas)   
         const response = await axios.get(`${url.pessoas.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
@@ -61,17 +64,11 @@ function usePessoa() {
     }
 
     async function removerToken(token) {
-        const response = await axios.delete(`${url.pessoas.href}/${token}`,{
+        const response = await axios.delete(`${url.pessoas.href}/${removertoken}/${token}`,{
             headers: {
                 "Authorization": `Bearer ${token}` ,
             }
-            })
-            /*.then((response) => {                                
-               
-            })
-            .catch((error) => {                                    
-                return error.response.data.userMessage
-            });*/
+        });
     }
 
     function formatarAltura(altura) {

@@ -86,6 +86,7 @@ function* apagar(action) {
 
 function* buscarPrimeiroPeso() {
     try {        
+        alert('entrou saga')
         const response = yield call(axios.get,`${URL.pesos.href}/${PRIMEIROPESO}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
@@ -94,6 +95,7 @@ function* buscarPrimeiroPeso() {
 
         yield put(buscarPrimeiroPesoSucesso(response.data));
     } catch(error) {
+        console.log(error)
         yield put(buscarPrimeiroPesoError(error));
     }
 }

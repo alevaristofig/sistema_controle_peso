@@ -8,10 +8,10 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
 
+//import useHome from '../../hooks/homeHook';
 import { buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 import usePessoa from "../../hooks/pessoaHook";
 import useTreino from '../../hooks/treinoHook';
-import useHome from '../../hooks/homeHook';
 
 import Header from '../../compomentes/Headers';
 import Titulo from "../../compomentes/Titulo";
@@ -25,7 +25,6 @@ export default function Home() {
     const { primeiroPeso, ultimoPeso } = useSelector((rootReducer) => rootReducer.peso);
     const { buscar } = usePessoa();
     const { listarQuantidadeTreinos } = useTreino();
-    const { listarUrls } = useHome();
     const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
@@ -38,12 +37,6 @@ export default function Home() {
     useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
-        }
-
-        async function setUrls() {
-            let urls = await listarUrls();
-
-            sessionStorage.setItem('urls',JSON.stringify(urls._links));
         }
 
         async function buscarDados() {
@@ -71,9 +64,8 @@ export default function Home() {
             setTreinosNaoFeitos(dados);
         }
 
-        if(sessionStorage.getItem('urls') == null) {                       
-            setUrls();
-        }
+      //  setUrls();
+
        
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
@@ -106,7 +98,7 @@ export default function Home() {
                         :
                             <div className="my-3 p-3 bg-body rounded shadow-sm">     
                                 <div className='row'>                           
-                                    <div className="text-body-secondary pt-3 col">
+                                    <div className="text-body-secondary pt-3 col marginLinha">
                                         <VscPerson color="#000" size={24} />
                                         <span className='ms-2'>{nome}</span>
                                         <span className='ms-2'>{altura}</span>m
@@ -114,7 +106,7 @@ export default function Home() {
                                         <span className='ms-3 float-end'>
                                             <Link to={`/pessoadados/1`} className="btn btn-info">Editar</Link>
                                         </span>
-                                    </div>
+                                    </div>                                    
                                     <hr />
                                 </div>
                                 <div className='row'>  

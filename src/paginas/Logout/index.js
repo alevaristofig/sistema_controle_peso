@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import axios from 'axios';
+
 import usePessoa from "../../hooks/pessoaHook";
 
 export default function Logout() {
@@ -11,11 +13,12 @@ export default function Logout() {
 
         async function remover() {
             removerToken(sessionStorage.getItem('token'));
-           sessionStorage.removeItem('token');
-           sessionStorage.removeItem('urls');
-           window.location.href = 'http://localhost:8080/logout';
+            sessionStorage.removeItem('token');
+            sessionStorage.removeItem('urls');
+            window.location.href = 'http://localhost:8080/logout';
         }
 
         remover();
-    },[])
+    },[]);
+
 }
