@@ -5,7 +5,8 @@ const initialState = {
     pesos: [],
     primeiroPeso: '',
     ultimoPeso: '',
-    loading: false
+    loading: false,
+    //url: sessionStorage.getItem('urls')
 }
 
 export const pesoSlice = createSlice({

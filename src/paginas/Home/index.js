@@ -8,7 +8,6 @@ import { toast, ToastContainer } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
 
-//import useHome from '../../hooks/homeHook';
 import { buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 import usePessoa from "../../hooks/pessoaHook";
 import useTreino from '../../hooks/treinoHook';
@@ -30,7 +29,7 @@ export default function Home() {
     const [nome,setNome] = useState('');
     const [altura,setAltura] = useState('');
     const [endereco,setEndereco] = useState('');
-    const [treinosFeitos,setTreinosFeitos] = useState('');
+    const [treinosFeitos,setTreinosFeitos] = useState([]);
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
     const [buscarError,setBuscarErro] = useState(false);
 
@@ -63,9 +62,6 @@ export default function Home() {
 
             setTreinosNaoFeitos(dados);
         }
-
-      //  setUrls();
-
        
         buscarDados();
         buscarQuantidadeTreinoFeito('S');
@@ -110,7 +106,7 @@ export default function Home() {
                                     <hr />
                                 </div>
                                 <div className='row'>  
-                                    <div className="text-body-secondary pt-3 col">
+                                    <div className="text-body-secondary pt-3 col marginLinha">
                                         <LiaWeightHangingSolid color="#000" size={24} />
                                         <span className='ms-2'>Peso Inicial: {primeiroPeso.valor}</span>
                                         <span className='ms-2'>Peso Atual: {ultimoPeso.valor}</span>
@@ -141,7 +137,7 @@ export default function Home() {
                                     <hr />
                                 </div>
                                 <div className='row'>                                    
-                                    <div className="text-body-secondary pt-3 col">
+                                    <div className="text-body-secondary pt-3 col marginLinha">
                                         <GiWeightLiftingUp color="#000" size={24} />
                                         {
                                             treinosFeitos.length > 0
@@ -151,7 +147,15 @@ export default function Home() {
                                                         <>
                                                         <span className='ms-2' >{t.nome}:</span>
                                                         <span className='ms-2' >
-                                                            <label>Feitos: {t.quantidade} | Não Feitos: {treinosNaoFeitos[0].quantidade}</label>                                                        
+                                                            <label>Feitos: {t.quantidade} | 
+                                                                   Não Feitos: 
+                                                                   {
+                                                                        treinosNaoFeitos.length > 0 
+                                                                        ? 
+                                                                            treinosNaoFeitos[0].quantidade
+                                                                        :   ''
+                                                                    } 
+                                                            </label>                                                        
                                                         </span>
                                                         </>
                                                     
@@ -161,7 +165,7 @@ export default function Home() {
                                              ''                                            
                                         }
                                         <span className='ms-3 float-end'>
-                                            <Link to={`/treino`} className="btn btn-info">Ver Treinos</Link>
+                                            <Link to={`/treino/0`} className="btn btn-info">Ver Treinos</Link>
                                         </span>
                                     </div>
                                 </div>

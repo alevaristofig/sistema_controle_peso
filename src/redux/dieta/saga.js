@@ -30,6 +30,7 @@ function* salvarDietaAlimento(action) {
 
         yield put(salvarDietaAlimentoSucesso());
     }catch(error) {
+        alert('error')
         console.log(error)
         yield put(salvarDietaAlimentoError());
     }
@@ -59,7 +60,7 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/dietas/${action.payload.id}`,{
+        yield call(axios.delete,`${URL.dietas.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -74,7 +75,11 @@ function* apagar(action) {
 
 function* apagarAlimentoDieta(action) {
     try {
-        yield call(axios.delete,`http://localhost:8080/alimentodieta/${action.payload.id}`);
+        yield call(axios.delete,`${URL.alimentodieta.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(apagarAlimentoDietaSucesso());
 
@@ -97,15 +102,14 @@ function* atualizarDietaAlimento(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`http://localhost:8080/alimentodieta/${action.payload.id}`,dados,{
+        yield call(axios.put,`${URL.alimentodieta.href}/${action.payload.id}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
         });
 
         yield put(atualizarDietaAlimentoSucesso());
-    } catch(error) {
-        alert('erro')
+    } catch(error) {        
         yield put(atualizarDietaAlimentoError());
     }
 

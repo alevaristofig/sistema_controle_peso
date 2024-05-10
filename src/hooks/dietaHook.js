@@ -26,7 +26,7 @@ function useDieta() {
     }
 
     async function salvar(dados) {
-        const result = await axios.post("http://localhost:8080/dietas",dados,{
+        const result = await axios.post(`${url.dietas.href}`,dados,{
                                     headers: {
                                         "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
                                     }
@@ -34,7 +34,8 @@ function useDieta() {
                                 .then((response) => {                                    
                                     return response.data.id
                                 })
-                                .catch((error) => {                                    
+                                .catch((error) => {   
+                                    alert('error')                                 
                                     return error.response.data.userMessage;
                                 });
         return result;
@@ -65,8 +66,7 @@ function useDieta() {
                             .then((response) => {                                
                                 return response.data;
                             })
-                            .catch((error) => {
-                                console.log(error.message)
+                            .catch((error) => {                                
                                 return false;
                             });
 

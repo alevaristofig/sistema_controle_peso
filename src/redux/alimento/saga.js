@@ -6,6 +6,7 @@ import { salvarSucesso, salvarError, listarSucesso, listarError,
 import axios from 'axios';
 
 const URL = JSON.parse(sessionStorage.getItem('urls'));
+const LISTAR_ALIMENTOS = 'listaralimentos';
 
 function* listar(action){
     try {
@@ -92,7 +93,7 @@ function* apagar(action) {
 
 function* listarAlimentos(action) {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/alimentos/listaralimentos",{
+        const response = yield call(axios.get,`${URL.alimentos.href}/${LISTAR_ALIMENTOS}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

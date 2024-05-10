@@ -5,7 +5,7 @@ function useTreino() {
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
 
     async function listarQuantidadeTreinos(treino) {
-        
+       // alert('listar treinos')
         const result = await axios.get(`${url.pessoaexercicio.href}/listartreinos/${treino}`,{
                                     headers: {
                                         "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,

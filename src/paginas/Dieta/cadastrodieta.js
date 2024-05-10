@@ -61,9 +61,12 @@ export default function CadastroDieta() {
                 'dataAtualizacao': null
             };
 
+            //let resultDieta = '';
              const resultDieta = await salvar(dados);
 
              if(typeof resultDieta !== 'string') {
+             //   alert('sdim')
+               // console.log(alimentosDieta)
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
                         'dietaId': resultDieta,
@@ -147,7 +150,7 @@ export default function CadastroDieta() {
                                                                                         value={a.id} 
                                                                                         onChange={(e) => registrarValoresTreino(e)}
                                                                                     /> 
-                                                                                    <label class="form-check-label" for="inlineCheckbox1">{a.nome} - {a.quantidade}</label>
+                                                                                    <label className="form-check-label" htmlFor="inlineCheckbox1">{a.nome} - {a.quantidade}</label>
                                                                                 </div>   
                                                                             </div> 
                                                                         </div>

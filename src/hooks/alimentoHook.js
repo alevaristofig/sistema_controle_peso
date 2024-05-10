@@ -3,6 +3,7 @@ import axios from 'axios';
 
 function useAlimento() {
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+    const [listaralimentos] = useState('listaralimentos');
 
     async function buscar(id) {
         const result = await axios.get(`${url.alimentos.href}/${id}`,{
@@ -30,20 +31,22 @@ function useAlimento() {
     }
 
     async function listar() {
-        const result = await axios.get(`${url.alimentos.href}`,{
+        const result = await axios.get(`${url.alimentos.href}/${listaralimentos}`,{
                                         headers: {
                                             "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                         }
                                     })
                                     .then((response) => {
-                                        return {
+                                        return response.data;
+                                       /* return {
                                             dados: response.data._embedded.alimentoModelList,
                                             paginacao: response.data.page,
                                             links: response.data._links,
                                             url: 'dieta'
-                                        }
+                                        }*/
                                     })
                                     .catch((error) => {
+                                        console.log(error)
                                         return '';
                                    });
 

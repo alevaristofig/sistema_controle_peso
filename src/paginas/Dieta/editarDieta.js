@@ -56,11 +56,12 @@ export default function EditarDieta() {
                 setDietaId(dadosDieta.id);
                 setDataCadastro(dadosDieta.dataCadastro)
     
-                dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);                
+                dadosAlimentos = await buscarAlimentoDieta(dadosDieta.id);   
+                setDadosAlimentos(dadosAlimentos);                             
                 setNumAlimentosDieta(dadosAlimentos.length);
             }
 
-            alimentos.dados.forEach((e,i) => {                  
+            alimentos.forEach((e,i) => {                  
                 if(typeof dadosAlimentos.find((d) => d.alimento.id == e.id) == 'object') {
                     isChecked[i] = true;
 
@@ -114,19 +115,18 @@ export default function EditarDieta() {
             'dataAtualizacao': dataAtual.toISOString()
         }));
         
-
-        if(alimentosDieta.length > numAlimentosDieta) {
-            alimentosDieta.forEach(element => {
-                if(typeof dadosAlimentos.find((d) => d.alimento.id == element.idAlimento) !== 'object') {
+        if(alimentosDieta.length > numAlimentosDieta) {           
+            alimentosDieta.forEach(element => {              
+                if(typeof dadosAlimentos.find((d) => d.alimento.id == element.idAlimento) !== 'object') {                    
                     dispatch(salvarDietaAlimento({
                         'dietaId': id,
                         'alimentoId': element.idAlimento,
-                        'dataCadastro': dataAtual.toISOString(),
+                        'dataCadastro': dataCadastro,
                         'dataAtualizacao': null
                     }));
                 }
             })  
-        } else if(alimentosDieta.length < numAlimentosDieta) {                        
+        } else if(alimentosDieta.length < numAlimentosDieta) {                                    
             dadosAlimentos.forEach(element => {
                 if(typeof alimentosDieta.find((d) => d.idAlimento == element.alimento.id) === 'undefined') {
                     dispatch(apagarAlimentoDieta({
@@ -134,7 +134,7 @@ export default function EditarDieta() {
                     }));
                 }
             })
-        } else if(alimentosDieta.length == numAlimentosDieta) {
+        } else if(alimentosDieta.length == numAlimentosDieta) {            
             alimentosDieta.forEach((element,i) => {                
                 dispatch(atualizarDietaAlimento({
                     'id': dadosAlimentos[i].id,
@@ -208,7 +208,7 @@ export default function EditarDieta() {
                                                 <div className="row mt-3">
                                                     
                                                         {
-                                                            alimentos.dados.map((a,i) => {                                                                
+                                                            alimentos.map((a,i) => {                                                                
                                                                 return(                                                                                                                                  
                                                                     <div className="col-sm-3 mb-4" key={i}>
                                                                         <div className="card">

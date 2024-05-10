@@ -10,6 +10,10 @@ const URL = JSON.parse(sessionStorage.getItem('urls'));
 const PRIMEIROPESO = "buscarprimeiropeso";
 const ULTIMOPESO = "buscarultimopeso";
 
+function setUrl() {    
+    return JSON.parse(sessionStorage.getItem('urls'));
+}
+
 function* listar(action){
     try {      
         const response = yield call(axios.get,`${URL.pesos.href}?page=${action.payload.page}`,{
@@ -85,9 +89,9 @@ function* apagar(action) {
 }
 
 function* buscarPrimeiroPeso() {
-    try {        
-        alert('entrou saga')
-        const response = yield call(axios.get,`${URL.pesos.href}/${PRIMEIROPESO}`,{
+    try {       
+        let url = yield call(setUrl);      
+        const response = yield call(axios.get,`${url.pesos.href}/${PRIMEIROPESO}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -102,7 +106,8 @@ function* buscarPrimeiroPeso() {
 
 function* buscarUltimoPeso() {
     try {
-        const response = yield call(axios.get,`${URL.pesos.href}/${ULTIMOPESO}`,{
+        let url = yield call(setUrl);  
+        const response = yield call(axios.get,`${url.pesos.href}/${ULTIMOPESO}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
