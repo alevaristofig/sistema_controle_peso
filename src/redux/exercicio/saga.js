@@ -6,12 +6,19 @@ import { listarSucesso, listarError, salvarSucesso, salvarError,
 
 import axios from 'axios';
 
-const URL = JSON.parse(sessionStorage.getItem('urls'));
-const LISTAREXERCICIOS = 'listarexercicios';
+function setUrl() {    
+    return {
+              "url":    JSON.parse(sessionStorage.getItem('urls')),
+              "listarexercicios": 'listarexercicios',              
+           }
+}
 
 function* listar(action) {
     try {
-        const response = yield call(axios.get,`${URL.exercicios.href}?page=${action.payload.page}`,{
+
+        let urls = yield call(setUrl);
+
+        const response = yield call(axios.get,`${urls.url.exercicios.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -32,7 +39,10 @@ function* listar(action) {
 
 function* listarSemPaginacao() {
     try {
-        const response = yield call(axios.get,`${URL.exercicios.href}/${LISTAREXERCICIOS}`,{
+
+        let urls = yield call(setUrl);
+
+        const response = yield call(axios.get,`${urls.url.exercicios.href}/${urls.listarexercicios}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -55,7 +65,9 @@ function* salvar(action) {
             'dataAtualizar': action.payload.dataAtualizar
         };
 
-        yield call(axios.post,`${URL.exercicios.href}`,dados,{
+        let urls = yield call(setUrl);
+
+        yield call(axios.post,`${urls.url.exercicios.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -70,7 +82,10 @@ function* salvar(action) {
 
 function* remover(action) {
     try {
-        yield call(axios.delete,`${URL.exercicios.href}/${action.payload.id}`,{
+
+        let urls = yield call(setUrl);
+
+        yield call(axios.delete,`${urls.url.exercicios.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -93,12 +108,17 @@ function* atualizar(action) {
             'dataCadastro': action.payload.dataCadastro,
             'dataAtualizar': action.payload.dataAtualizar
         };
-        console.log(data)
-        yield call(axios.put,`${URL.exercicios.href}/${action.payload.id}`,data);
+       
+        let urls = yield call(setUrl);
+
+        yield call(axios.put,`${urls.url.exercicios.href}/${action.payload.id}`,data, {
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(atualizarSucesso());
     } catch(error) {
-        console.log(error)
         yield put(atualizarError(error.response.data.userMessage));
     }
 }

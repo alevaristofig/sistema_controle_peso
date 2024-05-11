@@ -19,7 +19,7 @@ export default function Treino() {
     const dispatch = useDispatch();
 
     const {page} = useParams();
-    const { exercicios, loading } = useSelector((rootReducer) => rootReducer.exercicio);
+    const { exerciciosSemPaginacao, loading } = useSelector((rootReducer) => rootReducer.exercicio);
     const { treinos, loadingTreino } = useSelector((rootReducer) => rootReducer.treino); 
     const navigate = useNavigate();   
 
@@ -109,7 +109,7 @@ export default function Treino() {
 
         dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
 
-        exercicios.forEach(e => {
+        exerciciosSemPaginacao.forEach(e => {
             let dados = {
                 'pessoaId': 1,
                 'exercicioId': e.id,                
@@ -155,9 +155,7 @@ export default function Treino() {
                 <div>
                     <ToastContainer />
                 </div>
-               {
-                //console.log(exercicios)
-               }
+
                 <div className="container py-4">
                     {
                         loading
@@ -173,7 +171,7 @@ export default function Treino() {
                         }
 
                         {                                                     
-                            exercicios.length === 0
+                            exerciciosSemPaginacao.length === 0
                             ?
                                 <div className="row mt-4">
                                     <div className="col">
@@ -185,7 +183,7 @@ export default function Treino() {
                                     <form method='post' onSubmit={registrarTreino}>
                                         <div className="row">                                    
                                             {                                        
-                                                exercicios.map((e,i) => {     
+                                                exerciciosSemPaginacao.map((e,i) => {     
                                                     if(mostrarDivTreino() === -1) {                                                                                                                                       
                                                         return(                                                                                                       
                                                             <div className="col-sm-3 mb-4" key={i}>

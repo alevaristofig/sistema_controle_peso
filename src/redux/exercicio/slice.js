@@ -3,6 +3,7 @@ import { toast } from 'react-toastify';
 
 const initialState = {
     exercicios: [],
+    exerciciosSemPaginacao: [],
     loading: false
 }
 
@@ -21,12 +22,12 @@ export const exercicioSlice = createSlice({
             state.loading = false;  
             toast.error("Ocorreu um erro ao listar os Exercícios!");         
         },
-        listarSemPaginacao(state) {
+        listarSemPaginacao(state) {            
             state.loading = true;
         },
         listarSemPaginacaoSucesso(state,action) {
             state.loading = false;
-            state.exercicios = action.payload;
+            state.exerciciosSemPaginacao = action.payload;
         },
         listarSemPaginacaoError(state) {
             state.loading = false;

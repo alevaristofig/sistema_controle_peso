@@ -37,7 +37,8 @@ export default function HistoricoMedico() {
 
         listarHistoricosMedico();
         setLoading(false);
-    },[loading]);
+        
+    },[]);
 
     function formatarData(dataFormatada) {
         let data = new Date(dataFormatada);
@@ -50,7 +51,9 @@ export default function HistoricoMedico() {
             'id': id
         }));
 
-        setLoading(true);
+        setTimeout(() => {
+            window.location.reload()
+        }, 7000);
     }
 
     return(

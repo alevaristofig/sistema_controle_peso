@@ -1,10 +1,20 @@
 import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { listarSucesso, listarError, atualizarSucesso, atualizarError } from './slice';
+
 import axios from 'axios';
+
+function setUrl() {    
+    return {
+              "url":    JSON.parse(sessionStorage.getItem('urls')),
+           }
+}
 
 function* listar() {
     try {
-        const response = yield call(axios.get,"http://localhost:8080/pessoas");
+
+        let urls = yield call(setUrl);  
+
+        const response = yield call(axios.get,`${urls.url.pessoas.href}`);
 
         yield put(listarSucesso(response.data));
     } catch(error) {
@@ -23,8 +33,10 @@ function* atualizar(action) {
             'dataCadastro': action.payload.dataCadastro,
             'dataAtualizacao': action.payload.dataAtualizacao
         };
-console.log(data)
-        yield call(axios.put,`http://localhost:8080/pessoas/${action.payload.pessoa}`,data,{
+
+        let urls = yield call(setUrl);
+
+        yield call(axios.put,`${urls.url.pessoas.href}/${action.payload.pessoa}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

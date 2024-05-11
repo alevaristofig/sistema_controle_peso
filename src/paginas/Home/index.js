@@ -31,6 +31,7 @@ export default function Home() {
     const [endereco,setEndereco] = useState('');
     const [treinosFeitos,setTreinosFeitos] = useState([]);
     const [treinosNaoFeitos,setTreinosNaoFeitos] = useState([]);
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')));
     const [buscarError,setBuscarErro] = useState(false);
 
     useEffect(() => {
@@ -39,7 +40,7 @@ export default function Home() {
         }
 
         async function buscarDados() {
-            let dados = await buscar(1);
+            let dados = await buscar(dadosPessoa.id);
 
             if(typeof dados === 'string') {
                 toast.error(dados);  

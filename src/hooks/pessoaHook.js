@@ -64,11 +64,7 @@ function usePessoa() {
     }
 
     async function removerToken(token) {
-        const response = await axios.delete(`${url.pessoas.href}/${removertoken}/${token}`,{
-            headers: {
-                "Authorization": `Bearer ${token}` ,
-            }
-        });
+        const response = await axios.delete(`${url.pessoas.href}/${removertoken}/${token}`);
     }
 
     function formatarAltura(altura) {

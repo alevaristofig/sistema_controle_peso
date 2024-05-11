@@ -3,11 +3,18 @@ import { listarSucesso, listarError, salvarSucesso, salvarError} from './slice';
 
 import axios from 'axios';
 
-const URL = JSON.parse(sessionStorage.getItem('urls'));
+function setUrl() {    
+    return {
+              "url": JSON.parse(sessionStorage.getItem('urls'))
+           }
+}
 
 function* listarTreino(action) {
     try {
-        const response = yield call(axios.get,`${URL.pessoaexercicio.href}?page=${action.payload.page}`,{
+
+        let urls = yield call(setUrl);
+
+        const response = yield call(axios.get,`${urls.url.pessoaexercicio.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -39,7 +46,9 @@ function* salvar(action) {
             'data': action.payload.dados.data
         };
 
-        yield call(axios.post,"http://localhost:8080/pessoaexercicio",dados);
+        let urls = yield call(setUrl);
+
+        yield call(axios.post,`${urls.url.pessoaexercicio.href}`,dados);
 
         yield put(salvarSucesso());
 

@@ -5,12 +5,19 @@ import { salvarSucesso, salvarError, listarSucesso, listarError,
 
 import axios from 'axios';
 
-const URL = JSON.parse(sessionStorage.getItem('urls'));
-const LISTAR_ALIMENTOS = 'listaralimentos';
+function setUrl() {    
+    return {
+              "url": JSON.parse(sessionStorage.getItem('urls')),
+              "listaralimentos": "listaralimentos"
+           }
+}
 
 function* listar(action){
     try {
-        const response = yield call(axios.get,`${URL.alimentos.href}?page=${action.payload.page}`,{
+
+        let urls = yield call(setUrl);
+
+        const response = yield call(axios.get,`${urls.url.alimentos.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -40,7 +47,9 @@ function* salvar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao          
         }
 
-        yield call(axios.post,`${URL.alimentos.href}`,dados,{
+        let urls = yield call(setUrl);
+
+        yield call(axios.post,`${urls.url.alimentos.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -63,7 +72,9 @@ function* atualizar(action) {
             'dataAtualizacao': action.payload.dataAtualizacao
         };
 
-        yield call(axios.put,`${URL.alimentos.href}/${action.payload.id}`,data,{
+        let urls = yield call(setUrl);
+
+        yield call(axios.put,`${urls.url.alimentos.href}/${action.payload.id}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
             }
@@ -78,11 +89,14 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-            yield call(axios.delete,`${URL.alimentos.href}/${action.payload.id}`,{
-                headers: {
-                    "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
-                }
-            });
+
+        let urls = yield call(setUrl);
+
+        yield call(axios.delete,`${urls.url.alimentos.href}/${action.payload.id}`,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
+            }
+        });
 
         yield put(apagarSucesso());
 
@@ -93,7 +107,10 @@ function* apagar(action) {
 
 function* listarAlimentos(action) {
     try {
-        const response = yield call(axios.get,`${URL.alimentos.href}/${LISTAR_ALIMENTOS}`,{
+
+        let urls = yield call(setUrl);
+
+        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listarAlimentos}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

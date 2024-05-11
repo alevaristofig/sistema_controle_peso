@@ -16,6 +16,7 @@ export default function CadastroHistoricoMedico() {
 
     const [descricao,setDescricao] = useState('');
     const [remedio,setRemedio] = useState('');
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')));
 
     useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
@@ -29,7 +30,7 @@ export default function CadastroHistoricoMedico() {
         let dataAtual = new Date();
 
         dispatch(salvar({
-            'id': 1,
+            'id': dadosPessoa.id,
             'descricao': descricao,
             'remedio': remedio,
             'dataCadastro': dataAtual.toISOString(),

@@ -6,17 +6,19 @@ import { listarSucesso, listarError, salvarSucesso, salvarError,
 
 import axios from 'axios';
 
-const URL = JSON.parse(sessionStorage.getItem('urls'));
-const PRIMEIROPESO = "buscarprimeiropeso";
-const ULTIMOPESO = "buscarultimopeso";
-
 function setUrl() {    
-    return JSON.parse(sessionStorage.getItem('urls'));
+    return {
+              "url":    JSON.parse(sessionStorage.getItem('urls')),
+              "primeiroPeso": 'buscarprimeiropeso',
+              "ultimoPeso": 'buscarultimopeso'
+           }
 }
 
 function* listar(action){
     try {      
-        const response = yield call(axios.get,`${URL.pesos.href}?page=${action.payload.page}`,{
+        let urls = yield call(setUrl);  
+
+        const response = yield call(axios.get,`${urls.url.pesos.href}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -37,8 +39,10 @@ function* listar(action){
 
 function* salvar(action) {
     try {
-        console.log(action.payload.dados);
-        yield call(axios.post,`${URL.pesos.href}`,action.payload.dados,{
+        
+        let urls = yield call(setUrl);  
+
+        yield call(axios.post,`${urls.url.pesos.href}`,action.payload.dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -61,7 +65,9 @@ function* atualizar(action) {
             'pessoa': action.payload.pessoa
         };
 
-        yield call(axios.put,`${URL.pesos.href}/${action.payload.id}`,data,{
+        let urls = yield call(setUrl);  
+
+        yield call(axios.put,`${urls.url.pesos.href}/${action.payload.id}`,data,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -75,7 +81,10 @@ function* atualizar(action) {
 
 function* apagar(action) {
     try {
-        yield call(axios.delete,`${URL.pesos.href}/${action.payload.id}`,{
+
+        let urls = yield call(setUrl);  
+
+        yield call(axios.delete,`${urls.url.pesos.href}/${action.payload.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -89,9 +98,11 @@ function* apagar(action) {
 }
 
 function* buscarPrimeiroPeso() {
-    try {       
-        let url = yield call(setUrl);      
-        const response = yield call(axios.get,`${url.pesos.href}/${PRIMEIROPESO}`,{
+    try {   
+
+        let urls = yield call(setUrl); 
+
+        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -106,8 +117,10 @@ function* buscarPrimeiroPeso() {
 
 function* buscarUltimoPeso() {
     try {
-        let url = yield call(setUrl);  
-        const response = yield call(axios.get,`${url.pesos.href}/${ULTIMOPESO}`,{
+
+        let urls = yield call(setUrl);  
+
+        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.ultimoPeso}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

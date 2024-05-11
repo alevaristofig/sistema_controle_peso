@@ -39,7 +39,11 @@ export default function Login() {
             if(token != '') {
               sessionStorage.setItem("token", token);
               let urls = await listarUrls();
+              let dadosToken = await buscarDadosToken(token);
+
               sessionStorage.setItem('urls',JSON.stringify(urls._links));
+              sessionStorage.setItem('dadosPessoa',JSON.stringify(dadosToken));
+
               navigate('/', {replace: true});
             }            
           }
@@ -130,6 +134,22 @@ export default function Login() {
                     }); 
                     
     return result;
+  }
+
+  async function buscarDadosToken(token) {
+    const result = await axios.get(`${urlPadrao}/pessoas/buscardadostoken/${token}`,{
+      headers: {
+          "Authorization": `Bearer ${token}`,
+      }
+      })
+      .then((response) => {                        
+          return response.data;
+      })
+      .catch((error) => {                          
+          return false;
+      }); 
+  
+      return result;
   }
 
 }
