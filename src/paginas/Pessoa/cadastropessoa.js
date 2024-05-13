@@ -13,7 +13,7 @@ import './pessoa.css';
 
 export default function CadastroPessoa() {
 
-    const {salvar, formatarAltura} = usePessoa();
+    const {salvar, formatarAltura, criptografarSenha} = usePessoa();
     const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
@@ -31,7 +31,7 @@ export default function CadastroPessoa() {
             'email': email,
             'altura': altura,
             'endereco': endereco,
-            'senha': senha,
+            'senha': criptografarSenha(senha),
             'dataCadastro': dataBanco.toISOString(),
             'dataAtualizacao': ''
         }

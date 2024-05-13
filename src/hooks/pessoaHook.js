@@ -1,4 +1,6 @@
 import { useState, useEffect } from 'react';
+
+import bcrypt from "bcryptjs";
 import axios from 'axios';
 
 function usePessoa() {
@@ -7,7 +9,7 @@ function usePessoa() {
     const [removertoken,setRemovertoken] = useState('removertoken');
 
     function listar() {
-            const response =  axios.get("http://localhost:8080/pessoas")
+            const response =  axios.get(`${url.pessoas.href}`)
                                 .then((response) => {
                                     return response.data;
                                 })
@@ -18,9 +20,7 @@ function usePessoa() {
             return response;        
     }
 
-    async function buscar(id) {   
-       // alert('entrou hook, '+typeof url) 
-      //  console.log(url.pessoas)   
+    async function buscar(id) {     
         const response = await axios.get(`${url.pessoas.href}/${id}`,{
                                 headers: {
                                     "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
@@ -52,11 +52,11 @@ function usePessoa() {
             'dataAtualizacao': dados.dataAtualizacao
         }
     
-        const result = axios.post("http://localhost:8080/pessoas",dadosPessoa)
-                        .then((response) => {
+        const result = axios.post(`http://localhost:8080/v1/pessoas`,dadosPessoa)
+                        .then((response) => {                                                        
                             return true;
                         })
-                        .catch((error) => {                            
+                        .catch((error) => {                                                       
                             return false;
                         });     
                         
@@ -84,7 +84,14 @@ function usePessoa() {
         } 
     }
 
-    return {listar,buscar, salvar, formatarAltura, removerToken}
+    async function criptografarSenha(senha) {
+        let salt = bcrypt.genSaltSync(10);        
+        let senhaCript = bcrypt.hashSync(senha,salt);
+
+        return senhaCript;      
+    }
+
+    return {listar,buscar, salvar, formatarAltura, removerToken, criptografarSenha}
 }
 
 export default usePessoa;
