@@ -10,7 +10,7 @@ import { atualizar } from '../../redux/peso/slice';
 
 import { toast,  ToastContainer } from 'react-toastify';
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarPeso() {
@@ -110,9 +110,9 @@ export default function EditarPeso() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Editar Pessoa">
-                    <LiaWeightHangingSolid color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Editar Pessoa">
+                    <LiaWeightHangingSolid color="#fff" size={24} />
+                </Titulo2>
 
                 <div>
                     <ToastContainer />

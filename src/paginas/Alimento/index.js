@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { FaBowlFood } from 'react-icons/fa6';
 
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -51,9 +51,9 @@ export default function Alimento() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Alimento">
-                    <FaBowlFood color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Alimento">
+                    <FaBowlFood color="#fff" size={24} />
+                </Titulo2>
 
                 <div>
                     <ToastContainer />

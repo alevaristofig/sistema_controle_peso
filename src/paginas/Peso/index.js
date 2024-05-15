@@ -7,7 +7,7 @@ import { listar, apagar, buscarPrimeiroPeso, buscarUltimoPeso } from '../../redu
 
 import { ToastContainer } from 'react-toastify';
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -64,9 +64,9 @@ export default function Peso() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Pessoa">
-                    <LiaWeightHangingSolid color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Peso">
+                    <LiaWeightHangingSolid color="#fff" size={24} />
+                </Titulo2>
                 <div>
                     <ToastContainer />
                 </div>

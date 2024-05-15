@@ -8,7 +8,7 @@ import { listarSemPaginacao } from "../../redux/exercicio/slice";
 import { listarTreino, salvar } from '../../redux/treino/slice';
 
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import Treinos from '../../compomentes/Treinos';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -105,9 +105,7 @@ export default function Treino() {
         e.preventDefault();
         
         let dataBanco = data.split('/');
-        let dataAtual = new Date();
-
-       // dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+        let dataAtual = new Date();       
 
         exerciciosSemPaginacao.forEach(e => {
             let dados = {
@@ -148,9 +146,9 @@ export default function Treino() {
         <>
             <Header />
             <div className="content">
-                <Titulo nome="Treino">
-                    <GiWeightLiftingUp color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Treino">
+                    <GiWeightLiftingUp color="#fff" size={24} />
+                </Titulo2>
 
                 <div>
                     <ToastContainer />

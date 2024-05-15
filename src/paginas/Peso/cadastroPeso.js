@@ -3,7 +3,6 @@ import { useNavigate } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
 import InputMask from 'react-input-mask';
-import CurrencyInput from 'react-currency-masked-input';
 
 import { useDispatch } from 'react-redux';
 import { salvar } from '../../redux/peso/slice';
@@ -11,7 +10,7 @@ import { salvar } from '../../redux/peso/slice';
 import usePeso from '../../hooks/pesoHook';
 
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroPeso() {
@@ -80,9 +79,9 @@ export default function CadastroPeso() {
                     <ToastContainer />
                 </div>
 
-                <Titulo nome="Cadastro de Peso">
-                    <LiaWeightHangingSolid color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Cadastro de Peso">
+                    <LiaWeightHangingSolid color="#fff" size={24} />
+                </Titulo2>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>

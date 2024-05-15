@@ -8,7 +8,7 @@ import useDieta from "../../hooks/dietaHook";
 import { apagar } from "../../redux/dieta/slice";
 
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -61,9 +61,9 @@ export default function Dieta() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Dieta">
-                    <BiFoodMenu color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Dieta">
+                    <BiFoodMenu color="#fff" size={24} />
+                </Titulo2>
 
                 <div>
                     <ToastContainer />

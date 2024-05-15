@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { VscPerson } from "react-icons/vsc";
 import { Link } from "react-router-dom";
 import Header from "../../compomentes/Headers";
-import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 
 import usePessoa from "../../hooks/pessoaHook";
 
@@ -35,9 +35,9 @@ export default function Pessoa() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Pessoa">
-                    <VscPerson color="#000" size={24} />
-                </Titulo>
+                <Titulo2 nome="Pessoa">
+                    <VscPerson color="#fff" size={24} />
+                </Titulo2>
 
                 <div className="container py-4">
                     {    

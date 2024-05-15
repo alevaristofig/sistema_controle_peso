@@ -4,6 +4,7 @@ import { FiHome } from 'react-icons/fi';
 import { VscPerson } from "react-icons/vsc";
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { GiWeightLiftingUp } from 'react-icons/gi';
+import { MdLibraryBooks } from 'react-icons/md';
 import { toast, ToastContainer } from 'react-toastify';
 
 import { useDispatch, useSelector } from 'react-redux';
@@ -15,7 +16,6 @@ import useTreino from '../../hooks/treinoHook';
 import TreinoPessoa from '../../compomentes/Treinos/treinoPessoa';
 
 import Header from '../../compomentes/Headers';
-import Titulo from "../../compomentes/Titulo";
 import Titulo2 from '../../compomentes/Titulo/titulo2';
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -143,13 +143,24 @@ export default function Home() {
                                 <div className='row'>                                    
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <GiWeightLiftingUp color="#000" size={24} className='float-start' />                                                                     
-                                         <span className='ms-2 float-start'>
+                                        <span className='ms-2 float-start'>
                                             <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
                                         </span>
                                         <span className='ms-3 float-end'>
                                             <Link to={`/treino/0`} className="btn btn-info">Ver Treinos</Link>
                                         </span>
                                     </div>
+                                    <hr />
+                                </div>
+                                <div>
+                                    <div className="text-body-secondary pt-3 col marginLinha">
+                                        <MdLibraryBooks color="#000" size={24} className='float-start' />   
+                                        <span className='ms-2 float-start'>   
+                                            <a className='linkGuia' href='https://bvsms.saude.gov.br/bvs/publicacoes/guia_alimentar_populacao_brasileira_2ed.pdf' target='_blank'>
+                                                Guia Alimentar Para a População Brasileira
+                                            </a>
+                                        </span>
+                                    </div>                                    
                                 </div>
                             </div>
                     }
