@@ -20,8 +20,6 @@ export default function Exercicio(){
     const { page } = useParams();
     const navigate = useNavigate();
 
-    const [loadingDel,setLoadingDel] = useState(true);
-
     useEffect(() => {
 
         if(sessionStorage.getItem('token') == null) {           
@@ -32,8 +30,7 @@ export default function Exercicio(){
             'page': page
         }));
 
-        setLoadingDel(false);
-    },[loadingDel]);
+    },[]);
 
     function formatarData(dataFormatada) {
         let d = new Date(dataFormatada);
@@ -44,9 +41,11 @@ export default function Exercicio(){
     function removerExercicio(id) {
         dispatch(remover({
             "id": id
-        }));
-
-        setLoadingDel(true);
+        })); 
+        
+        setTimeout(() => {
+            window.location.reload()
+        }, 7000);
     }
 
     return(

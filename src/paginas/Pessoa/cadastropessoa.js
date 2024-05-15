@@ -22,7 +22,7 @@ export default function CadastroPessoa() {
     const [endereco,setEndereco] = useState('');
     const [senha,setSenha] = useState('');
 
-    function salvarDados(e) {
+    async function salvarDados(e) {
         e.preventDefault();    
         
         let dataBanco = new Date();
@@ -31,12 +31,12 @@ export default function CadastroPessoa() {
             'email': email,
             'altura': altura,
             'endereco': endereco,
-            'senha': criptografarSenha(senha),
+            'senha':  await criptografarSenha(senha),
             'dataCadastro': dataBanco.toISOString(),
             'dataAtualizacao': ''
         }
 
-        const resp = salvar(dados);
+        const resp = await salvar(dados);
 
         if(resp) {
             toast.success("Pessoa cadastrada com Sucesso!");

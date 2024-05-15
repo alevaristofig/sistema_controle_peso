@@ -5,7 +5,8 @@ import axios from 'axios';
 
 function setUrl() {    
     return {
-              "url": JSON.parse(sessionStorage.getItem('urls'))
+              "url": JSON.parse(sessionStorage.getItem('urls')),
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))
            }
 }
 
@@ -14,14 +15,14 @@ function* listarTreino(action) {
 
         let urls = yield call(setUrl);
 
-        const response = yield call(axios.get,`${urls.url.pessoaexercicio.href}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${urls.url.pessoaexercicio.href}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
         });
-
+       
         let responsePessoaExercicio = {
-            dados: response.data._embedded.pessoaExercicioModelList,
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.pessoaExercicioModelList,
             paginacao: response.data.page,
             links: response.data._links,
             url: 'treino'
@@ -43,12 +44,16 @@ function* salvar(action) {
                 'id': action.payload.dados.exercicioId
             },
             'treino': action.payload.dados.treino,
-            'data': action.payload.dados.data
+            'dataCadastro': action.payload.dados.dataCadastro
         };
 
         let urls = yield call(setUrl);
 
-        yield call(axios.post,`${urls.url.pessoaexercicio.href}`,dados);
+        yield call(axios.post,`${urls.url.pessoaexercicio.href}`,dados,{
+            headers: {
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+            }
+        });
 
         yield put(salvarSucesso());
 

@@ -60,13 +60,10 @@ export default function CadastroDieta() {
                 'dataCadastro': dataAtual.toISOString(),
                 'dataAtualizacao': null
             };
+            
+            const resultDieta = await salvar(dados);
 
-            //let resultDieta = '';
-             const resultDieta = await salvar(dados);
-
-             if(typeof resultDieta !== 'string') {
-             //   alert('sdim')
-               // console.log(alimentosDieta)
+            if(typeof resultDieta !== 'string') {             
                 alimentosDieta.forEach(element => {
                     dispatch(salvarDietaAlimento({
                         'dietaId': resultDieta,

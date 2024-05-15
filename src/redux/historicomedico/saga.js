@@ -6,23 +6,25 @@ import axios from 'axios';
 
 function setUrl() {    
     return {
-              "url": JSON.parse(sessionStorage.getItem('urls'))
+              "url": JSON.parse(sessionStorage.getItem('urls')),
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))
            }
 }
 
 function* salvar(action) {
     try {
+
+        let urls = yield call(setUrl);
+
         let dados = {
             'pessoa': {
-                'id': action.payload.id
+                'id': urls.pessoa.id
             },
             'descricao': action.payload.descricao,
             'remedio': action.payload.remedio,
             'dataCadastro': action.payload.dataCadastro,
             'dataAtualizacao': action.payload.dataAtualizacao
-        };
-
-        let urls = yield call(setUrl);
+        };        
 
         yield call(axios.post,`${urls.url.historicomedico.href}`,dados,{
             headers: {

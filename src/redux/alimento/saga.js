@@ -8,7 +8,9 @@ import axios from 'axios';
 function setUrl() {    
     return {
               "url": JSON.parse(sessionStorage.getItem('urls')),
-              "listaralimentos": "listaralimentos"
+              "listaralimentospaginacao": "listaralimentospaginacao",
+              "listaralimentos": "listaralimentos",
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))
            }
 }
 
@@ -17,14 +19,14 @@ function* listar(action){
 
         let urls = yield call(setUrl);
 
-        const response = yield call(axios.get,`${urls.url.alimentos.href}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listaralimentospaginacao}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
         });
 
         let responseAlimento = {
-            dados: response.data._embedded.alimentoModelList,
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.alimentoModelList,
             paginacao: response.data.page,
             links: response.data._links,
             url: 'alimento'
@@ -32,23 +34,25 @@ function* listar(action){
 
         yield put(listarSucesso(responseAlimento));
     } catch(error) {
-        console.log(error)
         yield put(listarError());
     }
 }
 
 function* salvar(action) {
     try {
+        let urls = yield call(setUrl);
+
         let dados = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
             'calorias': action.payload.calorias,  
             'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizacao': action.payload.dataAtualizacao          
+            'dataAtualizacao': action.payload.dataAtualizacao,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }          
         }
-
-        let urls = yield call(setUrl);
-
+        
         yield call(axios.post,`${urls.url.alimentos.href}`,dados,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` 
@@ -64,15 +68,19 @@ function* salvar(action) {
 
 function* atualizar(action) {
     try {
+
+        let urls = yield call(setUrl);
+        
         let data = {
             'nome': action.payload.nome,
             'quantidade': action.payload.quantidade,
             'calorias': action.payload.calorias,
             'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizacao': action.payload.dataAtualizacao
-        };
-
-        let urls = yield call(setUrl);
+            'dataAtualizacao': action.payload.dataAtualizacao,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }  
+        };        
 
         yield call(axios.put,`${urls.url.alimentos.href}/${action.payload.id}`,data,{
             headers: {
@@ -81,7 +89,7 @@ function* atualizar(action) {
         });
     
         yield put(atualizarSucesso());
-    } catch(error) {
+    } catch(error) {        
         yield put(atualizarError(error.response.data.userMessage));
     }
 
@@ -110,9 +118,9 @@ function* listarAlimentos(action) {
 
         let urls = yield call(setUrl);
 
-        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listarAlimentos}`,{
+        const response = yield call(axios.get,`${urls.url.alimentos.href}/${urls.listaralimentos}`,{
             headers: {
-                "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
+                "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
             }
         });
         

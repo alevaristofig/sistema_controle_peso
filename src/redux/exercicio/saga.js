@@ -9,7 +9,9 @@ import axios from 'axios';
 function setUrl() {    
     return {
               "url":    JSON.parse(sessionStorage.getItem('urls')),
-              "listarexercicios": 'listarexercicios',              
+              "listarexercicios": "listarexercicios", 
+              "listarexerciciospaginacao": "listarexerciciospaginacao",
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))             
            }
 }
 
@@ -18,7 +20,7 @@ function* listar(action) {
 
         let urls = yield call(setUrl);
 
-        const response = yield call(axios.get,`${urls.url.exercicios.href}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${urls.url.exercicios.href}/${urls.listarexerciciospaginacao}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -57,15 +59,18 @@ function* listarSemPaginacao() {
 
 function* salvar(action) {
     try {
+        let urls = yield call(setUrl);
+
         let dados = {
             'nome': action.payload.nome,
             'frequencia': action.payload.frequencia,
             'tempo': action.payload.tempo,
             'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizar': action.payload.dataAtualizar
-        };
-
-        let urls = yield call(setUrl);
+            'dataAtualizar': action.payload.dataAtualizar,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }
+        };        
 
         yield call(axios.post,`${urls.url.exercicios.href}`,dados,{
             headers: {
@@ -101,15 +106,18 @@ function* remover(action) {
 function* atualizar(action) {
     try {
 
+        let urls = yield call(setUrl);
+        
         let data = {
             'nome': action.payload.nome,
             'frequencia': action.payload.frequencia,
             'tempo': action.payload.tempo,
             'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizar': action.payload.dataAtualizar
-        };
-       
-        let urls = yield call(setUrl);
+            'dataAtualizar': action.payload.dataAtualizar,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }
+        };       
 
         yield call(axios.put,`${urls.url.exercicios.href}/${action.payload.id}`,data, {
             headers: {
@@ -119,6 +127,7 @@ function* atualizar(action) {
 
         yield put(atualizarSucesso());
     } catch(error) {
+        console.log(error)
         yield put(atualizarError(error.response.data.userMessage));
     }
 }

@@ -57,7 +57,7 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.success("Ocorreu um erro ao apagar o peso!");
         },
-        buscarPrimeiroPeso(state) {
+        buscarPrimeiroPeso(state,action) {
             state.loading = true;
         },
         buscarPrimeiroPesoSucesso(state,action) {
@@ -68,7 +68,7 @@ export const pesoSlice = createSlice({
             state.loading = false;
             toast.error(action.payload.response.data.userMessage);
         },
-        buscarUltimoPeso(state) {
+        buscarUltimoPeso(state,action) {
             state.loading = true;
         },
         buscarUltimoPesoSucesso(state,action) {

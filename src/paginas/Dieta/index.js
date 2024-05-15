@@ -20,7 +20,7 @@ export default function Dieta() {
     const { page } = useParams();
     const navigate = useNavigate();
 
-    const [dietas,setDietas] = useState([]);
+    const [dietas,setDietas] = useState({dados: []});
     const [loadingApagar,setLoadingApagar] = useState(true);
 
     useEffect(() => {    
@@ -68,7 +68,9 @@ export default function Dieta() {
                 <div>
                     <ToastContainer />
                 </div>
-
+{
+    console.log(dietas)
+}
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">
@@ -76,7 +78,7 @@ export default function Dieta() {
                         </div>
                     </div>
                     {
-                        dietas.length == 0
+                        dietas.dados.length == 0
                         ?
                             <div className="row mt-4">
                                 <div className="col">

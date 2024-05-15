@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { LiaWeightHangingSolid } from 'react-icons/lia';
 import { ToastContainer } from 'react-toastify';
@@ -8,6 +8,8 @@ import CurrencyInput from 'react-currency-masked-input';
 import { useDispatch } from 'react-redux';
 import { salvar } from '../../redux/peso/slice';
 
+import usePeso from '../../hooks/pesoHook';
+
 import Header from "../../compomentes/Headers";
 import Titulo from "../../compomentes/Titulo";
 import 'bootstrap/dist/css/bootstrap.css';
@@ -16,17 +18,20 @@ export default function CadastroPeso() {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const inputRef = useRef(null);
+    const {formatarPeso} = usePeso();
 
     const [pesoValor,setPesoValor] = useState('0.00');
     const [imc,setImc] = useState('0.00');
     const [dataCadastro,setDataCadastro] = useState('');
     const [dataAtualizacao,setDataAtualizacao] = useState(null);
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')));
 
     useEffect(() => {
         if(sessionStorage.getItem('token') == null) {           
             navigate('/login');
         }
-    },[])
+    },[])   
 
     function salvarDados(e) {
         e.preventDefault();
@@ -34,17 +39,17 @@ export default function CadastroPeso() {
         let dataBanco = dataCadastro.split('/');
         let dataAtual = new Date();
 
-        let data = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
+        let dataCadastroBanco = new Date(dataBanco[2]+'-'+dataBanco[1]+'-'
                                     +dataBanco[0]
                                     +`T${dataAtual.toLocaleTimeString()}`);
 
         let dados = {
             'valor': pesoValor,
             'imc': imc,
-            'dataCadastro': data.toISOString(),
+            'dataCadastro': dataCadastroBanco.toISOString(),
             'dataAtualizacao': dataAtualizacao,
             'pessoa': {
-                'id': 1
+                'id': dadosPessoa.id
             }
         }
 
@@ -55,13 +60,17 @@ export default function CadastroPeso() {
         setPesoValor('');
         setImc('');
         setDataCadastro('');
+        inputRef.current.setInputValue('');        
     }
 
     function calcularImc(valor) {
-        setPesoValor(valor);
         let imcValor = valor / (1.70 * 1.70);
-        setImc(imcValor.toFixed(2));
+        setImc(imcValor.toFixed(2));        
     }
+
+    function mascaraPeso(peso) {
+        setPesoValor(formatarPeso(peso));
+     }
 
     return(
         <div>
@@ -81,11 +90,15 @@ export default function CadastroPeso() {
                             <div className="col">
                                 <label className="form-label">Peso</label>
                                 <label className="form-label obrigatorio">*</label>
-                                <CurrencyInput 
-                                    name="myinput" 
-                                    className="form-control"                                    
-                                    onBlur={(e) => calcularImc(e.target.value)} 
-                                    required />                                
+                                <input 
+                                    type='text' 
+                                    id='inputPeso'
+                                    className="form-control"  
+                                    value={pesoValor}                                                                                 
+                                    onChange={(e) => mascaraPeso(e.target.value)} 
+                                    onBlur={(e) => calcularImc(e.target.value)}
+                                    required
+                                />                               
                             </div>
                         </div>
 
@@ -110,6 +123,7 @@ export default function CadastroPeso() {
                                     name="data" 
                                     className="form-control" 
                                     onChange={ event => setDataCadastro(event.target.value)}
+                                    ref={inputRef}
                                     required
                                 /> 
                             </div>

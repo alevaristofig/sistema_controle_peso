@@ -20,6 +20,7 @@ export default function Peso() {
     const {page} = useParams();
 
     const [loadingDel,setLoadingDel] = useState(true);
+    const [dadosPessoa] = useState(JSON.parse(sessionStorage.getItem('dadosPessoa')));
 
     useEffect(() => {
 
@@ -28,12 +29,17 @@ export default function Peso() {
         }
 
         dispatch(listar({
-            'page': page
+            'page': page,
+            'id': dadosPessoa.id
         }));
 
-        dispatch(buscarPrimeiroPeso());
+        dispatch(buscarPrimeiroPeso({
+            'id': dadosPessoa.id
+        }));
 
-        dispatch(buscarUltimoPeso());
+        dispatch(buscarUltimoPeso({
+            'id': dadosPessoa.id
+        }));
 
         setLoadingDel(false);
     },[loadingDel]);
@@ -49,7 +55,9 @@ export default function Peso() {
             "id": id
         }));
 
-        setLoadingDel(true);
+        setTimeout(() => {
+            window.location.reload()
+        }, 7000);
     }
 
     return(
@@ -179,7 +187,7 @@ export default function Peso() {
                                                 </tbody>
                                             </table>
                                             {
-                                                pesos.paginacao.totalElements > 0
+                                                pesos.paginacao.totalPages > 1
                                                 ?
                                                     <div className='row'>
                                                         <Paginacao dados={pesos} />

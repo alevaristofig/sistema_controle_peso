@@ -12,8 +12,11 @@ import { buscarPrimeiroPeso, buscarUltimoPeso } from '../../redux/peso/slice';
 import usePessoa from "../../hooks/pessoaHook";
 import useTreino from '../../hooks/treinoHook';
 
+import TreinoPessoa from '../../compomentes/Treinos/treinoPessoa';
+
 import Header from '../../compomentes/Headers';
 import Titulo from "../../compomentes/Titulo";
+import Titulo2 from '../../compomentes/Titulo/titulo2';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -76,9 +79,9 @@ export default function Home() {
         <div>
             <Header />
             <div className="content">
-                <Titulo nome="Home">
+                <Titulo2 nome="Home">
                     <FiHome color="#fff" size={24} />
-                </Titulo> 
+                </Titulo2> 
                 <div>
                     <ToastContainer />
                 </div>
@@ -139,32 +142,10 @@ export default function Home() {
                                 </div>
                                 <div className='row'>                                    
                                     <div className="text-body-secondary pt-3 col marginLinha">
-                                        <GiWeightLiftingUp color="#000" size={24} />
-                                        {
-                                            treinosFeitos.length > 0
-                                            ?
-                                                treinosFeitos.map((t,i) => {
-                                                    return (
-                                                        <>
-                                                        <span className='ms-2' >{t.nome}:</span>
-                                                        <span className='ms-2' >
-                                                            <label>Feitos: {t.quantidade} | 
-                                                                   Não Feitos: 
-                                                                   {
-                                                                        treinosNaoFeitos.length > 0 
-                                                                        ? 
-                                                                            treinosNaoFeitos[0].quantidade
-                                                                        :   ''
-                                                                    } 
-                                                            </label>                                                        
-                                                        </span>
-                                                        </>
-                                                    
-                                                    )
-                                                })
-                                            :
-                                             ''                                            
-                                        }
+                                        <GiWeightLiftingUp color="#000" size={24} className='float-start' />                                                                     
+                                         <span className='ms-2 float-start'>
+                                            <TreinoPessoa treinoFeitosDados={treinosFeitos} treinoNaoFeitosDados={treinosNaoFeitos} />                                                          
+                                        </span>
                                         <span className='ms-3 float-end'>
                                             <Link to={`/treino/0`} className="btn btn-info">Ver Treinos</Link>
                                         </span>

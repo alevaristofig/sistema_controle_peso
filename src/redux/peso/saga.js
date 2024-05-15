@@ -9,8 +9,10 @@ import axios from 'axios';
 function setUrl() {    
     return {
               "url":    JSON.parse(sessionStorage.getItem('urls')),
-              "primeiroPeso": 'buscarprimeiropeso',
-              "ultimoPeso": 'buscarultimopeso'
+              "listar": "listar",
+              "primeiroPeso": "buscarprimeiropeso",
+              "ultimoPeso": "buscarultimopeso",
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))
            }
 }
 
@@ -18,7 +20,7 @@ function* listar(action){
     try {      
         let urls = yield call(setUrl);  
 
-        const response = yield call(axios.get,`${urls.url.pesos.href}?page=${action.payload.page}`,{
+        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.listar}/${urls.pessoa.id}?page=${action.payload.page}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
@@ -32,7 +34,7 @@ function* listar(action){
         }
        
         yield put(listarSucesso(responsePeso));
-    } catch(error) {
+    } catch(error) {     
         yield put(listarError());
     }
 }
@@ -50,7 +52,7 @@ function* salvar(action) {
 
         yield put(salvarSucesso());
 
-    } catch(error) {     
+    } catch(error) {           
         yield put(salvarError(error.response.data.userMessage));
     }
 }
@@ -97,37 +99,36 @@ function* apagar(action) {
     }
 }
 
-function* buscarPrimeiroPeso() {
+function* buscarPrimeiroPeso(action) {
     try {   
 
         let urls = yield call(setUrl); 
 
-        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}`,{
+        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.primeiroPeso}/${urls.pessoa.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
         });
 
         yield put(buscarPrimeiroPesoSucesso(response.data));
-    } catch(error) {
-        console.log(error)
+    } catch(error) {        
         yield put(buscarPrimeiroPesoError(error));
     }
 }
 
-function* buscarUltimoPeso() {
+function* buscarUltimoPeso(action) {
     try {
 
         let urls = yield call(setUrl);  
 
-        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.ultimoPeso}`,{
+        const response = yield call(axios.get,`${urls.url.pesos.href}/${urls.ultimoPeso}/${urls.pessoa.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }
         });
 
         yield put(buscarUltimoPesoSucesso(response.data));
-    } catch(error) {
+    } catch(error) { 
         yield put(buscarUltimoPesoError(error));
     }
 }

@@ -20,7 +20,7 @@ export default function HistoricoMedico() {
     const { page } = useParams();
     const navigate = useNavigate();
 
-    const [historicosMedico,setHistoricosMedico] = useState([]);
+    const [historicosMedico,setHistoricosMedico] = useState({dados: []});
     const [loading,setLoading] = useState(true);
 
     useEffect(() => {
@@ -80,7 +80,7 @@ export default function HistoricoMedico() {
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         :
-                            historicosMedico.length == 0
+                            historicosMedico.dados.length == 0
                             ?
                                 <div className="row mt-4">
                                     <div className="col">

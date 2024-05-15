@@ -19,7 +19,7 @@ export default function EditarPeso() {
     const navigate = useNavigate();
     const { id } = useParams();
 
-    const [buscar,formatarPeso,calcularImc] = usePeso();
+    const {buscar,formatarPeso,calcularImc} = usePeso();
     const [inputPeso, setInputPeso] = useState('');
     const [altura,setAltura] = useState('');
     const [imc, setImc] = useState('');

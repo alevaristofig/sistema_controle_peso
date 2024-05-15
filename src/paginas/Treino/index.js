@@ -107,13 +107,13 @@ export default function Treino() {
         let dataBanco = data.split('/');
         let dataAtual = new Date();
 
-        dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
+       // dataBanco = dataBanco[2]+'-'+dataBanco[1]+'-'+dataBanco[0]+`T${dataAtual.toLocaleTimeString()}`;
 
         exerciciosSemPaginacao.forEach(e => {
             let dados = {
                 'pessoaId': 1,
                 'exercicioId': e.id,                
-                'data': dataBanco
+                'dataCadastro': dataAtual.toISOString()
             };
             let indice = valoresTreino.findIndex((i) => i.id == e.id);
 
@@ -122,7 +122,7 @@ export default function Treino() {
             } else {
                 dados.treino = treinoNaoFeito;
             }
-            
+           
             dispatch(salvar({
                 dados
             }));

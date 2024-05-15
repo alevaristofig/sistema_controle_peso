@@ -19,8 +19,6 @@ export default function Alimento() {
     const { alimentos, loading } = useSelector((rootReducer) => rootReducer.alimento);
     const navigate = useNavigate();
 
-    const [loadingDel,setLoadingDel] = useState(true);
-
     useEffect(() => {
 
         if(sessionStorage.getItem('token') == null) {           
@@ -31,8 +29,7 @@ export default function Alimento() {
             'page': page
         }));
 
-        setLoadingDel(false);
-    },[loadingDel]);
+    },[]);
 
     function formatarData(dataFormatada) {
         let data = new Date(dataFormatada);
@@ -43,9 +40,11 @@ export default function Alimento() {
     function apagarAlimento(id) {
         dispatch(apagar({
             'id': id
-        }));
-
-        setLoadingDel(true);
+        })); 
+        
+        setTimeout(() => {
+            window.location.reload()
+        }, 7000);
     }
 
     return(
@@ -59,7 +58,9 @@ export default function Alimento() {
                 <div>
                     <ToastContainer />
                 </div>
-
+{
+    console.log(alimentos.length)
+}
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">

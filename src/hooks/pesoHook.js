@@ -44,7 +44,7 @@ function usePeso() {
         } 
     }
 
-    return [buscar,formatarPeso,calcularImc];
+    return {buscar,formatarPeso,calcularImc};
 }
 
 export default usePeso;
