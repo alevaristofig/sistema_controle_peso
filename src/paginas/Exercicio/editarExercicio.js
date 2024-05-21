@@ -8,7 +8,7 @@ import { atualizar } from "../../redux/exercicio/slice";
 import useExercicio from '../../hooks/exercicioHook';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarExercicio() {
@@ -68,9 +68,9 @@ export default function EditarExercicio() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Editar Exercício">
+                <Titulo nome="Editar Exercício">
                     <LiaRunningSolid color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />

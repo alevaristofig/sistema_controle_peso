@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { salvar } from "../../redux/exercicio/slice";
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroExercicio() {
@@ -50,9 +50,9 @@ export default function CadastroExercicio() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Cadastro de Exercícios">
+                <Titulo nome="Cadastro de Exercícios">
                     <LiaRunningSolid color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>

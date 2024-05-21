@@ -10,7 +10,7 @@ import { FaBowlFood } from 'react-icons/fa6';
 import { ToastContainer } from 'react-toastify';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroAlimento() {
@@ -59,9 +59,9 @@ export default function CadastroAlimento() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Cadastro Alimento">
+                <Titulo nome="Cadastro Alimento">
                     <FaBowlFood color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>

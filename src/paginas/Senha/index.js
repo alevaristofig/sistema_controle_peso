@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
 import usePessoa from '../../hooks/pessoaHook';
 import axios from 'axios';
@@ -49,7 +49,7 @@ export default function Senha() {
 
     return(
         <div>
-            <div className='titulo2'>
+            <div className='titulo'>
 	            <span className='spanLogin'>Sistema de Controle de Peso</span>
 	        </div>
 
@@ -108,7 +108,10 @@ export default function Senha() {
                     <div className="row mt-3">
                         <div className="col-1">
                             <button type="submit" className="btn btn-primary">Enviar</button>
-                        </div>                        
+                        </div>   
+                        <div className="col">                                
+                            <Link to="/login" className="btn btn-primary">Voltar</Link>
+                        </div>                     
                     </div>
                 </form>
             </div>

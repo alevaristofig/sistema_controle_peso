@@ -27,14 +27,14 @@ function* listar(action) {
         });
 
         let responseExercicio = {
-            dados: response.data._embedded.exercicioModelList,
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.exercicioModelList,
             paginacao: response.data.page,
             links: response.data._links,
             url: 'exercicio'
         }
-
+console.log(responseExercicio)
         yield put(listarSucesso(responseExercicio));
-    } catch(error) {
+    } catch(error) {        
         yield put(listarError());
     }
 }

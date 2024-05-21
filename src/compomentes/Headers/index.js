@@ -9,14 +9,13 @@ import { CiMedicalClipboard } from "react-icons/ci";
 import { TbLogout2 } from 'react-icons/tb';
 
 import './header.css';
-import avatarImg from '../../assets/avatar.png';
-import avatarImg2 from '../../assets/coracao.jpeg';
+import avatarImg from '../../assets/coracao.jpeg';
 
 export default function Header(){
     return (
         <div className='sidebar'>
             <div>
-                <img src={avatarImg2} alt='Foto do Usuário'    />            
+                <img src={avatarImg} alt='Foto do Usuário'    />            
             </div>
 
             <Link to="/">

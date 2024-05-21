@@ -8,7 +8,7 @@ import { listarSemPaginacao } from "../../redux/exercicio/slice";
 import { listarTreino, salvar } from '../../redux/treino/slice';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import Treinos from '../../compomentes/Treinos';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -146,9 +146,9 @@ export default function Treino() {
         <>
             <Header />
             <div className="content">
-                <Titulo2 nome="Treino">
+                <Titulo nome="Treino">
                     <GiWeightLiftingUp color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />

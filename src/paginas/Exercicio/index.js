@@ -8,7 +8,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { listar, remover } from "../../redux/exercicio/slice";
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -52,9 +52,9 @@ export default function Exercicio(){
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Exercício">
+                <Titulo nome="Exercício">
                     <LiaRunningSolid color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />
@@ -74,7 +74,7 @@ export default function Exercicio(){
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         :
-                            exercicios.length === 0
+                            exercicios.dados.length === 0
                             ?
                                 <div className="row mt-4">
                                     <div className="col">

@@ -9,7 +9,7 @@ import { listarAlimentos } from '../../redux/alimento/slice';
 import useDieta from "../../hooks/dietaHook";
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroDieta() {
@@ -87,14 +87,14 @@ export default function CadastroDieta() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Cadastro Dieta">
+                <Titulo nome="Cadastro Dieta">
                     <BiFoodMenu color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />
                 </div>
-
+                
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>
                         {
@@ -104,7 +104,7 @@ export default function CadastroDieta() {
                                     <span className="visually-hidden">Loading...</span>
                                 </div>
                             :                                
-                                    alimentos.length === 0                                    
+                                    alimentos.dados.length === 0                                    
                                         ?
                                             <div className="row mt-4">
                                                 <div className="col">
@@ -134,7 +134,7 @@ export default function CadastroDieta() {
                                                 <div className="row mt-3">
                                                     
                                                         {
-                                                            alimentos.map((a,i) => {
+                                                            alimentos.dados.map((a,i) => {
                                                                 return(
                                                                     
                                                                     <div className="col-sm-3 mb-4" key={i}>

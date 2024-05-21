@@ -123,8 +123,12 @@ function* listarAlimentos(action) {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}`,
             }
         });
+
+        let responseAlimento = {
+            dados: response.data,            
+        }
         
-        yield put(listarAlimentosSucesso(response.data));
+        yield put(listarAlimentosSucesso(responseAlimento));
     } catch(error) {
         yield put(listarAlimentosError());
     }

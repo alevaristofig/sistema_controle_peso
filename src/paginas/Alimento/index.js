@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import { FaBowlFood } from 'react-icons/fa6';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -51,16 +51,14 @@ export default function Alimento() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Alimento">
+                <Titulo nome="Alimento">
                     <FaBowlFood color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />
                 </div>
-{
-    console.log(alimentos.length)
-}
+
                 <div className="container py-4">
                     <div className="row">
                         <div className="col">
@@ -74,7 +72,7 @@ export default function Alimento() {
                                 <span className="visually-hidden">Loading...</span>
                             </div>
                         : 
-                            alimentos.length == 0
+                            alimentos.dados.length == 0
                             ?
                                 <div className="row mt-4">
                                     <div className="col">

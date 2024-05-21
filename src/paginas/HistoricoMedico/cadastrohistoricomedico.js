@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { salvar } from "../../redux/historicomedico/slice";
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroHistoricoMedico() {
@@ -47,9 +47,9 @@ export default function CadastroHistoricoMedico() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Cadastro Histórico Médico">
+                <Titulo nome="Cadastro Histórico Médico">
                     <CiMedicalClipboard color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>

@@ -11,7 +11,7 @@ import useDieta from "../../hooks/dietaHook";
 import useAlimento from '../../hooks/alimentoHook';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarDieta() {
@@ -153,9 +153,9 @@ export default function EditarDieta() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Editar Dieta">
+                <Titulo nome="Editar Dieta">
                     <BiFoodMenu color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div>
                     <ToastContainer />

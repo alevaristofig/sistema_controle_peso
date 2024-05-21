@@ -9,7 +9,7 @@ import { FaBowlFood } from 'react-icons/fa6';
 import { ToastContainer, toast } from 'react-toastify';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function EditarAlimento() {
@@ -78,9 +78,9 @@ export default function EditarAlimento() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Editar Alimento">
+                <Titulo nome="Editar Alimento">
                     <FaBowlFood color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 {
                     buscarError

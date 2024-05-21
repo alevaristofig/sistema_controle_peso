@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux';
 import { ToastContainer, toast } from "react-toastify";
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import useHistoricoMedico from "../../hooks/historicoMedicoHook";
@@ -77,9 +77,9 @@ export default function EditarHistoricoMedico() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Editar Histórico Médico">
+                <Titulo nome="Editar Histórico Médico">
                     <CiMedicalClipboard color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 {
                     buscarError

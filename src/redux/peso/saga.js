@@ -27,14 +27,16 @@ function* listar(action){
         });
 
         let responsePeso = {
-            dados: response.data._embedded.pesoModelList,
+            dados: response.data.page.totalElements === 0 ? [] : response.data._embedded.pesoModelList,
             paginacao: response.data.page,
             links: response.data._links,
             url: 'peso'
         }
        
         yield put(listarSucesso(responsePeso));
-    } catch(error) {     
+    } catch(error) {  
+        alert('error listar')  
+        console.log(error)
         yield put(listarError());
     }
 }
@@ -111,7 +113,7 @@ function* buscarPrimeiroPeso(action) {
         });
 
         yield put(buscarPrimeiroPesoSucesso(response.data));
-    } catch(error) {        
+    } catch(error) {         
         yield put(buscarPrimeiroPesoError(error));
     }
 }
@@ -128,7 +130,7 @@ function* buscarUltimoPeso(action) {
         });
 
         yield put(buscarUltimoPesoSucesso(response.data));
-    } catch(error) { 
+    } catch(error) {     
         yield put(buscarUltimoPesoError(error));
     }
 }

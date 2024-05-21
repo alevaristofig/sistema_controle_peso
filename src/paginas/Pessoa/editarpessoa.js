@@ -6,7 +6,7 @@ import { VscPerson } from "react-icons/vsc";
 import { toast, ToastContainer } from 'react-toastify';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import usePessoa from "../../hooks/pessoaHook";
 
 import 'bootstrap/dist/css/bootstrap.css';
@@ -76,9 +76,9 @@ export default function EditarPessoa() {
                 <div>
                     <ToastContainer />
                 </div> 
-                <Titulo2 nome="Pessoa">
+                <Titulo nome="Editar Pessoa">
                     <VscPerson color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 {
                     buscarError

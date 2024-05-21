@@ -16,7 +16,7 @@ import useTreino from '../../hooks/treinoHook';
 import TreinoPessoa from '../../compomentes/Treinos/treinoPessoa';
 
 import Header from '../../compomentes/Headers';
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -79,9 +79,9 @@ export default function Home() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Home">
+                <Titulo nome="Home">
                     <FiHome color="#fff" size={24} />
-                </Titulo2> 
+                </Titulo> 
                 <div>
                     <ToastContainer />
                 </div>

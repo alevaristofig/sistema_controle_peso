@@ -16,6 +16,7 @@ export default function Login() {
     const navigate = useNavigate();
 
    useEffect(() => {
+
         let params = new URLSearchParams(window.location.search);
 
         if(params == '') {          

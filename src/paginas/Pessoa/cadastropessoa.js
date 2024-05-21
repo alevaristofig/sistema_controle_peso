@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 
 import { toast, ToastContainer } from 'react-toastify';
 
@@ -138,8 +138,11 @@ export default function CadastroPessoa() {
                         </div>
                        
                         <div className="row mt-3">
-                            <div className="col">
+                            <div className="col-1">
                                 <button type="submit" className="btn btn-primary">Cadastrar</button>
+                            </div>
+                            <div className="col">                                
+                                <Link to="/login" className="btn btn-primary">Voltar</Link>
                             </div>
                         </div>                      
                     </form>

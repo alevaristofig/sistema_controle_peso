@@ -10,7 +10,7 @@ import { salvar } from '../../redux/peso/slice';
 import usePeso from '../../hooks/pesoHook';
 
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 export default function CadastroPeso() {
@@ -79,9 +79,9 @@ export default function CadastroPeso() {
                     <ToastContainer />
                 </div>
 
-                <Titulo2 nome="Cadastro de Peso">
+                <Titulo nome="Cadastro de Peso">
                     <LiaWeightHangingSolid color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>

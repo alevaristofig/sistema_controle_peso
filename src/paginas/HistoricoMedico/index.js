@@ -8,7 +8,7 @@ import useHistoricoMedico from "../../hooks/historicoMedicoHook";
 
 import { ToastContainer } from 'react-toastify';
 import Header from "../../compomentes/Headers";
-import Titulo2 from '../../compomentes/Titulo/titulo2';
+import Titulo from '../../compomentes/Titulo';
 import 'bootstrap/dist/css/bootstrap.css';
 
 import Paginacao from '../../compomentes/Paginacao';
@@ -60,9 +60,9 @@ export default function HistoricoMedico() {
         <div>
             <Header />
             <div className="content">
-                <Titulo2 nome="Histórico Médico">
+                <Titulo nome="Histórico Médico">
                     <CiMedicalClipboard color="#fff" size={24} />
-                </Titulo2>
+                </Titulo>
                 <div>
                     <ToastContainer />
                 </div>

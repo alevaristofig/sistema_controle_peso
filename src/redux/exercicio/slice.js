@@ -2,7 +2,9 @@ import { createSlice } from "@reduxjs/toolkit";
 import { toast } from 'react-toastify';
 
 const initialState = {
-    exercicios: [],
+    exercicios: {
+        'dados': []
+    },
     exerciciosSemPaginacao: [],
     loading: false
 }
