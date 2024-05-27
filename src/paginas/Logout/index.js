@@ -6,6 +6,7 @@ import usePessoa from "../../hooks/pessoaHook";
 
 export default function Logout() {
 
+    const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
     const { removerToken } = usePessoa();
     const navigate = useNavigate();
 
@@ -15,7 +16,7 @@ export default function Logout() {
             removerToken(sessionStorage.getItem('token'));
             sessionStorage.removeItem('token');
             sessionStorage.removeItem('urls');
-            window.location.href = 'http://localhost:8080/logout';
+            window.location.href = `${url.pessoas.href}/logout`;
         }
 
         remover();

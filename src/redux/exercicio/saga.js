@@ -32,7 +32,7 @@ function* listar(action) {
             links: response.data._links,
             url: 'exercicio'
         }
-console.log(responseExercicio)
+
         yield put(listarSucesso(responseExercicio));
     } catch(error) {        
         yield put(listarError());
@@ -127,7 +127,7 @@ function* atualizar(action) {
 
         yield put(atualizarSucesso());
     } catch(error) {
-        console.log(error)
+        
         yield put(atualizarError(error.response.data.userMessage));
     }
 }

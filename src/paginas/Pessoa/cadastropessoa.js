@@ -67,8 +67,8 @@ export default function CadastroPessoa() {
 
                 <div className="container py-4">
                     <form className="form-perfil" onSubmit={salvarDados}>
-                        <div className="row mt-3">
-                            <div className="col">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm">
                                 <label className="form-label">Nome</label>
                                 <label className="form-label obrigatorio">*</label>
                                 <input 
@@ -81,8 +81,8 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
                         
-                        <div className="row mt-3">
-                            <div className="col">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm">
                                 <label className="form-label">E-mail</label>
                                 <label className="form-label obrigatorio">*</label>
                                 <input 
@@ -95,8 +95,8 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
 
-                        <div className="row mt-3">
-                            <div className="col">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm">
                                 <label className="form-label">Altura</label>
                                 <label className="form-label obrigatorio">*</label>
                                 <input 
@@ -109,8 +109,8 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
 
-                        <div className="row mt-3">
-                            <div className="col">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm">
                                 <label className="form-label">Endereço</label>
                                 <label className="form-label obrigatorio">*</label>
                                 <input 
@@ -123,8 +123,8 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
 
-                        <div className="row mt-3">
-                            <div className="col">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm">
                                 <label className="form-label">Senha</label>
                                 <label className="form-label obrigatorio">*</label>
                                 <input 
@@ -137,11 +137,11 @@ export default function CadastroPessoa() {
                             </div>
                         </div>
                        
-                        <div className="row mt-3">
-                            <div className="col-1">
+                        <div className="row mt-3 form-group">
+                            <div className="col-sm quebralinha">
                                 <button type="submit" className="btn btn-primary">Cadastrar</button>
                             </div>
-                            <div className="col">                                
+                            <div className="col-sm">                                
                                 <Link to="/login" className="btn btn-primary">Voltar</Link>
                             </div>
                         </div>                      

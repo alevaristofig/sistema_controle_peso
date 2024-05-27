@@ -8,10 +8,10 @@ import '../Pessoa/pessoa.css';
 
 export default function Login() {
     const [clientId] = useState('sisetemacontrolepesobackend');
-    const [authorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
-    const [tokenUrl] = useState('http://localhost:8080/oauth2/token');
-    const [callbackUrl] = useState('http://localhost:3000/login');
-    const [urlPadrao] = useState('http://localhost:8080/v1');
+    const [authorizeUrl] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/oauth2/authorize');
+    const [tokenUrl] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/oauth2/token');
+    const [callbackUrl] = useState('http://controlepeso.s3-website-us-east-1.amazonaws.com/login');
+    const [urlPadrao] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1');
     
     const navigate = useNavigate();
 

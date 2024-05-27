@@ -29,3 +29,14 @@
 .linkGuia {
     color: #000;
 }
+
+@media screen and (max-width: 600px){
+    .titulo{
+        width: auto;
+        margin-left: 4px;
+    }
+
+    .quebralinha{
+        margin-bottom: 10px;
+    }
+}

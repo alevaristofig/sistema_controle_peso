@@ -34,7 +34,7 @@ export default function Senha() {
             "senha": novaSenha
         }
 
-        await axios.put(`http://localhost:8080/v1/pessoas/recuperarsenha`,dados)
+        await axios.put(`http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1/pessoas/recuperarsenha`,dados)
             .then((response) => {                                                        
                toast.success("Senha alterada com Sucesso");
 
@@ -106,10 +106,10 @@ export default function Senha() {
 					</div>
 
                     <div className="row mt-3">
-                        <div className="col-1">
+                        <div className="col-sm-1 quebralinha">
                             <button type="submit" className="btn btn-primary">Enviar</button>
                         </div>   
-                        <div className="col">                                
+                        <div className="col-sm-1">                                
                             <Link to="/login" className="btn btn-primary">Voltar</Link>
                         </div>                     
                     </div>

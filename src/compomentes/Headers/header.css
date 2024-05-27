@@ -55,3 +55,17 @@
     margin-left: 200px;
     padding: 1px 16px;
 }
+
+@media screen and (max-width: 600px){
+    .sidebar{
+        width: auto;        
+    }
+
+    .content{
+        margin-left: 168px;
+    }
+
+    .marginLinha span {
+        display: block;
+    }
+}

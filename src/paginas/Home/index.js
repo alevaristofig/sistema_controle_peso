@@ -101,7 +101,7 @@ export default function Home() {
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <VscPerson color="#000" size={24} />
                                         <span className='ms-2'>{nome}</span>
-                                        <span className='ms-2'>{altura}</span>m
+                                        <span className='ms-2'>{altura}</span>
                                         <span className='ms-3'>{endereco}</span>
                                         <span className='ms-3 float-end'>
                                             <Link to={`/pessoadados/1`} className="btn btn-info">Editar</Link>
@@ -152,7 +152,7 @@ export default function Home() {
                                     </div>
                                     <hr />
                                 </div>
-                                <div>
+                                <div className='row'>
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <MdLibraryBooks color="#000" size={24} className='float-start' />   
                                         <span className='ms-2 float-start'>   

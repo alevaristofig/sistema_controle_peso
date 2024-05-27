@@ -8,6 +8,7 @@ import { BiFoodMenu } from "react-icons/bi";
 import { CiMedicalClipboard } from "react-icons/ci";
 import { TbLogout2 } from 'react-icons/tb';
 
+import 'bootstrap/dist/css/bootstrap.css';
 import './header.css';
 import avatarImg from '../../assets/coracao.jpeg';
 

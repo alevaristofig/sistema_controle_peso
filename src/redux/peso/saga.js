@@ -34,9 +34,7 @@ function* listar(action){
         }
        
         yield put(listarSucesso(responsePeso));
-    } catch(error) {  
-        alert('error listar')  
-        console.log(error)
+    } catch(error) {            
         yield put(listarError());
     }
 }

@@ -42,8 +42,7 @@ export default function Pessoa() {
 
                 <div className="container py-4">
                     {    
-                                     
-                        //pessoas.length == 0
+                                                             
                         pessoas == ''
                         ?
                             <div className="row mt-4">
@@ -54,7 +53,7 @@ export default function Pessoa() {
                             
                         :
                             <div className="row mt-4">
-                            <div className="col">
+                            <div className="col-sm table-responsive">
                                 <table className="table table-bordered">
                                     <thead>
                                         <tr>                                        

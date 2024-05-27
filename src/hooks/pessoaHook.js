@@ -52,7 +52,7 @@ function usePessoa() {
             'dataAtualizacao': dados.dataAtualizacao
         }
     
-        const result = axios.post(`http://localhost:8080/v1/pessoas`,dadosPessoa)
+        const result = axios.post(`http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1/pessoas`,dadosPessoa)
                         .then((response) => {                                                                                    
                             return true;
                         })
