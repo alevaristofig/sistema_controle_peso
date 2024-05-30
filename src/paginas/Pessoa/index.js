@@ -53,41 +53,41 @@ export default function Pessoa() {
                             
                         :
                             <div className="row mt-4">
-                            <div className="col-sm table-responsive">
-                                <table className="table table-bordered">
-                                    <thead>
-                                        <tr>                                        
-                                            <th scope="col">Nome</th>
-                                            <th scope="col">Altura</th>
-                                            <th scope="col">E-mail</th>
-                                            <th scope="col">Endereço</th> 
-                                            <th>#</th>                                                                              
-                                        </tr>
-                                    </thead>
+                                <div className="col-sm table-responsive">
+                                    <table className="table table-bordered">
+                                        <thead>
+                                            <tr>                                        
+                                                <th scope="col">Nome</th>
+                                                <th scope="col">Altura</th>
+                                                <th scope="col">E-mail</th>
+                                                <th scope="col">Endereço</th> 
+                                                <th>#</th>                                                                              
+                                            </tr>
+                                        </thead>
 
-                                    <tbody>
-                                    {                                        
-                                        pessoas.map((p,i) => {
-                                            return(
-                                                <tr key={i}>
-                                                    <td>{p.nome}</td>
-                                                    <td>{p.altura}</td>
-                                                    <td>{p.email}</td>
-                                                    <td>{p.endereco}</td>
-                                                    <td>
-                                                        <Link to={`/pessoadados/${p.id}`} className="btn btn-info">Editar</Link>
-                                                    </td>
-                                                </tr>
-                                            )
-                                        })
-                                    }
-                                    </tbody>
-                                </table>
+                                        <tbody>
+                                            {                                        
+                                                pessoas.map((p,i) => {
+                                                    return(
+                                                        <tr key={i}>
+                                                            <td>{p.nome}</td>
+                                                            <td>{p.altura}</td>
+                                                            <td>{p.email}</td>
+                                                            <td>{p.endereco}</td>
+                                                            <td>
+                                                                <Link to={`/pessoadados/${p.id}`} className="btn btn-info">Editar</Link>
+                                                            </td>
+                                                        </tr>
+                                                    )
+                                                })
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
                             </div>
-                        </div>
-                    }                    
+                        }                    
+                    </div>
                 </div>
-            </div>
         </div>
     )
 }

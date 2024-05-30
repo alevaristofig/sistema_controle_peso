@@ -106,7 +106,7 @@ export default function Exercicio(){
                                                                     <td>{m.frequencia}</td>
                                                                     <td>{m.tempo}</td>
                                                                     <td>{formatarData(m.dataCadastro)}</td>
-                                                                    <td>{formatarData(m.dataAtualizar)}</td>
+                                                                    <td>{formatarData(m.dataAtualizacao)}</td>
                                                                     <td>
                                                                     <td>
                                                                         <Link to={`/editarexercicio/${m.id}`} className="btn btn-info float-start me-4">Editar</Link>                                                                        

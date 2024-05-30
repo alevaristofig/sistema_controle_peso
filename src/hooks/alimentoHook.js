@@ -11,19 +11,10 @@ function useAlimento() {
                                             "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
                                         }
                                     })
-                                    .then((response) => {
-                                       /* return {
-                                            dados: response.data._embedded.alimentoModelList,
-                                            paginacao: response.data.page,
-                                            links: response.data._links,
-                                            url: 'dieta'
-                                        }*/
-                            
+                                    .then((response) => {                            
                                         return response.data;
                                     })
-                                    .catch((error) => {    
-                                        alert('error')   
-                                        console.log(error)                            
+                                    .catch((error) => {                                
                                         return error.response.data.userMessage
                                    });
 
@@ -38,15 +29,8 @@ function useAlimento() {
                                     })
                                     .then((response) => {
                                         return response.data;
-                                       /* return {
-                                            dados: response.data._embedded.alimentoModelList,
-                                            paginacao: response.data.page,
-                                            links: response.data._links,
-                                            url: 'dieta'
-                                        }*/
                                     })
-                                    .catch((error) => {
-                                        console.log(error)
+                                    .catch((error) => {                                        
                                         return '';
                                    });
 

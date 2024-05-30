@@ -6,6 +6,7 @@ import axios from 'axios';
 function usePessoa() {
 
     const [url,setUrl] = useState(JSON.parse(sessionStorage.getItem('urls')));
+    const [urlSemAutenticacao] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1');
     const [removertoken,setRemovertoken] = useState('removertoken');
 
     function listar() {
@@ -52,13 +53,11 @@ function usePessoa() {
             'dataAtualizacao': dados.dataAtualizacao
         }
     
-        const result = axios.post(`http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1/pessoas`,dadosPessoa)
-                        .then((response) => {                                                                                    
+        const result = axios.post(`${urlSemAutenticacao}/pessoas`,dadosPessoa)
+                        .then((response) => {                                                                                                               
                             return true;
                         })
-                        .catch((error) => {  
-                            alert('error')
-                            console.log(error)                                                                          
+                        .catch((error) => {                                                                          
                             return false;
                         });     
                         
@@ -99,11 +98,11 @@ function usePessoa() {
             "senha": null
         }
 
-        const result = await axios.post(`http://localhost:8080/v1/pessoas/verificarEmail`,dados)
+        const result = await axios.post(`${urlSemAutenticacao}/pessoas/verificarEmail`,dados)
                         .then((response) => {                                                                                    
                             return response.data;
                         })
-                        .catch((error) => {                                                                          
+                        .catch((error) => {                                                                                                      
                             return 'error';
                         });     
                         

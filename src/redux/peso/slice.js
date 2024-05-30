@@ -66,8 +66,7 @@ export const pesoSlice = createSlice({
             state.primeiroPeso = action.payload;
         },
         buscarPrimeiroPesoError(state,action) {
-            state.loading = false;
-            //toast.error(action.payload.response.data.userMessage);
+            state.loading = false;            
         },
         buscarUltimoPeso(state,action) {
             state.loading = true;
@@ -77,8 +76,7 @@ export const pesoSlice = createSlice({
             state.ultimoPeso = action.payload;
         },
         buscarUltimoPesoError(state,action) {
-            state.loading = false;
-           // toast.error(action.payload.response.data.userMessage);
+            state.loading = false;           
         },
     }
 });

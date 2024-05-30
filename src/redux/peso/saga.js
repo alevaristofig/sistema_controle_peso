@@ -2,7 +2,7 @@ import { all, takeEvery, call, put } from 'redux-saga/effects';
 import { listarSucesso, listarError, salvarSucesso, salvarError,
          atualizarSucesso, atualizarError, apgarSucesso,
          apgarError, buscarPrimeiroPesoSucesso, buscarPrimeiroPesoError,
-        buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
+         buscarUltimoPesoSucesso, buscarUltimoPesoError } from './slice';
 
 import axios from 'axios';
 
@@ -53,7 +53,7 @@ function* salvar(action) {
         yield put(salvarSucesso());
 
     } catch(error) {    
-        console.log(error)       
+           
         yield put(salvarError(error.response.data.userMessage));
     }
 }
