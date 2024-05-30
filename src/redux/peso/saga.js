@@ -52,7 +52,8 @@ function* salvar(action) {
 
         yield put(salvarSucesso());
 
-    } catch(error) {           
+    } catch(error) {    
+        console.log(error)       
         yield put(salvarError(error.response.data.userMessage));
     }
 }

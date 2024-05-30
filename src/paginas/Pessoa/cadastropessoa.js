@@ -13,7 +13,7 @@ import './pessoa.css';
 
 export default function CadastroPessoa() {
 
-    const {salvar, formatarAltura, criptografarSenha} = usePessoa();
+    const {salvar, formatarAltura, criptografarSenha, verificarEmail} = usePessoa();
     const navigate = useNavigate();
 
     const [nome,setNome] = useState('');
@@ -58,6 +58,15 @@ export default function CadastroPessoa() {
         setAltura(formatarAltura(altura));
     }
 
+    async function verificarEmailCadastro(email) {       
+        let emailCadastro = await verificarEmail(email);    
+        
+        if(emailCadastro) {
+            alert("Esse email já está cadastro, corrija o campo e tente novamente");
+            setEmail('');
+        }
+    }
+
     return(                 
             <div>
                 <div>
@@ -90,6 +99,7 @@ export default function CadastroPessoa() {
                                     className="form-control"
                                     value={email}
                                     onChange={(e) => setEmail(e.target.value)} 
+                                    onBlur={(e) => verificarEmailCadastro(e.target.value)}
                                     required
                                 /> 
                             </div>

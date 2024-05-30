@@ -2,16 +2,32 @@ import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 
+import CryptoJS from 'crypto-js';
+
 import 'react-toastify/dist/ReactToastify.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import '../Pessoa/pessoa.css';
 
 export default function Login() {
+  
     const [clientId] = useState('sisetemacontrolepesobackend');
-    const [authorizeUrl] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/oauth2/authorize');
-    const [tokenUrl] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/oauth2/token');
+    const [authorizeUrl] = useState('http://localhost:8080/oauth2/authorize');
+    const [tokenUrl] = useState('http://localhost:8080/oauth2/token');
+    const [callbackUrl] = useState('http://localhost:3000/login');
+    const [urlPadrao] = useState('http://localhost:8080/v1');
+    const [arrayBuffer, setArrayBuffer] = useState(null);
+
+    
+    /*const [clientId] = useState('sisetemacontrolepesobackend');
+    const [authorizeUrl] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/oauth2/authorize');
+    const [tokenUrl] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/oauth2/token');
+    //const [authorizeUrl] = useState('http://54.91.177.73:8080/oauth2/authorize');
+    //const [tokenUrl] = useState('http://54.91.177.73:8080/oauth2/token');
     const [callbackUrl] = useState('http://controlepeso.s3-website-us-east-1.amazonaws.com/login');
-    const [urlPadrao] = useState('http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1');
+    //const [callbackUrl] = useState('http://www.controlepeso.com.br/login');
+    const [urlPadrao] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1');
+    //const [urlPadrao] = useState('http://54.91.177.73:8080/v1');*/
+    
     
     const navigate = useNavigate();
 
@@ -33,7 +49,6 @@ export default function Login() {
 
             getCodeChallenge();                     
         } else {
-
           const gerarToken = async () => {
             let token = await gerarAccessToken(params.get("code"));
 
@@ -58,21 +73,43 @@ export default function Login() {
    }
 
    function generateRandomString() {
-    let array = new Uint32Array(56/2);
+    /*let array = new Uint32Array(56/2);
     window.crypto.getRandomValues(array);
 
-    return Array.from(array, dec2Hex).join('');
+    return Array.from(array, dec2Hex).join('');*/
+
+        let text = "";
+      let possible = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+      
+      for (let i = 0; i < 128; i++) {
+        text += possible.charAt(Math.floor(Math.random() * possible.length));
+      }
+      
+      return text;
    }
 
-   function sha256(plain) {
+   async function sha256(plain) {
       let encoder = new TextEncoder();
       let data = encoder.encode(plain);
+      //let digest = await window.crypto.subtle.digest('SHA-256', data);
+     let digest = await CryptoJS.SHA256(data);
+     let wordArray = CryptoJS.enc.Hex.parse(digest.toString(CryptoJS.enc.Hex));
+     let buffer = new ArrayBuffer(wordArray.sigBytes);
+     let view = new Uint8Array(buffer);
 
-      return window.crypto.subtle.digest('SHA-256', data);
+     for (let i = 0; i < wordArray.sigBytes; i++) {
+      view[i] = (wordArray.words[i >>> 2] >>> (24 - (i % 4) * 8)) & 0xff;
+    }
+
+    //setArrayBuffer(buffer);
+
+console.log(digest,view);
+      //return digest;
+      return view;
    }
 
    function base64urlencode(codigo) {
-    let str = '';
+    /*let str = '';
     let bytes = new Uint8Array(codigo);
     let len = bytes.byteLength;
 
@@ -83,14 +120,20 @@ export default function Login() {
     return btoa(str)
       .replace(/\+/g, "-")
       .replace(/\//g, "_")
-      .replace(/=+$/, "");
+      .replace(/=+$/, "");*/
+
+      return codigo.toString(CryptoJS.enc.Base64).replace(/=/g, '').replace(/\+/g, '-').replace(/\//g, '_');
    }
 
    async function challenge_from_verifier(codeVerifier) {
-    let hashed = await sha256(codeVerifier);
+   /* let hashed = await sha256(codeVerifier);
+    console.log(hashed);
     let base64encoded = base64urlencode(hashed);
     
-    return base64encoded;
+    return base64encoded;*/
+
+
+    return base64urlencode(CryptoJS.SHA256(codeVerifier))
    }
 
   async function gerarAccessToken(code) {

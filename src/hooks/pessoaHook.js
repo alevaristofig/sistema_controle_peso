@@ -52,11 +52,13 @@ function usePessoa() {
             'dataAtualizacao': dados.dataAtualizacao
         }
     
-        const result = axios.post(`http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1/pessoas`,dadosPessoa)
+        const result = axios.post(`http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1/pessoas`,dadosPessoa)
                         .then((response) => {                                                                                    
                             return true;
                         })
-                        .catch((error) => {                                                                            
+                        .catch((error) => {  
+                            alert('error')
+                            console.log(error)                                                                          
                             return false;
                         });     
                         
@@ -91,7 +93,24 @@ function usePessoa() {
         return senhaCript;      
     }
 
-    return {listar,buscar, salvar, formatarAltura, removerToken, criptografarSenha}
+    async function verificarEmail(email) {
+        let dados = {
+            "email": email,
+            "senha": null
+        }
+
+        const result = await axios.post(`http://localhost:8080/v1/pessoas/verificarEmail`,dados)
+                        .then((response) => {                                                                                    
+                            return response.data;
+                        })
+                        .catch((error) => {                                                                          
+                            return 'error';
+                        });     
+                        
+        return result;
+    }
+
+    return {listar,buscar, salvar, formatarAltura, removerToken, criptografarSenha, verificarEmail}
 }
 
 export default usePessoa;

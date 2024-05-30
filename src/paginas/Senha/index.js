@@ -34,7 +34,7 @@ export default function Senha() {
             "senha": novaSenha
         }
 
-        await axios.put(`http://controlepeso-lb-1799921286.us-east-1.elb.amazonaws.com:8080/v1/pessoas/recuperarsenha`,dados)
+        await axios.put(`http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1/pessoas/recuperarsenha`,dados)
             .then((response) => {                                                        
                toast.success("Senha alterada com Sucesso");
 
