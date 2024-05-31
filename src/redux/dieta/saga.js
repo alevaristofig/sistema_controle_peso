@@ -8,7 +8,8 @@ import axios from 'axios';
 
 function setUrl() {    
     return {
-              "url": JSON.parse(sessionStorage.getItem('urls'))
+              "url": JSON.parse(sessionStorage.getItem('urls')),
+              "pessoa": JSON.parse(sessionStorage.getItem('dadosPessoa'))
            }
 }
 
@@ -43,13 +44,16 @@ function* salvarDietaAlimento(action) {
 function* atualizar(action) {
     try {
 
+        let urls = yield call(setUrl);
+        
         let dados = {
             'nome': action.payload.nome,
             'dataCadastro': action.payload.dataCadastro,
-            'dataAtualizacao': action.payload.dataAtualizacao
-        };
-
-        let urls = yield call(setUrl);
+            'dataAtualizacao': action.payload.dataAtualizacao,
+            'pessoa': {
+                'id': urls.pessoa.id
+            }
+        };        
 
         yield call(axios.put,`${urls.url.dietas.href}/${action.payload.id}`,dados,{
             headers: {

@@ -109,7 +109,6 @@ export default function Treino() {
 
         exerciciosSemPaginacao.forEach(e => {
             let dados = {
-                'pessoaId': 1,
                 'exercicioId': e.id,                
                 'dataCadastro': dataAtual.toISOString()
             };
@@ -173,7 +172,7 @@ export default function Treino() {
                             ?
                                 <div className="row mt-4">
                                     <div className="col">
-                                        <span>Nenhuma exercício encontrado </span>                                    
+                                        <span>Nenhum exercício encontrado </span>                                    
                                     </div>
                                 </div>
                             :                            

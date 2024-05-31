@@ -32,8 +32,7 @@ export const exercicioSlice = createSlice({
             state.exerciciosSemPaginacao = action.payload;
         },
         listarSemPaginacaoError(state) {
-            state.loading = false;
-            toast.error("Ocorreu um erro ao listar os Exercícios!");    
+            state.loading = false;                
         },
         salvar(state,action) {
             state.loading = true;

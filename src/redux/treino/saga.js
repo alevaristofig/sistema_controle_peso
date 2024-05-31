@@ -36,18 +36,18 @@ function* listarTreino(action) {
 
 function* salvar(action) {
     try {
+        let urls = yield call(setUrl);
+
         let dados = {
             'pessoaId': {
-                'id': action.payload.dados.pessoaId
+                'id': urls.pessoa.id
             },
             'exercicioId': {
                 'id': action.payload.dados.exercicioId
             },
             'treino': action.payload.dados.treino,
             'dataCadastro': action.payload.dados.dataCadastro
-        };
-
-        let urls = yield call(setUrl);
+        };       
 
         yield call(axios.post,`${urls.url.pessoaexercicio.href}`,dados,{
             headers: {

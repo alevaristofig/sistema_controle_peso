@@ -112,28 +112,36 @@ export default function Home() {
                                 <div className='row'>  
                                     <div className="text-body-secondary pt-3 col marginLinha">
                                         <LiaWeightHangingSolid color="#000" size={24} />
-                                        <span className='ms-2'>Peso Inicial: {primeiroPeso.valor}</span>
-                                        <span className='ms-2'>Peso Atual: {ultimoPeso.valor}</span>
-                                        <span className='ms-2'>
-                                            {
-                                                primeiroPeso.valor - ultimoPeso.valor > 0
-                                                ?
-                                                    <label>Perdeu: {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)} </label>
-                                                :
-                                                    <label>Ganhou: {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)} </label>
-                                            }
-                                        </span>
-                                        <span className='ms-4'>IMC Inicial: {primeiroPeso.imc}</span>
-                                        <span className='ms-2'>IMC Atual: {ultimoPeso.imc}</span>
-                                        <span className='ms-2'>
-                                            {
-                                                primeiroPeso.imc - ultimoPeso.imc > 0
-                                                ?
-                                                    <label>Perdeu: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
-                                                :
-                                                    <label>Ganhou: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
-                                            }
-                                        </span>
+                                        {
+                                             primeiroPeso === ''
+                                             ?
+                                                <span className='ms-2 fst-italic'>Não existem registros de pesos para exibir</span>
+                                             :
+                                                <>
+                                                    <span className='ms-2'>Peso Inicial: {primeiroPeso.valor}</span>
+                                                    <span className='ms-2'>Peso Atual: {ultimoPeso.valor}</span>
+                                                    <span className='ms-2'>
+                                                        {
+                                                            primeiroPeso.valor - ultimoPeso.valor > 0
+                                                            ?
+                                                                <label>Perdeu: {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)} </label>
+                                                            :
+                                                                <label>Ganhou: {(primeiroPeso.valor - ultimoPeso.valor).toFixed(2)} </label>
+                                                        }
+                                                    </span>
+                                                    <span className='ms-4'>IMC Inicial: {primeiroPeso.imc}</span>
+                                                    <span className='ms-2'>IMC Atual: {ultimoPeso.imc}</span>
+                                                    <span className='ms-2'>
+                                                        {
+                                                            primeiroPeso.imc - ultimoPeso.imc > 0
+                                                            ?
+                                                                <label>Perdeu: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
+                                                            :
+                                                                <label>Ganhou: {(primeiroPeso.imc - ultimoPeso.imc).toFixed(2)} </label>
+                                                        }
+                                                    </span>
+                                                </>
+                                        }                                                                              
                                         <span className='ms-3 float-end'>
                                             <Link to={`/peso/0`} className="btn btn-info">Ver Pesos</Link>
                                         </span>

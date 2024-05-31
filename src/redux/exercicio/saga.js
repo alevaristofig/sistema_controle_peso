@@ -44,7 +44,7 @@ function* listarSemPaginacao() {
 
         let urls = yield call(setUrl);
 
-        const response = yield call(axios.get,`${urls.url.exercicios.href}/${urls.listarexercicios}`,{
+        const response = yield call(axios.get,`${urls.url.exercicios.href}/${urls.listarexercicios}/${urls.pessoa.id}`,{
             headers: {
                 "Authorization": `Bearer ${sessionStorage.getItem('token')}` ,
             }

@@ -13,9 +13,10 @@ export default function Login() {
     const [clientId] = useState('sisetemacontrolepesobackend');
     const [authorizeUrl] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/oauth2/authorize');
     const [tokenUrl] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/oauth2/token');    
-    const [callbackUrl] = useState('http://controlepeso.s3-website-us-east-1.amazonaws.com/login');    
+    const [callbackUrl] = useState('http://controlepeso.s3-website-us-east-1.amazonaws.com/login');        
     const [urlPadrao] = useState('http://ec2-54-144-7-19.compute-1.amazonaws.com:8080/v1');
-    const [password] = useState('123');
+    const [password] = useState('ZTmgTeTXlP373rI');
+
         
     const navigate = useNavigate();
 
